@@ -9,7 +9,7 @@ const state = {
     holdingsTabs: [
         { name: 'My Holdings', id: 0, active: true, count: '0' },
         { name: 'Family', id: 1, active: false, count: '0' },
-        { name: 'Gift Stocks', id: 2, active: false, count: '0' },
+        // { name: 'Gift Stocks', id: 2, active: false, count: '0' },
     ],
     actionTabs: [
         { name: 'Corporate Action', id: 0, active: true, count: '0' },

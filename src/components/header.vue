@@ -145,11 +145,11 @@ export default {
                 id: 'head_holdings',
                 route:'/holdings',
             },
-            {
-                name: 'Action',
-                id: 'head_action',
-                route:'/action',
-            },
+            // {
+            //     name: 'Action',
+            //     id: 'head_action',
+            //     route:'/action',
+            // },
             {
                 name: 'Profile',
                 id: 'head_profile',
