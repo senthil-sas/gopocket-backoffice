@@ -4,12 +4,12 @@ const state = {
         { name: 'P&L', id: 1, active: false, count: '0' },
         { name: 'Tax P&L', id: 2, active: false, count: '0' },
         { name: 'Ledger', id: 3, active: false, count: '0' },
-        { name: 'Downloads', id: 4, active: false, count: '0' },
+        // { name: 'Downloads', id: 4, active: false, count: '0' },
     ],
     holdingsTabs: [
         { name: 'My Holdings', id: 0, active: true, count: '0' },
         { name: 'Family', id: 1, active: false, count: '0' },
-        // { name: 'Gift Stocks', id: 2, active: false, count: '0' },
+        { name: 'Gift Stocks', id: 2, active: false, count: '0' },
     ],
     actionTabs: [
         { name: 'Corporate Action', id: 0, active: true, count: '0' },

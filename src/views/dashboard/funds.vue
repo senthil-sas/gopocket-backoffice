@@ -8,10 +8,10 @@
                 </div>
 
                 <div class="max-w-[350px] my-8">
-                    <div class="flex items-center justify-between gap-10 my-4">
+                    <!-- <div class="flex items-center justify-between gap-10 my-4">
                         <div class="secondary-color text-sm">Account Value</div>
                         <div class="primary-color text-sm">0.00</div> 
-                    </div>
+                    </div> -->
 
                     <div class="flex items-center justify-between gap-10 my-4">
                         <div class="secondary-color text-sm">Cash balance</div>

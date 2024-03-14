@@ -1,5 +1,5 @@
 <template>
-    <div :class="{'h-[calc(100vh-96px)] overflow-y-auto': !getIsGiftSelect }">
+  <!-- <div :class="{'h-[calc(100vh-96px)] overflow-y-auto': !getIsGiftSelect }">
         <div class="p-5" v-if="!getIsGiftSelect">
         <div class="mb-4 primary-color !font-bold text-sm">
             Send a Gift
@@ -51,36 +51,38 @@
         </div>
         </div>
         <gift_stocks_select v-if="getIsGiftSelect" />
-    </div>
+    </div> -->
+  <div>
+    <h1 class="text-center mt-10">Coming Soon!</h1>
+  </div>
 </template>
 
 <script>
-import icon from '../../components/utilComponents/icons.vue'
-import { Switch } from '@headlessui/vue'
-import { mapGetters } from 'vuex'
-import gift_stocks_select from './gift-stocks-select.vue'
+import icon from "../../components/utilComponents/icons.vue";
+import { Switch } from "@headlessui/vue";
+import { mapGetters } from "vuex";
+import gift_stocks_select from "./gift-stocks-select.vue";
 export default {
-    components: { icon, Switch, gift_stocks_select },
-    data() {
-        return {
-            recipientsName: '',
-            recipientsMobileNo: '',
-            recipientsEmail: ''
-        }
+  components: { icon, Switch, gift_stocks_select },
+  data() {
+    return {
+      recipientsName: "",
+      recipientsMobileNo: "",
+      recipientsEmail: "",
+    };
+  },
+  computed: {
+    ...mapGetters("giftStocks", ["getIsGiftSelect"]),
+  },
+  methods: {
+    handleSubmit() {
+      let json = {
+        recipientsName: this.recipientsName,
+        recipientsMobileNo: this.recipientsMobileNo,
+        recipientsEmail: this.recipientsEmail,
+      };
+      this.$store.commit("giftStocks/setRecipientsData", json);
     },
-    computed: {
-        ...mapGetters('giftStocks',['getIsGiftSelect'])
-    },
-    methods: {
-        
-        handleSubmit() {
-            let json = {
-                recipientsName : this.recipientsName,
-                recipientsMobileNo : this.recipientsMobileNo,
-                recipientsEmail: this.recipientsEmail
-            }
-            this.$store.commit('giftStocks/setRecipientsData', json)
-        }
-    },
-}
+  },
+};
 </script>
