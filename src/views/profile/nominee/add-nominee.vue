@@ -259,7 +259,6 @@ export default {
             nomineeYear:''
         }
     },
-    
     computed: {
         ...mapGetters(['getMonths']),
         ...mapGetters('nominee',['getIsMinor', 'getNomineeList']),
