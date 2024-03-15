@@ -5,6 +5,7 @@
         <div class="flex mt-4">
           <icon name="profile" height="18" width="18" class="mr-4"/>
           <p class="primaryColor text-[14px]">
+            
             {{ getProfileData.customer_name }}
           </p>
         </div>
@@ -38,7 +39,9 @@
           <icon name="address" height="18" width="18" class="mr-4"/>
           <div class="primaryColor text-[14px]">
             <div class="primaryColor text-[14px] leading-[1.3rem]">
-              {{ getProfileData.address ? getProfileData.address.join(', ') : 'NA' }}
+              <!-- {{ getProfileData.address ? getProfileData.address.join(', ') : 'NA' }} -->
+              {{ getProfileData.primary_address  }}
+
             </div>
           </div>
         </div>
@@ -46,7 +49,7 @@
       <box class="w-full p-3 my-3" >
           <p class="primaryColor text-[14px]">Your PAN</p>
           <p class="pb-3 text-[20px] violet-color">
-            {{ getProfileData.pan }}
+            {{ getProfileData.fsl_pan_card }}
           </p>
           <p class="primaryColor text-[14px]">Your Demat (BO)</p>
           <p class="pb-3 text-[20px] violet-color">
@@ -102,7 +105,9 @@
           <icon name="address" height="18" width="18" class="mr-4"/>
           <div class="primaryColor text-[14px]">
             <div class="primaryColor text-[14px] leading-[1.3rem] max-w-[265px]">
-              {{ getProfileData.address ? getProfileData.address.join(', ') : 'NA' }}
+              <!-- {{ getProfileData.address ? getProfileData.address.join(', ') : 'NA' }} -->
+              {{ getProfileData.primary_address  }}
+
             </div>
           </div>
         </div>
@@ -111,7 +116,7 @@
         <div class="my-8">
           <p class="primaryColor text-[14px]">Your PAN</p>
           <p class="pb-3 text-[20px] violet-color">
-            {{ getProfileData.pan }}
+            {{ getProfileData.fsl_pan_card }}
           </p>
           <p class="primaryColor text-[14px]">Your Demat (BO)</p>
           <p class="pb-3 text-[20px] violet-color">
@@ -146,7 +151,7 @@ export default {
         }
     },
     computed: {
-      ...mapGetters('profile', ['getProfileData','getLoader'])
+      ...mapGetters('profile', ['getProfileData', 'getLoader']),
     },
     methods: {
         startFromPan() {},
@@ -157,9 +162,9 @@ export default {
             this.supportText = '....'
         },
         async updateEmailOrMobile(type) {
-          // this.$router.push('/profile').catch(()=>{})
-          // this.$store.commit('tabs/setProfileCurrentTab', JSON.stringify(5))
-          // this.$store.dispatch('tabs/setActiveTab', { path: this.$route.path, id: 5 })
+          this.$router.push('/profile').catch(()=>{})
+          this.$store.commit('tabs/setProfileCurrentTab', JSON.stringify(5))
+          this.$store.dispatch('tabs/setActiveTab', { path: this.$route.path, id: 5 })
           this.$store.commit('popup/setUpdateType', type)
           this.$store.commit('popup/setIsEmailOrMobileUpdate', true)
         },
@@ -170,8 +175,6 @@ export default {
     props:{
       isBox: { type: Boolean, default: true }
     },
-    created() {
-        this.$store.dispatch('profile/getProfileDataFromApi')
-    },
+
 }
 </script>

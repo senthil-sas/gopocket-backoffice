@@ -64,11 +64,21 @@
   <div class="relative top-0 z-[9]">         
     <div class="flex header items-center justify-between py-[50px]" >
       <div class="flex items-center z-50 w-full">
+        <div class="flex lg:hidden">
+          <button
+            type="button"
+            class="inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+            @click="mobileMenuOpen = true"
+          >
+            <span class="sr-only">Open main menu</span>
+            <Bars3Icon class="h-6 w-6" aria-hidden="true" />
+          </button>
+        </div>
         <div class="-pointer logo mr-auto flex items-center">
           <img :src="clientLogo" class="h-6 px-4" alt="logo" />
         </div>
         <div class="menu-list">
-          <ul class="py-0 pl-0 pr-4">
+          <ul class="py-0 pl-0 pr-4 hidden lg:flex">
             <li class="primary-color" v-for="(head, id) in headers" :key="id">
                 <router-link :id="head.id" :to="head.route"><span class="pb-[4px] px-[20px]">{{ head.name }}</span></router-link>
             </li>
@@ -115,6 +125,52 @@
             </transition>
           </Menu>
         </div>
+        <Dialog
+          as="div"
+          class="lg:hidden"
+          @close="mobileMenuOpen = false"
+          :open="mobileMenuOpen"
+        >
+          <div class="fixed inset-0 z-10" />
+          <DialogPanel
+            class="fixed inset-y-0 left-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+          >
+            <div class="flex items-center justify-between">
+              <a href="#" class="">
+                <span class="sr-only">Your Company</span>
+                <img :src="clientLogo" class="h-6 px-4" alt="logo" />
+              </a>
+              <button
+                type="button"
+                class="-m-2.5 rounded-md p-2.5 text-gray-700"
+                @click="mobileMenuOpen = false"
+              >
+                <span class="sr-only">Close menu</span>
+                <XMarkIcon class="h-6 w-6" aria-hidden="true" />
+              </button>
+            </div>
+            <div class="flow-root">
+              <div class="-my-6 divide-y divide-gray-500/10">
+                <div class="space-y-2 py-6">
+                  <ul class="py-10 pl-0 pr-4 flex flex-col gap-4">
+                    <li
+                      @click="mobileMenuOpen = false"
+                      class="primary-color"
+                      v-for="(head, id) in headers"
+                      :key="id"
+                    >
+                      <router-link :id="head.id" :to="head.route"
+                        ><span class="pb-[4px] px-[20px]">{{
+                          head.name
+                        }}</span></router-link
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </DialogPanel>
+        </Dialog>
       </div>
     </div>
   </div>
@@ -123,11 +179,14 @@
 <script>
 import clientLogo from '../assets/images/client-logo.svg'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
+import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
+
 import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
         clientLogo,
+        mobileMenuOpen: false, 
         userRole: 'NORMAL_USER',
         headers: [
             {
@@ -156,9 +215,10 @@ export default {
                 route:'/profile',
             }
         ],
+
     }
   },
-  components: { Menu, MenuButton, MenuItems, MenuItem },
+  components: { Menu, MenuButton, MenuItems, MenuItem,Bars3Icon ,XMarkIcon},
   computed: {
     ...mapGetters('auth',['getUserId']),
     ...mapGetters('profile', ['getProfileData'])

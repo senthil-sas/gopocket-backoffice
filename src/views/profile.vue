@@ -19,13 +19,16 @@ import segments from './profile/segments.vue'
 import documents from './profile/documents.vue'
 import sidebar from '../components/sidebar.vue'
 import { mapGetters } from 'vuex'
+// import { mapstate } from 'vuex'
+
 export default {
     components: { tabs, income_proof, bank_details, nominee, segments, documents, sidebar },
     data() {
         return { }
     },
     computed: {
-        ...mapGetters('tabs',['getProfileCurrentTab'])
+        ...mapGetters('tabs',['getProfileCurrentTab']),
+        // ...mapstate( 'nominee',['profileData']),
     },
     methods: {
         changeTab(id) {
@@ -43,6 +46,8 @@ export default {
         } else {
             this.changeTab(0)
         }
+    //  this.$store.dispatch('nominee/profileData');
+
     }
 }
 </script>
