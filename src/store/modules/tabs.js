@@ -2,7 +2,7 @@ const state = {
     reportTabs : [
         { name: 'Tradebook', id: 0, active: true, count: '0' },
         { name: 'P&L', id: 1, active: false, count: '0' },
-        { name: 'Tax P&L', id: 2, active: false, count: '0' },
+        // { name: 'Tax P&L', id: 2, active: false, count: '0' },
         { name: 'Ledger', id: 3, active: false, count: '0' },
         // { name: 'Downloads', id: 4, active: false, count: '0' },
     ],
@@ -26,7 +26,7 @@ const state = {
     ],
     dashboardTabs: [
         { name: 'Accounts', id: 0, active: true, count: '0' },
-        { name: 'Funds', id: 1, active: false, count: '0' },
+        // { name: 'Funds', id: 1, active: false, count: '0' },
         { name: 'Positions', id: 2, active: false, count: '0' },
     ],
     profileCurrentTab: 0
