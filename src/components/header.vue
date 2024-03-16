@@ -218,7 +218,7 @@ export default {
 
     }
   },
-  components: { Menu, MenuButton, MenuItems, MenuItem,Bars3Icon ,XMarkIcon},
+  components: { Menu, MenuButton, MenuItems, MenuItem,Bars3Icon ,XMarkIcon,},
   computed: {
     ...mapGetters('auth',['getUserId']),
     ...mapGetters('profile', ['getProfileData'])

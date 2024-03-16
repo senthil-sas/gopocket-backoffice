@@ -1,6 +1,6 @@
 <template>
     <div class="p-5 bank-details">
-        <div v-if="!getIsAddBank" >
+        <div v-if="!isAddBank">
         <div class="flex gap-3 grow flex-wrap">
             <div v-for="(bank, id) in getbankdetails" :key="id" class="bank-details-card">
                 <div class="flex justify-between">
@@ -9,7 +9,6 @@
                         <button class="primarybtn">Primary</button>
                     </span>
                 </div>
-
                 <div class="flex gap-5 items-center my-4">
                     <img :src="hdfcImg" :alt="bank?.name" class="max-w-[60px] max-h-[60px] border rounded p-2">
                     <span>
@@ -53,45 +52,41 @@
             <bank_mandates />
         </div> -->
 
-        <add_bank v-if="getIsAddBank"/>
+        <add_bank v-if="isAddBank"/>
     </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script lang="ts" setup>
+import { reactive, computed } from 'vue'
 import add_bank from './add-bank.vue'
 import icon from '../../components/utilComponents/icons.vue'
 import bank_mandates from './bank-mandates.vue'
 import hdfcImg from '../../assets/images/hdfc.png'
+import { useStore } from 'vuex'
 
-export default {
-    components: { add_bank, icon, bank_mandates },
-    data() {
-        return {
-            isAddBank: false,
-            isShowBankMandates: false,
-            hdfcImg
-        }
-    },
+const store = useStore()
+
+const state = reactive({
+    isAddBank: false,
+    isShowBankMandates: false,
+    hdfcImg,
+})
+
+const getbankdetails = computed(() => store.getters['profile/getbankdetails']);
+
+const getLoader = computed(() => store.getters['profile/getLoader']);
+
+const addBank = () => {
     
-    computed: {
-        ...mapGetters('profile', ['getbankdetails', 'getLoader']),
-    },
-    methods: {
-        addBank() {
-            this.$store.commit('bankDetails/setIsAddBank', true)
-        },
-        viewBankMandates() {
-            this.isShowBankMandates = !this.isShowBankMandates
-        }
 
-        
-    },
-    created() {
-        // this.$store.dispatch('bankDetails/getBankDataFromApi')
-    },
+    // store.commit('bankDetails/setIsAddBank', true)
+}
+
+const viewBankMandates = () => {
+    state.isShowBankMandates = !state.isShowBankMandates
 }
 </script>
+
 
 
 

@@ -3,7 +3,7 @@ import service from "../modules/services/profile.ts";
 const state = {
     profileData: [],
     bankdetails: [],
-    loader: false
+    loader: false,
 };
 
 const actions = {

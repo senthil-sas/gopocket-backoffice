@@ -14,7 +14,7 @@
           <div class="flex">
             <icon name="date" height="18" width="18" class="mr-4"/>
             <p class="primaryColor text-[14px]">
-              {{ formatDate(getProfileData.fsl_dob) }}
+               {{ formatDate(getProfileData.fsl_dob) }} 
             </p>
           </div>
         </div>
@@ -80,7 +80,7 @@
           <div class="flex">
             <icon name="date" height="18" width="18" class="mr-4"/>
             <p class="primaryColor text-[14px]">
-              {{ formatDate(getProfileData.fsl_dob) }}
+               {{ formatDate(getProfileData.fsl_dob) }}
             </p>
           </div>
         </div>
@@ -137,44 +137,47 @@
 </div>
 </template>
 
-<script>
-import box from './utilComponents/box.vue'
-import icon from './utilComponents/icons.vue'
+<script setup lang="ts">
+import { ref } from 'vue';
+import { reactive, computed } from 'vue'
+
+import box from './utilComponents/box.vue';
+import icon from './utilComponents/icons.vue';
 import { mapGetters } from 'vuex';
 import common from '../mixins/common';
-export default {
-    mixins: [common],
-    components: { box, icon },
-    data() {
-        return {
-            supportText: '....',
-        }
-    },
-    computed: {
-      ...mapGetters('profile', ['getProfileData', 'getLoader']),
-    },
-    methods: {
-        startFromPan() {},
-        viewSupportCode() {
-            this.supportText = '1234'
-        },
-        hideSupportCode() {
-            this.supportText = '....'
-        },
-        async updateEmailOrMobile(type) {
-          this.$router.push('/profile').catch(()=>{})
-          this.$store.commit('tabs/setProfileCurrentTab', JSON.stringify(5))
-          this.$store.dispatch('tabs/setActiveTab', { path: this.$route.path, id: 5 })
-          this.$store.commit('popup/setUpdateType', type)
-          this.$store.commit('popup/setIsEmailOrMobileUpdate', true)
-        },
-        async resetSupportCode() {
-          this.$store.commit('popup/setIsResetSupportCode', true)
-        },
-    },
-    props:{
-      isBox: { type: Boolean, default: true }
-    },
+import { useStore } from 'vuex'
 
-}
+const store = useStore()
+const getProfileData = computed(() => store.getters['profile/getProfileData']);
+const getLoader = computed(() => store.getters['profile/getLoader']);
+
+
+const supportText = ref('....');
+
+const startFromPan = () => {};
+const viewSupportCode = () => {
+    supportText.value = '1234';
+};
+const hideSupportCode = () => {
+    supportText.value = '....';
+};
+const updateEmailOrMobile = async (type: string) => {
+    $router.push('/profile').catch(() => {});
+    $store.commit('tabs/setProfileCurrentTab', JSON.stringify(5));
+    $store.dispatch('tabs/setActiveTab', { path: $route.path, id: 5 });
+    $store.commit('popup/setUpdateType', type);
+    $store.commit('popup/setIsEmailOrMobileUpdate', true);
+};
+const resetSupportCode = async () => {
+    $store.commit('popup/setIsResetSupportCode', true);
+};
+const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    return formattedDate;
+};
+
+const props = defineProps({
+  isBox: { type: Boolean, default: true }
+});
 </script>
