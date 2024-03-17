@@ -1,25 +1,33 @@
 import service from "../httpService";
+import { apigettradebook } from "../services/tradebookApi";
+
+const apiservice = apigettradebook()
 const state = {
-    tradeBookData : [],
+    tradeBookData: [],
     dataPoints: {}
 }
 
 const actions = {
-    async getTradeBookFromApi({ commit }) {
+    async getTradeBookFromApi({ commit }, payload) {
+        // console.log(payload,"vvv");
         try {
-            service.getTradeBook().then(resp => {   
-                debugger
-                console.log(resp);
-                if(resp?.data?.data) {
-                    commit('setTradeBookData', resp?.data?.data)
-                    commit('setDataPoints', resp?.data?.data)
+
+            apiservice.getTradebookData(payload).then(resp => {
+
+                console.log(resp.data.message.tradebook_summary, "resp");
+
+                if (resp?.data?.message?.tradebook_summary) {
+
+                    commit('setTradeBookData', resp?.data?.message?.tradebook_summary)
+                    commit('setDataPoints', resp?.data?.message?.tradebook_summary) 
+                  
                 } else {
                     commit('setTradeBookData', [])
-                    commit('setDataPoints', {})
+                   
                 }
             })
         } catch (error) {
-            
+
         }
     }
 };
@@ -28,12 +36,21 @@ const mutations = {
     setTradeBookData(state, payload) {
         state.tradeBookData = payload
     },
+    
     setDataPoints(state, payload) {
-        state.dataPoints = {}
-        payload.forEach(el => {
-            console.log(getTimeStamp(el.trade_date));
+        console.log("payload",payload)
+        let dataPoints = {}
+        let dates = []
+
+        payload?.forEach(el => {
+            dates.push(new Date(el.trade_date))
+            dataPoints[getTimeStamp(el.trade_date)] = (el.qty)
         });
-        state.dataPoints = payload
+
+        // state.startDate = new Date(Math.min.apply(null, dates));
+        // state.endDate = new Date(Math.max.apply(null, dates));
+        state.dataPoints = dataPoints
+        console.log("v3",dataPoints);
     },
 };
 
