@@ -3,7 +3,7 @@ const state = {
         { name: 'Tradebook', id: 0, active: true, count: '0' },
         { name: 'P&L', id: 1, active: false, count: '0' },
         // { name: 'Tax P&L', id: 2, active: false, count: '0' },
-        { name: 'Ledger', id: 3, active: false, count: '0' },
+        { name: 'Ledger', id: 2, active: false, count: '0' },
         // { name: 'Downloads', id: 4, active: false, count: '0' },
     ],
     holdingsTabs: [

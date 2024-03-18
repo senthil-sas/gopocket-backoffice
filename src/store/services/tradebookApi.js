@@ -3,8 +3,6 @@ import axios from "axios";
 export const apigettradebook = () => {
 
 
-
-
     const getTradebookData = (payload) => {
 
         const[fmonth,fday,fyear]=payload.fromDate.split("/");
@@ -18,7 +16,6 @@ export const apigettradebook = () => {
 
        return response;
         
-
     }
 
     return { getTradebookData }

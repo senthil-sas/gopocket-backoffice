@@ -13,6 +13,7 @@ import positions from './modules/positions'
 import reports from './modules/reports'
 import funds from './modules/funds'
 import popup from './modules/popup'
+import ledger from './modules/ledger'
 export default createStore({
   state: {
     brokerName: "GoPocket",
@@ -52,5 +53,5 @@ export default createStore({
     getWindowWidth: state => state.windowWidth
   },
 
-  modules: { tabs, bankDetails, nominee, subAcc, giftStocks, auth, profile, segment, tradebook, holdings, positions, reports, funds, popup },
+  modules: { tabs, bankDetails, nominee, subAcc, giftStocks, auth, profile, segment,ledger,tradebook, holdings, positions, reports, funds, popup },
 });
