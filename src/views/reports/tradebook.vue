@@ -352,7 +352,6 @@ const formatDate = (paloadDate) => {
 
 const previousYear = () => {
   const [toyeardate] = formatDate(toDate.value).split("-");
-  // console.log(curYear.value, "prev");
   if (Number(toyeardate) <= curYear.value) {
     const [fyear, fmon, fday] = formatDate(fromDate.value).split("-");
     fromDate.value = (Number(fyear) - 1).toString() + "-" + fmon + "-" + fday;
@@ -370,8 +369,8 @@ const nextYear = () => {
   const [toyeardate] = formatDate(toDate.value).split("-");
 
   if (Number(toyeardate) !== curYear.value) {
-    console.log("toyeardate",toyeardate);
-    console.log("curyear",curYear.value);
+    console.log("toyeardate", toyeardate);
+    console.log("curyear", curYear.value);
     const [fyear, fmon, fday] = formatDate(fromDate.value).split("-");
     fromDate.value = new Date(
       (Number(fyear) + 1).toString() + "-" + fmon + "-" + fday
@@ -381,9 +380,6 @@ const nextYear = () => {
       (Number(tyear) + 1).toString() + "-" + tmon + "-" + tday
     );
   }
-
-
-  
 };
 const getPreviousDays = (dateString) => {
   const date = new Date(dateString);

@@ -335,8 +335,7 @@ const formateDate = (paloadDate) => {
 
 const previousYear = () => {
   const [toyeardate] = formateDate(toDate.value).split("-");
-  // console.log(curYear.value, "prev");
-
+  
   if (Number(toyeardate) <= curYear.value) {
     const [fyear, fmon, fday] = formateDate(fromDate.value).split("-");
     fromDate.value = (Number(fyear) - 1).toString() + "-" + fmon + "-" + fday;
