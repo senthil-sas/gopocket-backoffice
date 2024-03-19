@@ -2,6 +2,8 @@
 <div>
     <div v-if="isBox">
       <box class="w-full p-3" >
+        <p class="loginHeader font-bold py-2 header">Personal Details</p>
+
         <div class="flex mt-4">
           <icon name="profile" height="18" width="18" class="mr-4"/>
           <p class="primaryColor text-[14px]">
@@ -17,6 +19,13 @@
                {{ formatDate(getProfileData.fsl_dob) }} 
             </p>
           </div>
+           <div class="flex pl-5">
+          <icon name="male" height="20" width="20" v-if="getProfileData.gender == 'MALE' || getProfileData.gender == 'Male'"/>
+          <icon name="female" height="20" width="20" v-if="getProfileData.gender == 'FEMALE' || getProfileData.gender == 'Female'"/>
+          <p class="primaryColor text-[14px] ml-2">
+            {{ getProfileData.gender || "NA" }}
+          </p>
+        </div> 
         </div>
         <hr class="mt-4" />
         <div class="flex mt-4 gap-4 items-center">
@@ -83,6 +92,13 @@
                {{ formatDate(getProfileData.fsl_dob) }}
             </p>
           </div>
+          <div class="flex pl-5">
+          <icon name="male" height="20" width="20" v-if="getProfileData.gender == 'MALE' || getProfileData.gender == 'Male'"/>
+          <icon name="female" height="20" width="20" v-if="getProfileData.gender == 'FEMALE' || getProfileData.gender == 'Female'"/>
+          <p class="primaryColor text-[14px] ml-2">
+            {{ getProfileData.gender || "NA" }}
+          </p>
+        </div>
         </div>
         <hr class="mt-4" />
         <div class="flex mt-4 gap-4 items-center">
@@ -139,7 +155,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { reactive, computed } from 'vue'
+import { reactive, computed } from 'vue';
+// import commonIcon from '@/components/commonIcon.vue';
 
 import box from './utilComponents/box.vue';
 import icon from './utilComponents/icons.vue';

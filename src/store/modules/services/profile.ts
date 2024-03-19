@@ -7,7 +7,7 @@ export default {
         const requestOptions = {
             headers: authHeader(),
         };
-        return axios.get(`${baseUrlTemp}resource/Customer/SKY40491`, requestOptions);
+        return axios.get(`${baseUrlTemp}resource/Customer/SKY41810`, requestOptions);
 
     }
 }

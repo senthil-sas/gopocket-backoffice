@@ -1,7 +1,7 @@
 <template>
     <div class="p-5 bank-details">
         <div v-if="!isAddBank">
-        <div class="flex gap-3 grow flex-wrap">
+                    <div class="flex gap-3 grow flex-wrap">
             <div v-for="(bank, id) in getbankdetails" :key="id" class="bank-details-card">
                 <div class="flex justify-between">
                     <span class="primary-color !font-semibold text-xs"> BANK {{ id + 1 }}</span>
@@ -34,7 +34,7 @@
         </div>
 
         <div class="my-6">
-                <button class="commonbtn" @click="addBank()">Add New bank</button>
+            <button class="commonbtn" @click="addBank">Add New bank</button>
             </div>
 
             <!-- Recent Transactions -->
@@ -60,7 +60,7 @@
 import { reactive, computed } from 'vue'
 import add_bank from './add-bank.vue'
 import icon from '../../components/utilComponents/icons.vue'
-import bank_mandates from './bank-mandates.vue'
+// import bank_mandates from './bank-mandates.vue'
 import hdfcImg from '../../assets/images/hdfc.png'
 import { useStore } from 'vuex'
 
@@ -79,7 +79,7 @@ const getLoader = computed(() => store.getters['profile/getLoader']);
 const addBank = () => {
     
 
-    // store.commit('bankDetails/setIsAddBank', true)
+    store.commit('bankDetails/setIsAddBank', true)
 }
 
 const viewBankMandates = () => {
