@@ -34,7 +34,7 @@
         </div>
 
         <div class="my-6">
-            <button class="commonbtn" @click="addBank">Add New bank</button>
+            <button class="commonbtn" @click="addBank()">Add New bank</button>
             </div>
 
             <!-- Recent Transactions -->

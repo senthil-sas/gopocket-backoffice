@@ -190,9 +190,14 @@ const resetSupportCode = async () => {
 };
 const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-    return formattedDate;
-};
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear().toString();
+    return `${day}-${month}-${year}`;
+}
+
+
+;
 
 const props = defineProps({
   isBox: { type: Boolean, default: true }
