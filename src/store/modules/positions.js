@@ -1,20 +1,22 @@
-import service from "../httpService";
+import service from "../modules/services/Dasboard";
 const state = {
     positionData: []
 }
 
 const actions = {
-    getPositionsFromApi({commit}) {
+    getPositionsFromApi({ commit }) {
+        commit('setPositionData', [])
+
         try {
-            service.getPositions().then(resp => {
-                if(resp?.data?.result) {
-                    commit('setPositionData', resp?.data?.result)
+            service.getPositionsFromApi().then(resp => {
+                console.log(resp.data.message.data.positions)
+                if (resp.data.message.data.positions) {
+                    commit('setPositionData', resp.data.message.data.positions)
                 } else {
-                    commit('setPositionData', [])
                 }
             })
         } catch (error) {
-            
+
         }
     }
 };

@@ -8,6 +8,34 @@
   <meta name="color-scheme" content="light only">
   <title>cosmos</title>
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+  <script>
+    // Function to update the page title dynamically
+    function updatePageTitle(pageName) {
+      document.title = "GoPocket - " + pageName;
+    }
+
+    // Function to handle navigation and update page title
+    function navigateTo(pageName) {
+      history.pushState(null, null, pageName);
+      updatePageTitle(pageName);
+    }
+
+    // Update the page title initially
+    window.onload = function () {
+      var pathname = window.location.pathname;
+      var pageName = pathname.split('/').pop(); // Get the last part of the URL (page name)
+      pageName = pageName.charAt(0).toUpperCase() + pageName.slice(1); // Capitalize the first letter
+      updatePageTitle(pageName);
+    };
+
+    // Update the page title when navigating through browser history
+    window.onpopstate = function () {
+      var pathname = window.location.pathname;
+      var pageName = pathname.split('/').pop(); // Get the last part of the URL (page name)
+      pageName = pageName.charAt(0).toUpperCase() + pageName.slice(1); // Capitalize the first letter
+      updatePageTitle(pageName);
+    };
+  </script>
   <!-- <script src="https://unpkg.com/frappe-charts@latest"></script> -->
   <!-- <link href="/src/assets/tailwind/output.css" rel="stylesheet" /> -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/frappe-charts@1.2/dist/frappe-charts.min.iife.js"></script> -->

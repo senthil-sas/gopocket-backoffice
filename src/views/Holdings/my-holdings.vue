@@ -10,13 +10,15 @@
                     
         <tbody>
             <tr v-for="(item, id) in getHoldingsData" :key="id" class="border-b">
-                <td class="pl-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative">{{ item.symbol[0].tradingSymbol }}</td>
-                <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.netQty }}</td>
-                <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.buyPrice }}</td>
-                <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.buyValue }}</td>
-                <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ parseFloat(item.symbol[0].ltp).toFixed(2)  }}</td>
-                <td class="pr-3 py-4 text-sm relative text-right" :class="{'green-color' : Number(item.pnl) > 0, 'red-color' : Number(item.pnl) < 0, 'primary-color' : Number(item.pnl) == 0}">{{ netPnlCalc(item)?.toFixed(2) }}</td>
-                <td class="px-3 py-4 text-sm relative text-right" :class="{'green-color' : Number(item.pnl_change) > 0, 'red-color' : Number(item.pnl_change) < 0, 'primary-color' : Number(item.pnlChg) == 0}">{{ netChgCalc(item) }}%</td>
+                <td class="pl-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative">{{ item.tradingSymbol }}</td>
+                <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.qty }}</td>
+                <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.buy_avg }}</td>
+                <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.buy_value }}</td>
+                <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.present_value  }}</td>
+                <!-- <td class="pr-3 py-4 text-sm relative text-right" :class="{'green-color' : Number(item.pnl) > 0, 'red-color' : Number(item.pnl) < 0, 'primary-color' : Number(item.pnl) == 0}">{{ netPnlCalc(item)?.toFixed(2) }}</td> -->
+                <td class="pr-3 py-4 text-sm relative text-right">{{ item.pnl }}</td>
+                <td class="pr-3 py-4 text-sm relative text-right">{{ item.pnl_change }}</td>
+               <!-- <td class="px-3 py-4 text-sm relative text-right" :class="{'green-color' : Number(item.pnl_change) > 0, 'red-color' : Number(item.pnl_change) < 0, 'primary-color' : Number(item.pnlChg) == 0}">{{ netChgCalc(item) }}%</td> -->
             </tr>
         </tbody>
         </table>
@@ -32,6 +34,7 @@ export default {
     components: { holdings_widget } ,
     data() {
         return {
+            
             tableHeads: [
                 { name: 'Instrument', class: 'text-left'},
                 { name: 'Qty.', class: 'text-right'},
@@ -45,6 +48,7 @@ export default {
     },
     computed: {
         ...mapGetters('holdings', ['getHoldingsData'])
+
     },
     methods: {
         

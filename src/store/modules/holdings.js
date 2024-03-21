@@ -1,4 +1,4 @@
-import service from "../httpService";
+import service from "../modules/services/profile.ts";
 import commonjs from "../../mixins/common"
 const state = {
     holdingsData: [],
@@ -11,56 +11,59 @@ const state = {
 }
 
 const actions = {
-    getHoldingsFromApi({commit}) {
+    getHoldingsFromApi({ commit }) {
+        commit('setHoldingsData', [])
+
         try {
-            service.getHoldings().then(resp => {
-                if(resp?.data?.result[0]?.holdings) {
-                    commit('setHoldingsData', resp?.data?.result[0]?.holdings)
+            service.getHoldingsFromApi().then(resp => {
+                console.log(resp.data.message.data)
+
+                if (resp.data.message.data.length > 0 && resp.data.message.data) {
+                    commit('setHoldingsData', resp.data.message.data)
                 } else {
-                    commit('setHoldingsData', [])
                 }
             })
         } catch (error) {
-            
+
         }
     }
 };
 
 const mutations = {
     setHoldingsData(state, payload) {
-        let totalPreviousDayClose = 0
-        state.totalInvestment = 0
-        payload?.forEach((data) => {
-            let sellableQty = parseFloat(data["sellableQty"])
-            let pdc = data.symbol[0]['pdc']
-            let ltp = data.symbol[0]['ltp']
-            data["netPnl"] = commonjs.methods.netPnlCalc(data);
+        // let totalPreviousDayClose = 0
+        // state.totalInvestment = 0
+        // payload?.forEach((data) => {
+        //     let sellableQty = parseFloat(data["sellableQty"])
+        //     let pdc = data.symbol[0]['pdc']
+        //     let ltp = data.symbol[0]['ltp']
+        //     data["netPnl"] = commonjs.methods.netPnlCalc(data);
 
-            // calculate buy value
-            data["buyValue"] = parseFloat(Number(data["buyPrice"]) * Number(data['netQty'])).toFixed(2)
+        //     // calculate buy value
+        //     data["buyValue"] = parseFloat(Number(data["buyPrice"]) * Number(data['netQty'])).toFixed(2)
 
-            // total investment Calculation
-            state.totalInvestment += Number(data["buyValue"])
+        //     // total investment Calculation
+        //     state.totalInvestment += Number(data["buyValue"])
 
-            // total currentValue Calculation
-            state.totalcurrentValue += parseFloat(ltp) * sellableQty;
+        //     // total currentValue Calculation
+        //     state.totalcurrentValue += parseFloat(ltp) * sellableQty;
 
-            // total p&l calculation
-            state.totalPnl = state.totalPnl + parseFloat(data["netPnl"])
+        //     // total p&l calculation
+        //     state.totalPnl = state.totalPnl + parseFloat(data["netPnl"])
 
-            // total p&l change calculation
-            state.totalPnlChange = state.totalInvestment == 0 ? 0 : ((state.totalcurrentValue - state.totalInvestment) / state.totalInvestment) * 100
-            state.totalPnlChange = state.totalPnlChange == 'Infinity' ? 'NA' : state.totalPnlChange
+        //     // total p&l change calculation
+        //     state.totalPnlChange = state.totalInvestment == 0 ? 0 : ((state.totalcurrentValue - state.totalInvestment) / state.totalInvestment) * 100
+        //     state.totalPnlChange = state.totalPnlChange == 'Infinity' ? 'NA' : state.totalPnlChange
 
-            // find sum of Day's P&L
-            if (pdc) {
-                state.daysPnl += (parseFloat(ltp) - parseFloat(pdc)) * sellableQty;
-                totalPreviousDayClose = totalPreviousDayClose + (parseFloat(pdc) * sellableQty);
-                state.totalPdc += parseFloat(pdc) * Number(data['netQty'])
-                // find Day's P&L Change
-                state.daysPnlChange = totalPreviousDayClose == 0 ? 0 : ((state.totalcurrentValue - totalPreviousDayClose) / totalPreviousDayClose) * 100
-            }
-        });
+        //     // find sum of Day's P&L
+        //     if (pdc) {
+        //         state.daysPnl += (parseFloat(ltp) - parseFloat(pdc)) * sellableQty;
+        //         totalPreviousDayClose = totalPreviousDayClose + (parseFloat(pdc) * sellableQty);
+        //         state.totalPdc += parseFloat(pdc) * Number(data['netQty'])
+        //         // find Day's P&L Change
+        //         state.daysPnlChange = totalPreviousDayClose == 0 ? 0 : ((state.totalcurrentValue - totalPreviousDayClose) / totalPreviousDayClose) * 100
+        //     }
+        // });
 
         state.holdingsData = payload
     }
@@ -73,7 +76,7 @@ const getters = {
     getTotalPnlChange: state => state.totalPnlChange,
     getDaysPnlChange: state => state.daysPnlChange,
     getTotalPnl: state => state.totalPnl,
-    getDaysPnl:state => state.daysPnl
+    getDaysPnl: state => state.daysPnl
 };
 
 const holdings = {
