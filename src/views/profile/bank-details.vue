@@ -71,6 +71,7 @@ const state = reactive({
     isShowBankMandates: false,
     hdfcImg,
 })
+const isAddBank = computed(() => store.state.bankDetails.isAddBank)
 
 const getbankdetails = computed(() => store.getters['profile/getbankdetails']);
 
@@ -78,7 +79,6 @@ const getLoader = computed(() => store.getters['profile/getLoader']);
 
 const addBank = () => {
 
-    state.isAddBank = true;
     store.commit('bankDetails/setIsAddBank', true)
 }
 
