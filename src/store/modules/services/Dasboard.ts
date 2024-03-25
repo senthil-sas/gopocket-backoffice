@@ -9,5 +9,4 @@ export default {
         }
         return axios.get(`${baseUrlTemp}method/cs_bo.custom_api.positions.get_positions?${new URLSearchParams(payload)}`, requestOptions);
     },
-
 }

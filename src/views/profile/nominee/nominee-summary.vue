@@ -57,7 +57,8 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('nominee',['getNomineeList'])
+        ...mapGetters('nominee',['getNomineeList']),
+        ...mapGetters('auth', ['getUserId'])
     },
     methods: {
         addMoreNominee() {
@@ -72,7 +73,13 @@ export default {
         }
     },
     created() {
-        this.$store.dispatch('nominee/getNomineeDetails')
-    },
+        // nominee list retail with local store
+        let nomineeList = JSON.parse(sessionStorage.getItem('nomineeList'))
+        if(nomineeList && nomineeList?.length > 0) {
+            this.$store.commit('nominee/setNomineeDetails', nomineeList)
+        }
+        let userId = this.getUserId
+        this.$store.dispatch('nominee/getNomineeDetails',userId)
+    }
 }
 </script>
