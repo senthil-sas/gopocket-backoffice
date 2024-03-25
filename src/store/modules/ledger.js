@@ -1,27 +1,27 @@
 import service from "../httpService";
-import { apigettradebook } from "../services/tradebookApi";
+import { apiledgerservice } from "../services/ledgerApi";
 
-const apiservice = apigettradebook()
+const apiservice = apiledgerservice();
+
 const state = {
-    tradeBookData: [],
+    ledgerData: [],
     dataPoints: {}
 }
 
 const actions = {
-    async getTradeBookFromApi({ commit }, payload) {
+    async getledgerApi({ commit }, payload) { 
         // console.log(payload,"vvv");
         try {
+            apiservice.getLedgerData(payload).then(resp => {
+             
+                console.log(resp.data.message.customer_ledger, "resp");
 
-            apiservice.getTradebookData(payload).then(resp => {
+                if (resp?.data?.message?.customer_ledger) {
 
-                console.log(resp.data.message.tradebook_summary, "resp");
+                    commit('setledgerData', resp.data.message.customer_ledger);
 
-                if (resp?.data?.message?.tradebook_summary) {
-
-                    commit('setTradeBookData', resp?.data?.message?.tradebook_summary)
-                    commit('setDataPoints', resp?.data?.message?.tradebook_summary) 
-                  
                 } else {
+                 
                     commit('setTradeBookData', [])
                    
                 }
@@ -33,11 +33,15 @@ const actions = {
 };
 
 const mutations = {
-    setTradeBookData(state, payload) {
-        state.tradeBookData = payload
-    },
-    
+
+    setledgerData(state, payload) {
+
+        state.ledgerData = payload; 
+        // console.log("vvv",state.ledgerData);
+    },  
+
     setDataPoints(state, payload) {
+
         console.log("payload",payload)
         let dataPoints = {}
         let dates = []
@@ -55,10 +59,10 @@ const mutations = {
 };
 
 const getters = {
-    getTradeBookData: state => state.tradeBookData,
+    getLedgerData: state => state.ledgerData,
 };
 
-const tradebook = {
+const ledger = {
     namespaced: true,
     state: state,
     mutations: mutations,
@@ -66,8 +70,7 @@ const tradebook = {
     getters: getters,
 }
 
-export default tradebook
-
+export default ledger
 
 function getTimeStamp(date) {
     const myDate = new Date(date);

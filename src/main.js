@@ -8,8 +8,20 @@ import "./assets/tailwind/tailwind.css";
 import Chart from "vue-frappe-chart"
 
 const app = createApp(App)
-
 app.use(router)
 app.use(store)
 app.use(Chart)
 app.mount('#viteapp')
+
+
+
+
+import { setupCalendar, Calendar, DatePicker } from 'v-calendar';
+import 'v-calendar/style.css';
+
+// Use plugin defaults (optional)
+app.use(setupCalendar, {})
+
+// Use the components
+app.component('VCalendar', Calendar)
+app.component('VDatePicker', DatePicker)
