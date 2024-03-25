@@ -1,6 +1,6 @@
 <template>
     <div class="p-5">
-        <div class="py-8 min-h-[426px]">
+        <div class="py-8 min-h-[426px]" v-if="getNomineeStage != 'nomineeSummary' && getNomineeStage != 'nomineeList'">
             <div class="flex justify-center items-center">
                 <img :src="nomineesvg" alt="nominee" class="max-w-[15%] h-auto" />
             </div>
@@ -37,7 +37,9 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('nominee', ['getNomineeStage'])
+        ...mapGetters('nominee', ['getNomineeStage']),
+        ...mapGetters('auth', ['getUserId'])
+
     },
     methods: {
         addNominee() {
@@ -53,7 +55,8 @@ export default {
         if(nomineeList && nomineeList?.length > 0) {
             this.$store.commit('nominee/setNomineeDetails', nomineeList)
         }
-        this.$store.dispatch('nominee/getNomineeDetails')
+        let userId = this.getUserId
+        this.$store.dispatch('nominee/getNomineeDetails',userId)
     }
 }
 </script>

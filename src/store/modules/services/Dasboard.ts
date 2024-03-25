@@ -3,11 +3,11 @@ import { authHeader, baseUrlTemp } from '../services/env';
 
 
 export default {
-    async getPositionsFromApi() {
+    async getPositionsFromApi(payload:any) {
         const requestOptions = {
             headers: authHeader(),
-        };
-        return axios.get(`${baseUrlTemp}method/cs_bo.custom_api.positions.get_positions?ucc_code=SKY40962`, requestOptions);
+        }
+        return axios.get(`${baseUrlTemp}method/cs_bo.custom_api.positions.get_positions?${new URLSearchParams(payload)}`, requestOptions);
     },
 
 }

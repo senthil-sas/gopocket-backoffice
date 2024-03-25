@@ -6,9 +6,9 @@ const state = {
 }
 
 const actions = {
-    async getNomineeDetails({ commit }) {
+    async getNomineeDetails({ commit }, userId) {
         try {
-            service.getNomineeDetails().then(resp => {
+            service.getNomineeDetails(userId).then(resp => {
                 if (resp.data?.message?.data?.fsl_nominee_details) {
                     commit('setNomineeList', resp.data.message.data?.fsl_nominee_details)
                     if (resp.data.message.data?.fsl_nominee_details.length) {

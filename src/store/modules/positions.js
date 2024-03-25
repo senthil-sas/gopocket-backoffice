@@ -4,12 +4,11 @@ const state = {
 }
 
 const actions = {
-    getPositionsFromApi({ commit }) {
+    getPositionsFromApi({ commit }, payload) {
         commit('setPositionData', [])
-
         try {
-            service.getPositionsFromApi().then(resp => {
-                if (resp.data.message.data.positions) {
+            service.getPositionsFromApi(payload).then(resp => {
+                if (resp.data.message.data.positions != 'Positions Not Exists') {
                     commit('setPositionData', resp.data.message.data.positions)
                 } else {
                 }

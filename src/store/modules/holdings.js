@@ -1,5 +1,4 @@
 import service from "../modules/services/profile.ts";
-import commonjs from "../../mixins/common"
 const state = {
     holdingsData: [],
     totalInvestment: 0,
@@ -11,11 +10,11 @@ const state = {
 }
 
 const actions = {
-    getHoldingsFromApi({ commit }) {
+    getHoldingsFromApi({ commit }, userId) {
         commit('setHoldingsData', [])
 
         try {
-            service.getHoldingsFromApi().then(resp => {
+            service.getHoldingsFromApi(userId).then(resp => {
 
                 if (resp.data.message.data.length > 0 && resp.data.message.data) {
                     commit('setHoldingsData', resp.data.message.data)

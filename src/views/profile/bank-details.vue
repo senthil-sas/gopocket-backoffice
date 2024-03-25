@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, computed } from 'vue'
+import { ref, computed } from 'vue'
 import add_bank from './add-bank.vue'
 import icon from '../../components/utilComponents/icons.vue'
 // import bank_mandates from './bank-mandates.vue'
@@ -66,25 +66,16 @@ import { useStore } from 'vuex'
 
 const store = useStore()
 
-const state = reactive({
-    isAddBank: false,
-    isShowBankMandates: false,
-    hdfcImg,
-})
-const isAddBank = computed(() => store.state.bankDetails.isAddBank)
+const isAddBank = ref(false)
 
 const getbankdetails = computed(() => store.getters['profile/getbankdetails']);
 
 const getLoader = computed(() => store.getters['profile/getLoader']);
 
 const addBank = () => {
-
     store.commit('bankDetails/setIsAddBank', true)
 }
 
-const viewBankMandates = () => {
-    state.isShowBankMandates = !state.isShowBankMandates
-}
 </script>
 
 

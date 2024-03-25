@@ -1,6 +1,6 @@
 <template>
     <div class="h-[calc(100vh-96px)] overflow-y-auto">
-     <holdings_widget />
+     <!-- <holdings_widget /> -->
         <table id="holdings_table" class="w-full rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px]">
         <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
             <tr>
@@ -47,14 +47,17 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('holdings', ['getHoldingsData'])
+        ...mapGetters('holdings', ['getHoldingsData']),
+        ...mapGetters('auth', ['getUserId'])
+
 
     },
     methods: {
         
     },
     async created() {
-        this.$store.dispatch('holdings/getHoldingsFromApi')
+        let userId = this.getUserId
+        this.$store.dispatch('holdings/getHoldingsFromApi',userId)
     },
 }
 </script>

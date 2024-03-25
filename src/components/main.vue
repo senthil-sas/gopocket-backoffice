@@ -19,22 +19,20 @@ import { mapGetters } from 'vuex'
 import headerComp from './header.vue'
 import sidebar from './sidebar.vue'
 import box from './utilComponents/box.vue'
-
-// 
 import reset_supportcode_dialog from './popup-dialogs/reset-supportcode-dialog.vue'
 import otp_verification_dialog from './popup-dialogs/otp-verification-dialog.vue'
 import email_or_mobile_otp_dialog from './popup-dialogs/email-or-mobile-update-dialog.vue'
 export default {
     components:{ headerComp, sidebar, box, reset_supportcode_dialog, otp_verification_dialog, email_or_mobile_otp_dialog },
     computed: {
-        ...mapGetters('popup', ['getIsResetSupportCode', 'getIsEmailVerify','getIsOtpVerify','getIsEmailOrMobileUpdate'])
+        ...mapGetters('popup', ['getIsResetSupportCode', 'getIsEmailVerify','getIsOtpVerify','getIsEmailOrMobileUpdate']),
+        ...mapGetters('auth', ['getUserId'])
     },
 
-    
     created() {
-
-this.$store.dispatch('profile/getProfileDataFromApi')
-},
+        let userId = this.getUserId
+        this.$store.dispatch('profile/getProfileDataFromApi', userId)
+    },
 }
 
 

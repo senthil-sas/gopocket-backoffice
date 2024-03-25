@@ -8,13 +8,14 @@ const state = {
 };
 
 const actions = {
-    async getProfileDataFromApi({ commit }) {
+    async getProfileDataFromApi({ commit }, userId) {
         commit('setProfileData', []);
         commit('setbankdetails', []);
         commit("setSegments", []);
         try {
             commit('setLoader', true);
-            const resp = await service.getProfileDataFromApi();
+            const resp = await service.getProfileDataFromApi(userId);
+            // console.log(resp.data.data.fsl_bank_table)
 
             if (resp.data?.data) {
                 commit('setProfileData', resp.data.data);
