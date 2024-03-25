@@ -186,7 +186,7 @@
                 :key="id"
                 scope="col"
                 :class="head.class"
-                class="py-3.5 px-2 text-xs font-semibold z-10 whitespace-nowrap sticky top-0 bg-[#cbcbc4]"
+                class="py-3.5 px-2 text-xs font-semibold z-10 whitespace-nowrap sticky top-0 bg-[#fbfbf9]"
               >
                 {{ head.name }}
               </th>
@@ -405,7 +405,7 @@ const setDate = () => {
 };
 
 onMounted(() => {
-  store.dispatch("reports/getTradeBookFromApi");
+  // store.dispatch("reports/getTradeBookFromApi");
   setDate();
 });
 </script>

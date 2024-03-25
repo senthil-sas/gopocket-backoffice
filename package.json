@@ -1,10 +1,10 @@
 {
-  "name": "nidhi-backoffice",
-  "version": "0.0.0",
+  "name": "cosmos",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vue-tsc & vite build --base=./",
     "preview": "vite preview"
   },
   "dependencies": {

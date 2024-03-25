@@ -1,4 +1,4 @@
-import service from "../httpService"
+import service from "../modules/services/profile.ts";
 const state = {
     nomineeStage: 'nomineeSummary',
     nomineeList: [],
@@ -6,35 +6,36 @@ const state = {
 }
 
 const actions = {
-    async getNomineeDetails({state, commit}, payload) {
-       try {
-         service.getNomineeDetails().then(resp => {
-            if(resp.data?.message?.data?.fsl_nominee_details) {
-                commit('setNomineeList',resp.data.message.data?.fsl_nominee_details)
-                if(resp.data.message.data?.fsl_nominee_details.length) {
+    async getNomineeDetails({ commit }) {
+        try {
+            service.getNomineeDetails().then(resp => {
+                console.log(resp.data?.message?.data?.fsl_nominee_details)
+                if (resp.data?.message?.data?.fsl_nominee_details) {
+                    commit('setNomineeList', resp.data.message.data?.fsl_nominee_details)
+                    if (resp.data.message.data?.fsl_nominee_details.length) {
+                        commit('setNomineeStage', 'nomineeSummary')
+                    } else {
+                        commit('setNomineeStage', 'initialList')
+                    }
+                } else {
+                    commit('setNomineeList', [])
+                }
+            })
+        } catch (error) {
+
+        }
+    },
+    async addNomineeDetails({ commit }, payload) {
+        try {
+            service.addNomineeDetails(payload).then(resp => {
+                if (resp.status == 200) {
                     commit('setNomineeStage', 'nomineeSummary')
                 } else {
-                    commit('setNomineeStage', 'initialList')
+                    //  commit('setNomineeList', [])
                 }
-            } else {
-                commit('setNomineeList', [])
-            }
-         })
-       } catch (error) {
-        
-       }
-    },
-    async addNomineeDetails({ state, commit }, payload) {
-        try {
-          service.addNomineeDetails(payload).then(resp => {
-            if(resp.status == 200) {
-                commit('setNomineeStage', 'nomineeSummary')
-            } else {
-               //  commit('setNomineeList', [])
-            }
-          })
+            })
         } catch (error) {
-         
+
         }
     }
 };
@@ -62,17 +63,17 @@ const mutations = {
         state.nomineeList = payload
     },
 
-    setNomineeDetails(state, payload) { 
+    setNomineeDetails(state, payload) {
         state.nomineeList = payload
         sessionStorage.setItem('nomineeList', JSON.stringify(state.nomineeList))
-        if(state.nomineeList.length > 0) {
+        if (state.nomineeList.length > 0) {
             this.commit('nominee/setNomineeStage', 'nomineeSummary')
         }
     },
 
     deleteNominee(state, id) {
         state.nomineeList.splice(id, 1);
-        if(state.nomineeList?.length == 0) {
+        if (state.nomineeList?.length == 0) {
             this.commit('nominee/setNomineeStage', 'initialList')
         }
         this.commit('nominee/setNomineeDetails', state.nomineeList)

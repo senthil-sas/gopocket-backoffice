@@ -266,10 +266,13 @@
 </template>
 
 <script>
-import clientLogo from "../assets/images/client-logo.svg";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import { mapGetters } from "vuex";
+import clientLogo from '../assets/images/client-logo.svg'
+import { Menu, MenuButton, MenuItem, MenuItems,DialogPanel,Dialog } from '@headlessui/vue'
+import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
+
+import { mapGetters } from 'vuex';
 export default {
+  
   data() {
     return {
       clientLogo,
@@ -301,9 +304,10 @@ export default {
           route: "/profile",
         },
       ],
+      mobileMenuOpen: false
     };
   },
-  components: { Menu, MenuButton, MenuItems, MenuItem,Bars3Icon ,XMarkIcon,},
+  components: { Menu, MenuButton, MenuItems, MenuItem,Bars3Icon ,XMarkIcon,DialogPanel,Dialog},
   computed: {
     ...mapGetters("auth", ["getUserId"]),
     ...mapGetters("profile", ["getProfileData"]),

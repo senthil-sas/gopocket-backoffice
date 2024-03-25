@@ -1,11 +1,11 @@
 <template>
     <tabs :isBgBlue="true" page="reports" @activeTab="changeTab" />
     <div class="p-5 w-full" v-if="currentTab == 0">
-        <tradebook />
+        <!-- <tradebook /> -->
     </div>
     
     <tax_pnl v-if="currentTab == 1" />
-    <ledger v-if="currentTab == 2" />
+    <!-- <ledger v-if="currentTab == 2" /> -->
     
 </template>
 

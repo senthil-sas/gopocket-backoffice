@@ -54,10 +54,8 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('segment', ['getSegments'])
+        ...mapGetters('profile', ['getSegments']),
     },
-    created() {
-        this.$store.dispatch('segment/getSegmentsFromApi')
-    },
+
 }
 </script>

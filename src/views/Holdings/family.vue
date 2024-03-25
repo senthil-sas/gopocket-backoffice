@@ -98,7 +98,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("subAcc/getFamilyAccountFromApi");
+    // this.$store.dispatch("subAcc/getFamilyAccountFromApi");
   },
 };
 </script>

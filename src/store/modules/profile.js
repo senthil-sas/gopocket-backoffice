@@ -3,21 +3,25 @@ import service from "../modules/services/profile.ts";
 const state = {
     profileData: [],
     bankdetails: [],
+    segements: [],
     loader: false,
 };
 
 const actions = {
-    async getProfileDataFromApi({ commit }) {
+    async getProfileDataFromApi({ commit }, userId) {
         commit('setProfileData', []);
         commit('setbankdetails', []);
+        commit("setSegments", []);
         try {
             commit('setLoader', true);
-            const resp = await service.getProfileDataFromApi();
-            console.log(resp.data.data.fsl_bank_table)
+            const resp = await service.getProfileDataFromApi(userId);
+            // console.log(resp.data.data.fsl_bank_table)
 
             if (resp.data?.data) {
                 commit('setProfileData', resp.data.data);
                 commit('setbankdetails', resp.data.data.fsl_bank_table);
+                commit('setSegments', resp.data.data);
+
 
             } else {
             }
@@ -39,13 +43,17 @@ const mutations = {
     },
     setLoader(state, payload) {
         state.loader = payload;
+    },
+    setSegments(state, payload) {
+        state.segments = payload;
     }
 };
 
 const getters = {
     getProfileData: state => state.profileData,
     getbankdetails: state => state.bankdetails,
-    getLoader: state => state.loader
+    getLoader: state => state.loader,
+    getSegments: state => state.segments
 };
 
 const profile = {

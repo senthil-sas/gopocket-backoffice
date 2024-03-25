@@ -2,6 +2,8 @@
   <div>
       <div v-if="isBox">
         <box class="w-full p-3" >
+          <p class="loginHeader font-bold py-2 header">Personal Details</p>
+  
           <div class="flex mt-4">
             <icon name="profile" height="18" width="18" class="mr-4"/>
             <p class="primaryColor text-[14px]">
@@ -14,9 +16,16 @@
             <div class="flex">
               <icon name="date" height="18" width="18" class="mr-4"/>
               <p class="primaryColor text-[14px]">
-                {{ formatDate(getProfileData.fsl_dob) }} 
+                 {{ formatDate(getProfileData.fsl_dob) }} 
               </p>
             </div>
+             <div class="flex pl-5">
+            <icon name="male" height="20" width="20" v-if="getProfileData.gender == 'MALE' || getProfileData.gender == 'Male'"/>
+            <icon name="female" height="20" width="20" v-if="getProfileData.gender == 'FEMALE' || getProfileData.gender == 'Female'"/>
+            <p class="primaryColor text-[14px] ml-2">
+              {{ getProfileData.gender || "NA" }}
+            </p>
+          </div> 
           </div>
           <hr class="mt-4" />
           <div class="flex mt-4 gap-4 items-center">
@@ -83,6 +92,13 @@
                  {{ formatDate(getProfileData.fsl_dob) }}
               </p>
             </div>
+            <div class="flex pl-5">
+            <icon name="male" height="20" width="20" v-if="getProfileData.gender == 'MALE' || getProfileData.gender == 'Male'"/>
+            <icon name="female" height="20" width="20" v-if="getProfileData.gender == 'FEMALE' || getProfileData.gender == 'Female'"/>
+            <p class="primaryColor text-[14px] ml-2">
+              {{ getProfileData.gender || "NA" }}
+            </p>
+          </div>
           </div>
           <hr class="mt-4" />
           <div class="flex mt-4 gap-4 items-center">
@@ -139,7 +155,8 @@
   
   <script setup lang="ts">
   import { ref } from 'vue';
-  import { reactive, computed } from 'vue'
+  import { reactive, computed } from 'vue';
+  // import commonIcon from '@/components/commonIcon.vue';
   
   import box from './utilComponents/box.vue';
   import icon from './utilComponents/icons.vue';
@@ -161,7 +178,7 @@
   const hideSupportCode = () => {
       supportText.value = '....';
   };
-  const updateEmailOrMobile = async (type) => {
+  const updateEmailOrMobile = async (type: string) => {
       $router.push('/profile').catch(() => {});
       $store.commit('tabs/setProfileCurrentTab', JSON.stringify(5));
       $store.dispatch('tabs/setActiveTab', { path: $route.path, id: 5 });
@@ -171,11 +188,16 @@
   const resetSupportCode = async () => {
       $store.commit('popup/setIsResetSupportCode', true);
   };
-  const formatDate = (dateString) => {
+  const formatDate = (dateString: string) => {
       const date = new Date(dateString);
-      const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-      return formattedDate;
-  };
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear().toString();
+      return `${day}-${month}-${year}`;
+  }
+  
+  
+  ;
   
   const props = defineProps({
     isBox: { type: Boolean, default: true }

@@ -1,20 +1,20 @@
-import service from "../httpService";
+import service from "../modules/services/Dasboard";
 const state = {
     positionData: []
 }
 
 const actions = {
-    getPositionsFromApi({commit}) {
+    getPositionsFromApi({ commit }, payload) {
+        commit('setPositionData', [])
         try {
-            service.getPositions().then(resp => {
-                if(resp?.data?.result) {
-                    commit('setPositionData', resp?.data?.result)
+            service.getPositionsFromApi(payload).then(resp => {
+                if (resp.data.message.data.positions != 'Positions Not Exists') {
+                    commit('setPositionData', resp.data.message.data.positions)
                 } else {
-                    commit('setPositionData', [])
                 }
             })
         } catch (error) {
-            
+
         }
     }
 };

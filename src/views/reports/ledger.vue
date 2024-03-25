@@ -126,7 +126,7 @@
               :key="id"
               scope="col"
               :class="head.class"
-              class="px-2 text-xs font-semibold z-10 whitespace-nowrap sticky top-0 bg-[#cbcbc4]"
+              class="px-2 text-xs font-semibold z-10 whitespace-nowrap sticky top-0 bg-[#fbfbf9]"
             >
               {{ head.name }}
             </th>
