@@ -29,5 +29,13 @@ export default {
     computed: {
         ...mapGetters('popup', ['getIsResetSupportCode', 'getIsEmailVerify','getIsOtpVerify','getIsEmailOrMobileUpdate'])
     },
+
+    
+    created() {
+
+this.$store.dispatch('profile/getProfileDataFromApi')
+},
 }
+
+
 </script>
