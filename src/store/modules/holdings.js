@@ -16,7 +16,6 @@ const actions = {
 
         try {
             service.getHoldingsFromApi().then(resp => {
-                console.log(resp.data.message.data)
 
                 if (resp.data.message.data.length > 0 && resp.data.message.data) {
                     commit('setHoldingsData', resp.data.message.data)

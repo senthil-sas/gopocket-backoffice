@@ -15,7 +15,6 @@ const actions = {
         try {
             commit('setLoader', true);
             const resp = await service.getProfileDataFromApi();
-            // console.log(resp.data.data.fsl_bank_table)
 
             if (resp.data?.data) {
                 commit('setProfileData', resp.data.data);

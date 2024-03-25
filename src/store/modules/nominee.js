@@ -9,7 +9,6 @@ const actions = {
     async getNomineeDetails({ commit }) {
         try {
             service.getNomineeDetails().then(resp => {
-                console.log(resp.data?.message?.data?.fsl_nominee_details)
                 if (resp.data?.message?.data?.fsl_nominee_details) {
                     commit('setNomineeList', resp.data.message.data?.fsl_nominee_details)
                     if (resp.data.message.data?.fsl_nominee_details.length) {

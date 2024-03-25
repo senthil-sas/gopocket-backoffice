@@ -9,7 +9,6 @@ const actions = {
 
         try {
             service.getPositionsFromApi().then(resp => {
-                console.log(resp.data.message.data.positions)
                 if (resp.data.message.data.positions) {
                     commit('setPositionData', resp.data.message.data.positions)
                 } else {

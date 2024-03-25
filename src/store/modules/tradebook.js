@@ -1,16 +1,14 @@
 import service from "../httpService";
 const state = {
-    tradeBookData : [],
+    tradeBookData: [],
     dataPoints: {}
 }
 
 const actions = {
     async getTradeBookFromApi({ commit }) {
         try {
-            service.getTradeBook().then(resp => {   
-                debugger
-                console.log(resp);
-                if(resp?.data?.data) {
+            service.getTradeBook().then(resp => {
+                if (resp?.data?.data) {
                     commit('setTradeBookData', resp?.data?.data)
                     commit('setDataPoints', resp?.data?.data)
                 } else {
@@ -19,7 +17,7 @@ const actions = {
                 }
             })
         } catch (error) {
-            
+
         }
     }
 };
