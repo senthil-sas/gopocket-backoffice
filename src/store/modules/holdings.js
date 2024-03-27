@@ -10,21 +10,42 @@ const state = {
 }
 
 const actions = {
+    // getHoldingsFromApi({ commit }, userId) {
+    //     commit('setHoldingsData', [])
+
+    //     try {
+    //         service.getHoldingsFromApi(userId).then(resp => {
+
+    //             if (resp.data.message.data.length > 0 && resp.data.message.data) {
+    //                 commit('setHoldingsData', resp.data.message.data)
+    //             } else {
+    //             }
+    //         })
+    //     } catch (error) {
+
+    //     }
+    // }
+
     getHoldingsFromApi({ commit }, userId) {
-        commit('setHoldingsData', [])
+        commit('setHoldingsData', []);
+        commit('setLoader', true, { root: true });
 
-        try {
-            service.getHoldingsFromApi(userId).then(resp => {
 
+        service.getHoldingsFromApi(userId)
+            .then(resp => {
                 if (resp.data.message.data.length > 0 && resp.data.message.data) {
-                    commit('setHoldingsData', resp.data.message.data)
+                    commit('setHoldingsData', resp.data.message.data);
                 } else {
                 }
-            })
-        } catch (error) {
-
-        }
+            },
+                (err) => {
+                    errorHandle.handleError(err)
+                })
+            .finally(() => {
+                commit('setLoader', false, { root: true });
+            });
     }
+
 };
 
 const mutations = {

@@ -1,29 +1,58 @@
 import service from "../modules/services/profile.ts";
+import errorHandle from '../../handleError/errorHandling'
+
 const state = {
     nomineeStage: 'nomineeSummary',
     nomineeList: [],
-    isMinor: false
+    isMinor: false,
+
 }
 
 const actions = {
+    // async getNomineeDetails({ commit }, userId) {
+    //     try {
+    //         service.getNomineeDetails(userId).then(resp => {
+    //             if (resp.data?.message?.data?.fsl_nominee_details) {
+    //                 commit('setNomineeList', resp.data.message.data?.fsl_nominee_details)
+    //                 if (resp.data.message.data?.fsl_nominee_details.length) {
+    //                     commit('setNomineeStage', 'nomineeSummary')
+    //                 } else {
+    //                     commit('setNomineeStage', 'initialList')
+    //                 }
+    //             } else {
+    //                 commit('setNomineeList', [])
+    //             }
+    //         })
+    //     } catch (error) {
+
+    //     }
+    // },
+
     async getNomineeDetails({ commit }, userId) {
-        try {
-            service.getNomineeDetails(userId).then(resp => {
+        commit('setNomineeList', []);
+        commit('setLoader', true, { root: true });
+
+
+        service.getNomineeDetails(userId)
+            .then(resp => {
                 if (resp.data?.message?.data?.fsl_nominee_details) {
-                    commit('setNomineeList', resp.data.message.data?.fsl_nominee_details)
+                    commit('setNomineeList', resp.data.message.data?.fsl_nominee_details);
                     if (resp.data.message.data?.fsl_nominee_details.length) {
-                        commit('setNomineeStage', 'nomineeSummary')
+                        commit('setNomineeStage', 'nomineeSummary');
                     } else {
-                        commit('setNomineeStage', 'initialList')
+                        commit('setNomineeStage', 'initialList');
                     }
                 } else {
-                    commit('setNomineeList', [])
                 }
-            })
-        } catch (error) {
-
-        }
+            },
+                (err) => {
+                    errorHandle.handleError(err)
+                })
+            .finally(() => {
+                commit('setLoader', false, { root: true });
+            });
     },
+
     async addNomineeDetails({ commit }, payload) {
         try {
             service.addNomineeDetails(payload).then(resp => {
@@ -80,13 +109,18 @@ const mutations = {
 
     setIsMinor(state, payload) {
         state.isMinor = payload
-    }
+    },
+
+    // setLoader(state, payload) {
+    //     state.loader = payload
+    // }
 };
 
 const getters = {
     getNomineeStage: state => state.nomineeStage,
     getNomineeList: state => state.nomineeList,
     getIsMinor: state => state.isMinor
+
 };
 
 const nominee = {

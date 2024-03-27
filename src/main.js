@@ -8,10 +8,16 @@ import "./assets/tailwind/tailwind.css";
 import Chart from "vue-frappe-chart"
 
 const app = createApp(App)
+
+
+import spinner from './components/utilComponents/spinner.vue'
+app.component("spinner", spinner);
+
 app.use(router)
 app.use(store)
 app.use(Chart)
 app.mount('#viteapp')
+
 
 
 

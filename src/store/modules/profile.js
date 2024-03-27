@@ -1,37 +1,64 @@
 import service from "../modules/services/profile.ts";
+import errorHandle from '../../handleError/errorHandling'
+
 
 const state = {
     profileData: [],
     bankdetails: [],
-    segements: [],
+    segments: [],
     loader: false,
 };
 
 const actions = {
-    async getProfileDataFromApi({ commit }, userId) {
+    // async getProfileDataFromApi({ commit }, userId) {
+    //     commit('setProfileData', []);
+    //     commit('setbankdetails', []);
+    //     commit("setSegments", []);
+    //     try {
+    //         commit('setLoader', true);
+    //         const resp = await service.getProfileDataFromApi(userId);
+    //         // console.log(resp.data.data.fsl_bank_table)
+
+    //         if (resp.data?.data) {
+    //             commit('setProfileData', resp.data.data);
+    //             commit('setbankdetails', resp.data.data.fsl_bank_table);
+    //             commit('setSegments', resp.data.data);
+
+
+    //         } else {
+    //         }
+    //     } catch (error) {
+    //         // Handle error
+    //         console.error(error);
+    //     } finally {
+    //         commit('setLoader', false);
+    //     }
+    // }
+
+    getProfileDataFromApi({ commit }, userId) {
         commit('setProfileData', []);
         commit('setbankdetails', []);
         commit("setSegments", []);
-        try {
-            commit('setLoader', true);
-            const resp = await service.getProfileDataFromApi(userId);
-            // console.log(resp.data.data.fsl_bank_table)
+        commit('setLoader', true, { root: true });
 
-            if (resp.data?.data) {
-                commit('setProfileData', resp.data.data);
-                commit('setbankdetails', resp.data.data.fsl_bank_table);
-                commit('setSegments', resp.data.data);
+        service.getProfileDataFromApi(userId)
+            .then(resp => {
+                if (resp.data?.data) {
+                    commit('setProfileData', resp.data.data);
+                    commit('setbankdetails', resp.data.data.fsl_bank_table);
+                    commit('setSegments', resp.data.data);
+                } else {
+                }
+            },
+                (err) => {
+                    errorHandle.handleError(err)
+                })
+            .finally(() => {
+                commit('setLoader', false, { root: true });
+            });
 
-
-            } else {
-            }
-        } catch (error) {
-            // Handle error
-            console.error(error);
-        } finally {
-            commit('setLoader', false);
-        }
     }
+
 };
 
 const mutations = {
@@ -41,9 +68,7 @@ const mutations = {
     setbankdetails(state, payload) {
         state.bankdetails = payload;
     },
-    setLoader(state, payload) {
-        state.loader = payload;
-    },
+
     setSegments(state, payload) {
         state.segments = payload;
     }
@@ -52,7 +77,6 @@ const mutations = {
 const getters = {
     getProfileData: state => state.profileData,
     getbankdetails: state => state.bankdetails,
-    getLoader: state => state.loader,
     getSegments: state => state.segments
 };
 

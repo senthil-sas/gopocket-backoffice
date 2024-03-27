@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="p-5" v-if="!getLoader">
         <table id="positions_table"
             class="w-full rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] "
             v-if="getPositionData?.length > 0">
@@ -49,10 +49,8 @@ export default {
         ...mapGetters('auth', ['getUserId'])
     },
     async created() {
-        let json = {
-            ucc_code: this.getUserId
-        }
-        this.$store.dispatch('positions/getPositionsFromApi', json)
+     
+        this.$store.dispatch('positions/getPositionsFromApi', this.getUserId)
     },
 }
 </script>

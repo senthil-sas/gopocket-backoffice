@@ -5,6 +5,8 @@
 
 export const baseUrlTemp = 'https://erp-uat.gopocket.in/api/';
 
+export const baseUrl = 'https://kyc.skybroking.com/ekyc-skyadmin/';
+
 
 export function authHeader() {
     let headers = {

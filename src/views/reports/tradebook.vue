@@ -3,7 +3,7 @@
     <div class="flex gap-4 items-end">
       <div>
         <div class="primary-color text-xs mb-1">Segment</div>
-        <Listbox as="div" v-model="segment" class="w-[200px]">
+        <Listbox as="div" v-model="segment" class="w-[150px]">
           <div class="relative">
             <ListboxButton
               class="min-h-[28px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6"
@@ -76,12 +76,12 @@
             :masks="{ input: 'DD-MM-YYYY', modelValue: 'YYYY-MM-DD' }"
             type="date"
             mode="date"
-            class="w-[100px]"
+            class="w-[150px]"
             :dateFormat="'YYYY-MM-DD'"
           >
             <template v-slot="{ inputValue, inputEvents }">
               <div
-                class="flex items-center justify-between w-[100px] h-7 border rounded cursor-pointer p-2"
+                class="flex items-center justify-between w-[150px] h-7 border rounded cursor-pointer p-2"
               >
                 <input
                   :value="inputValue"
@@ -108,12 +108,12 @@
             :masks="{ input: 'DD-MM-YYYY', modelValue: 'YYYY-MM-DD' }"
             type="date"
             mode="date"
-            class="w-[100px]"
+            class="w-[150px]"
             :dateFormat="'YYYY-MM-DD'"
           >
             <template v-slot="{ inputValue, inputEvents }">
               <div
-                class="flex items-center justify-between w-[100px] h-7 border rounded cursor-pointer p-2"
+                class="flex items-center justify-between w-[150px] h-7 border rounded cursor-pointer p-2"
               >
                 <input
                   :value="inputValue"

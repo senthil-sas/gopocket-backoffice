@@ -70,7 +70,7 @@ const isAddBank = ref(false)
 
 const getbankdetails = computed(() => store.getters['profile/getbankdetails']);
 
-const getLoader = computed(() => store.getters['profile/getLoader']);
+// const getLoader = computed(() => store.getters['profile/getLoader']);
 
 const addBank = () => {
     store.commit('bankDetails/setIsAddBank', true)

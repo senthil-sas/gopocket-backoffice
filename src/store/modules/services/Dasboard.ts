@@ -1,12 +1,12 @@
 import axios from "axios";
-import { authHeader, baseUrlTemp } from '../services/env';
+import { authHeader, baseUrl } from '../services/env';
 
 
 export default {
-    async getPositionsFromApi(payload:any) {
+    async getPositionsFromApi(userId: any) {
         const requestOptions = {
             headers: authHeader(),
         }
-        return axios.get(`${baseUrlTemp}method/cs_bo.custom_api.positions.get_positions?${new URLSearchParams(payload)}`, requestOptions);
+        return axios.get(`${baseUrl}boupdate/positionsDetails?ucc=${userId}`, requestOptions);
     },
 }

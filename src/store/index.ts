@@ -19,7 +19,7 @@ export default createStore({
     brokerName: "GoPocket",
     ekycLink: 'https://ekyc.gopocket.in/',
     ssoRedirectionUrl: 'http://web.gopocket.in/',
-    myAppCode:'oJGBKnveAXcHOWG',
+    myAppCode: 'oJGBKnveAXcHOWG',
     version: "1.0.0",
     months: [
       { month: "Jan", id: "01" },
@@ -37,21 +37,28 @@ export default createStore({
     ],
     windowWidth: 0,
     windowHeigth: 0,
+    loader: false
+
   },
-  
+
   mutations: {
     setWindowHeightWidth(state, payload) {
       state.windowWidth = payload.w
       state.windowHeigth = payload.h
     },
+    setLoader(state, payload) {
+      state.loader = payload
+    }
   },
 
   actions: {},
 
   getters: {
     getMonths: state => state.months,
-    getWindowWidth: state => state.windowWidth
+    getWindowWidth: state => state.windowWidth,
+    getLoader: state => state.loader
+
   },
 
-  modules: { tabs, bankDetails, nominee, subAcc, giftStocks, auth, profile, segment,ledger,tradebook, holdings, positions, reports, funds, popup },
+  modules: { tabs, bankDetails, nominee, subAcc, giftStocks, auth, profile, segment, ledger, tradebook, holdings, positions, reports, funds, popup },
 });
