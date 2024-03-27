@@ -1,5 +1,5 @@
 <template>
-    <div class="p-5">
+    <div class="p-5" v-if="!getLoader">
         <div class="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-col-3 sm:grid-cols-2 gap-8 h-auto">
             <div class="rounded-lg p-3 border-[0.02rem] dark:border-[#232325]">
                 <label class="my-2 primary-color !font-semibold text-sm" id="accinfo_label_eq">Equities</label>
@@ -54,7 +54,8 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('profile', ['getSegments']),
+        ...mapGetters('profile', ['getSegments', 'getLoader']), 
+
     },
 
 }

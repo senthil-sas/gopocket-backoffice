@@ -1,5 +1,5 @@
 <template>
-    <div class="p-5">
+    <div class="p-5" v-if="!getLoader">
         <div class="py-8 min-h-[426px]" v-if="getNomineeStage != 'nomineeSummary' && getNomineeStage != 'nomineeList'">
             <div class="flex justify-center items-center">
                 <img :src="nomineesvg" alt="nominee" class="max-w-[15%] h-auto" />

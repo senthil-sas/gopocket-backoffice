@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from "../store";
+
 
 
 const router = createRouter({
@@ -11,7 +13,7 @@ const router = createRouter({
     },
     {
       path: '/',
-      redirect:'/dashboard',
+      redirect: '/dashboard',
       name: 'home',
       component: () => import('../components/main.vue'),
       children: [
@@ -26,3 +28,29 @@ const router = createRouter({
 })
 
 export default router
+
+
+
+router.beforeEach((to, from, next) => {
+  const clientId = localStorage.getItem("clientId");
+  const sessionId = localStorage.getItem("sessionId");
+
+  if (clientId !== null) {
+    store.commit("auth/setUserId", clientId);
+  }
+
+  if (sessionId !== null) {
+    store.commit("auth/setSessionId", sessionId);
+  }
+
+  const isValidSession = sessionId !== null && sessionId !== "undefined";
+  const isValidClientId = clientId !== null && clientId !== "undefined";
+
+  if (isValidSession && isValidClientId && from.path === "/" && to.path === "/") {
+    next({ path: "dashboard" });
+  } else if ((!isValidSession || !isValidClientId) && to.path !== "/") {
+    next({ path: "" });
+  } else {
+    next();
+  }
+});
