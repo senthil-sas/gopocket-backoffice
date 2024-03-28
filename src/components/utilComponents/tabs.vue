@@ -10,7 +10,7 @@
         </button>
       </li>
     </ul>
-    <spinner v-if="getLoader"/>
+    <spinner v-if="tabChanging" />
 
   </div>
 </template>
@@ -22,10 +22,20 @@ export default {
     isBgBlue: { type: Boolean, default: false },
     page: { page: String }
   },
+  data() {
+    return {
+      tabChanging: false 
+    };
+  },
   methods: {
     changeActive(id) {
+      this.tabChanging = true; 
+
       this.$store.dispatch('tabs/setActiveTab', { path: this.$route.path, id: id })
       this.$emit('activeTab', id)
+      setTimeout(() => {
+        this.tabChanging = false;
+      }, 1000); 
     },
     getTabs() {
       if (this.$route.path == '/reports') {

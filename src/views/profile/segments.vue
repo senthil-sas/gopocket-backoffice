@@ -54,7 +54,9 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('profile', ['getSegments', 'getLoader']), 
+        ...mapGetters('profile', ['getSegments']), 
+        ...mapGetters(['getLoader'])
+
 
     },
 

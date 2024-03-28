@@ -1,5 +1,5 @@
 const state = {
-    reportTabs : [
+    reportTabs: [
         { name: 'Tradebook', id: 0, active: true, count: '0' },
         { name: 'P&L', id: 1, active: false, count: '0' },
         // { name: 'Tax P&L', id: 2, active: false, count: '0' },
@@ -36,21 +36,21 @@ const state = {
 const actions = {
     async setActiveTab({ state, commit, rootGetters }, payload) {
         let data = []
-        if(payload.path == '/reports') {
+        if (payload.path == '/reports') {
             data = state.reportTabs
-        } else if(payload.path == '/holdings') {
+        } else if (payload.path == '/holdings') {
             data = state.holdingsTabs
-        } else if(payload.path == '/action') {
+        } else if (payload.path == '/action') {
             data = state.actionTabs
-        } else if(payload.path == '/profile') {
-             data = state.profileTabs
-        } else if(payload.path == '/dashboard') {
+        } else if (payload.path == '/profile') {
+            data = state.profileTabs
+        } else if (payload.path == '/dashboard') {
             data = state.dashboardTabs
         }
 
-        if(data) {
+        if (data) {
             data.forEach(el => {
-                if(el.id == payload.id) {
+                if (el.id == payload.id) {
                     el.active = true
                 } else {
                     el.active = false

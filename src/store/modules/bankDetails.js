@@ -5,19 +5,23 @@ const state = {
 }
 
 const actions = {
-    async getBankDataFromApi({ commit }) {
-        try {
-            service.getBankDetails().then(resp => {
-                if (resp.data?.message?.data?.fsl_bank_details) {
-                    commit('setBankDetails', resp.data.message.data?.fsl_bank_details)
-                } else {
-                    commit('setBankDetails', [])
-                }
-            })
-        } catch (error) {
+    // async getBankDataFromApi({ commit }) {
+    //     commit('setBankDetails', []);
 
-        }
-    }
+    //     service.getBankDetails()
+    //         .then(resp => {
+    //             if (resp.data?.message?.data?.fsl_bank_details) {
+    //                 commit('setBankDetails', resp.data.message.data?.fsl_bank_details);
+    //             } else {
+    //                 // Handle the case where data is missing
+    //             }
+    //         }(err) => {
+    //             errorHandle.handleError(err)
+    //         })
+    //         .finally(() => {
+    //             commit('setLoader', false, { root: true });
+    //         });
+    // }
 };
 
 const mutations = {

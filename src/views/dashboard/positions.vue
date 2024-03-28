@@ -46,7 +46,9 @@ export default {
     },
     computed: {
         ...mapGetters('positions', ['getPositionData']),
-        ...mapGetters('auth', ['getUserId'])
+        ...mapGetters('auth', ['getUserId']),
+        ...mapGetters(['getLoader'])
+
     },
     async created() {
      
