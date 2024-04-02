@@ -35,7 +35,7 @@ export default {
       this.$emit('activeTab', id)
       setTimeout(() => {
         this.tabChanging = false;
-      }, 1000); 
+      }, 500); 
     },
     getTabs() {
       if (this.$route.path == '/reports') {

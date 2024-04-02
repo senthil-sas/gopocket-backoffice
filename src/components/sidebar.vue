@@ -160,8 +160,6 @@
   
   import box from './utilComponents/box.vue';
   import icon from './utilComponents/icons.vue';
-  import { mapGetters } from 'vuex';
-  import common from '../mixins/common';
   import { useRouter } from 'vue-router';
 
   import { useStore } from 'vuex';
