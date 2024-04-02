@@ -216,36 +216,41 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      clientLogo,
-      userRole: "NORMAL_USER",
-      headers: [
-        {
-          name: "Dashboard",
-          id: "head_dashboard",
-          route: "/dashboard",
-        },
-        {
-          name: "Reports",
-          id: "head_reports",
-          route: "/reports",
-        },
-        {
-          name: "Holdings",
-          id: "head_holdings",
-          route: "/holdings",
-        },
-        //{
-        //     name: 'Action',
-        //     id: 'head_action',
-        //     route:'/action',
-        //},
-        {
-          name: "Profile",
-          id: "head_profile",
-          route: "/profile",
-        },
-      ],
-    };
+        clientLogo,
+        userRole: 'NORMAL_USER',
+        headers: [
+            {
+                name: 'Dashboard',
+                id: 'head_dashboard',
+                route:'/dashboard',
+            },
+            {
+                name: 'Reports',
+                id: 'head_reports',
+                route:'/reports',
+            },
+            {
+                name: 'Holdings',
+                id: 'head_holdings',
+                route:'/holdings',
+            },
+            {
+                name: 'Action',
+                id: 'head_action',
+                route:'/action',
+            },
+            {
+                name: 'Journey Report',
+                id: 'head_misreport',
+                route:'/mis_report',
+            },
+            {
+                name: 'Profile',
+                id: 'head_profile',
+                route:'/profile',
+            }
+        ],
+    }
   },
   components: { Menu, MenuButton, MenuItems, MenuItem },
   computed: {

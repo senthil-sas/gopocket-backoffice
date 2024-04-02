@@ -55,6 +55,12 @@ export default {
         return axios.get(`${baseUrlTemp}method/ninjafox.custom_api.get_customer_nominee_details?customer=${userId}`, requestOptions).then();
     },
 
+    async getmisreport(payload) {
+            
+        return await axios.get(`https://kyc.skybroking.com/skybo/mis/ExcelDownload?frmDate=${payload.fromDate}&toDate=${payload.toDate}`).then();
+    },
+
+
     async addNomineeDetails(payload) {
         const requestOptions = {
             headers: this.authHeader(),

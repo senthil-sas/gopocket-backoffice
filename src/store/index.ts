@@ -13,7 +13,7 @@ import positions from './modules/positions'
 import reports from './modules/reports'
 import funds from './modules/funds'
 import popup from './modules/popup'
-import ledger from './modules/ledger'
+import misreport from "./modules/misReport";
 export default createStore({
   state: {
     brokerName: "GoPocket",
@@ -21,7 +21,7 @@ export default createStore({
     ssoRedirectionUrl: 'http://web.gopocket.in/',
     myAppCode:'oJGBKnveAXcHOWG',
     version: "1.0.0",
-    months: [
+    months:[
       { month: "Jan", id: "01" },
       { month: "Feb", id: "02" },
       { month: "Mar", id: "03" },
@@ -53,5 +53,5 @@ export default createStore({
     getWindowWidth: state => state.windowWidth
   },
 
-  modules: { tabs, bankDetails, nominee, subAcc, giftStocks, auth, profile, segment,ledger,tradebook, holdings, positions, reports, funds, popup },
+  modules: { tabs, bankDetails, nominee, subAcc, giftStocks, auth, profile, segment, tradebook, holdings, positions, reports, funds, popup, misreport },
 });
