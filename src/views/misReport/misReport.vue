@@ -1,8 +1,7 @@
 <template>
   <div class="overflow-y-auto h-[calc(100vh-100px)]">
 
-    <div class="mx-5 mt-4 flex flex-col gap-4 item-start lg:flex-row lg:items-end">
-      
+    <div class="mx-5 mt-4 flex flex-col gap-4 item-start lg:flex-row lg:items-end"> 
       <div>
         <div class="primaryColor text-xs ml-2 mb-1">From Date</div>
         <div>
@@ -72,11 +71,11 @@
         </div>
       </div>
     </div>
-    <div class="flex w-full my-5">
+    <div v-if="getmisReportData.length" class="flex w-full my-5">
       <misChart/>
     </div>
 
-    <div class="m-5 relative">
+    <div v-if="getmisReportData.length" class="m-5 relative">
       <table id="revenue_table" class="w-full m-0 table-sticky rounded-3xl">
         <thead class="md:h-[50px] grid-rows-none">
           <tr class="relative grid-rows-none">
@@ -90,21 +89,21 @@
               rowspan="2"
               class="text-xs font-semibold whitespace-nowrap !bg-gray-100"
               id="revenue_th_instrument">
-              Total A/c Opened
+              Total A/c Started
             </th>
             <th
               rowspan="2"
               class="text-xs font-semibold whitespace-nowrap !bg-gray-100"
               id="revenue_th_instrument"
             >
-              Total A/c Esign
+              Esign Completed
             </th>
             <th
               rowspan="2"
               class="text-xs font-semibold whitespace-nowrap !bg-gray-100"
               id="revenue_th_instrument"
             >
-              Total A/c Bo
+              A/c Opened
             </th>
             <!-- referral -->
             <th
@@ -113,27 +112,6 @@
               id="revenue_th_instrument"
             >
               Referral
-            </th>
-            <th
-              rowspan="2"
-              class="text-xs font-semibold whitespace-nowrap !bg-gray-100"
-              id="revenue_th_instrument"
-            >
-              Total A/c Open Count
-            </th>
-            <th
-              rowspan="2"
-              class="text-xs font-semibold whitespace-nowrap !bg-gray-100"
-              id="revenue_th_instrument"
-            >
-              TotalAccEsignCount
-            </th>
-            <th
-              rowspan="2"
-              class="text-xs font-semibold whitespace-nowrap !bg-gray-100"
-              id="revenue_th_instrument"
-            >
-              TotalAccBoCount
             </th>
           </tr>
         </thead>
@@ -165,21 +143,7 @@
               >
                 {{ i.referral }}
               </td>
-              <td
-                class="pl-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center"
-              >
-                {{ i.totalAccOpenCount }}
-              </td>
-              <td
-                class="pl-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center"
-              >
-                {{ i.totalAccEsignCount }}
-              </td>
-              <td
-                class="pl-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center"
-              >
-                {{ i.totalAccBoCount }}
-              </td>
+            
             </tr>
           </template>
         </tbody>

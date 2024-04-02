@@ -1,4 +1,5 @@
 import service from "../httpService"
+
 const state = {
     profileData: [],
     loader: false
