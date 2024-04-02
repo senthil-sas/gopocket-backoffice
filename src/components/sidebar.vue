@@ -1,9 +1,9 @@
 <template>
   <div>
-      <div v-if="isBox">
-        <box class="w-full p-3" >
-          <p class="loginHeader font-bold py-2 header">Personal Details</p>
-  
+
+    <div v-if="isBox && ($route.path == '/dashboard' || $route.path == '/holdings' || $route.path == '/profile')">
+        <box class="w-full py-[40px] px-[24px] " >
+          <p class="loginHeader font-bold pa-3 header">Personal Details</p>
           <div class="flex mt-4">
             <icon name="profile" height="18" width="18" class="mr-4"/>
             <p class="primaryColor text-[14px]">
@@ -11,7 +11,8 @@
               {{ getProfileData.customer_name }}
             </p>
           </div>
-          <hr class="mt-4" />
+          <div class="h-5"></div>
+
           <div class="flex mt-4">
             <div class="flex">
               <icon name="date" height="18" width="18" class="mr-4"/>
@@ -27,7 +28,7 @@
             </p>
           </div> 
           </div>
-          <hr class="mt-4" />
+          <div class="h-5"></div>
           <div class="flex mt-4 gap-4 items-center">
             <icon name="mail" height="18" width="18"/>
             <p class="primaryColor text-[14px]">
@@ -35,7 +36,7 @@
             </p>
             <span class="ml-auto cursor-pointer" @click="updateEmailOrMobile('email')"><icon name="edit" height="16" width="16" /></span>
           </div>
-          <hr class="mt-4" />
+          <div class="h-5"></div>
           <div class="flex mt-4 gap-4 items-center">
             <icon name="phone" height="18" width="18"/>
             <p class="primaryColor text-[14px]">
@@ -43,7 +44,7 @@
             </p>
             <span class="ml-auto cursor-pointer"  @click="updateEmailOrMobile('mobile')"><icon name="edit" height="16" width="16" /></span>
           </div>
-          <hr class="mt-4" />
+          <div class="h-5"></div>
           <div class="flex mt-4">
             <icon name="address" height="18" width="18" class="mr-4"/>
             <div class="primaryColor text-[14px]">
@@ -55,7 +56,7 @@
             </div>
           </div>
         </box>
-        <box class="w-full p-3 my-3" >
+        <box class="w-full py-[40px] px-[24px] " >
             <p class="primaryColor text-[14px]">Your PAN</p>
             <p class="pb-3 text-[20px] violet-color">
               {{ getProfileData.fsl_pan_card }}
@@ -76,6 +77,14 @@
             </p>
         </box>
       </div>
+
+      <div v-if="isBox && $route.path == '/reports'">
+        <box class="w-full py-[40px] px-[24px]  " >
+          <p class="loginHeader font-bold pa-3 header" > Filter</p>
+          <tradebookfliter />
+        </box>
+      
+      </div>
   
     <div v-if="!isBox" class="p-5">
           <div class="flex mt-4">
@@ -84,7 +93,7 @@
               {{ getProfileData.customer_name }}
             </p>
           </div>
-          <hr class="mt-4" />
+          <div class="h-5"></div>
           <div class="flex mt-4">
             <div class="flex">
               <icon name="date" height="18" width="18" class="mr-4"/>
@@ -100,7 +109,7 @@
             </p>
           </div>
           </div>
-          <hr class="mt-4" />
+          <div class="h-5"></div>
           <div class="flex mt-4 gap-4 items-center">
             <icon name="mail" height="18" width="18" />
             <p class="primaryColor text-[14px]">
@@ -108,7 +117,7 @@
             </p>
             <!-- <span class="ml-auto cursor-pointer"><icon name="edit" height="16" width="16" /></span> -->
           </div>
-          <hr class="mt-4" />
+          <div class="h-5"></div>
           <div class="flex mt-4 gap-4 items-center">
             <icon name="phone" height="18" width="18"/>
             <p class="primaryColor text-[14px]">
@@ -116,7 +125,7 @@
             </p>
             <!-- <span class="ml-auto cursor-pointer"><icon name="edit" height="16" width="16" /></span> -->
           </div>
-          <hr class="mt-4" />
+          <div class="h-5"></div>
           <div class="flex mt-4">
             <icon name="address" height="18" width="18" class="mr-4"/>
             <div class="primaryColor text-[14px]">
@@ -157,18 +166,25 @@
   import { ref } from 'vue';
   import { reactive, computed } from 'vue';
   // import commonIcon from '@/components/commonIcon.vue';
-  
+import tradebookfliter from '../views/reports/tradebookfliter.vue';
   import box from './utilComponents/box.vue';
   import icon from './utilComponents/icons.vue';
   import { useRouter } from 'vue-router';
 
   import { useStore } from 'vuex';
-  
+  import tabs from './utilComponents/tabs.vue'
+
   const store = useStore()
   const getProfileData = computed(() => store.getters['profile/getProfileData']);
   const getLoader = computed(() => store.getters['profile/getLoader']);
-  
-  
+  // const activeTab = computed(() => store.getters['tabs/getActiveTab']);
+
+  const changeTab = (id) => {
+  store.dispatch('tabs/setActiveTab', { path: router.path, id });
+  setTimeout(() => {
+    store.commit('tabs/setProfileCurrentTab', JSON.stringify(id));
+  }, 500);
+};
   const supportText = ref('....');
   
   const startFromPan = () => {};

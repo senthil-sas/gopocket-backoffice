@@ -66,28 +66,8 @@
 
     <div class="flex space-x-4">
       <div>
-        <button @click="getLedger()" class="commonbtn h-[30px] !py-0 text-xs">
+        <button @click="getLedger()" class="commonbtn ">
           Submit
-        </button>
-      </div>
-
-      <div>
-        <button
-          type="button"
-          @click="previousYear()"
-          class="commonbtn text-xs !py-0 h-[30px]"
-        >
-          Previous Year
-        </button>
-      </div>
-
-      <div>
-        <button
-          type="button"
-          @click="nextYear()"
-          class="commonbtn text-xs !py-0 h-[30px]"
-        >
-          Next Year
         </button>
       </div>
     </div>

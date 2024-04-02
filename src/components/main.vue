@@ -2,9 +2,9 @@
     <div>
         <div class="h-screen !overflow-hidden">
             <headerComp class="fixed top-0"/>
-            <div class="flex gap-3 w-full relative p-3">
-                <sidebar class="h-[calc(100vh-74px)] w-[350px] sidebar overflow-y-auto" v-if="$store.state.windowWidth >= 1200" :isBox="true"/>
-                <box class="min-h-[calc(100vh-74px)]" :class="{ 'w-[calc(100vw-358px)]' : $store.state.windowWidth >= 1200, 'w-full' : $store.state.windowWidth < 1200}"><RouterView /></box>
+            <div class="flex  w-full relative  border border-r-[1px]">
+                <sidebar class="h-[calc(100vh-74px)]  w-[350px] sidebar overflow-y-auto " v-if="$store.state.windowWidth >= 1200" :isBox="true"/>
+                <box class="min-h-[calc(100vh-74px)] border-l-[1px]" :class="{ 'w-[calc(100vw-349px)]' : $store.state.windowWidth >= 1200, 'w-full' : $store.state.windowWidth < 1200}"><RouterView /></box>
             </div>
         </div>
 
