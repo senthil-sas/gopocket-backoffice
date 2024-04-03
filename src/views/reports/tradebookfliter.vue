@@ -66,7 +66,7 @@
         </div>
   
         <div>
-          <div class="primaryColor text-xs  mb-2">From Date</div>
+          <div class="primaryColor text-[14px]  mb-2">From Date</div>
           <div>
             <VDatePicker
               :max-date="today"
@@ -98,7 +98,7 @@
         </div>
   
         <div>
-          <div class="primary-color text-xs mb-2">To Date</div>
+          <div class="primary-color text-[14px] mb-2">To Date</div>
           <div>
             <VDatePicker
               :max-date="today"
