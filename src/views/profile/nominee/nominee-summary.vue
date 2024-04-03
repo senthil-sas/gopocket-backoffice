@@ -72,7 +72,7 @@ export default {
         }
     },
     created() {
-        this.$store.dispatch('nominee/getNomineeDetails')
+        // this.$store.dispatch('nominee/')
     },
 }
 </script>

@@ -2,7 +2,7 @@ import service from "../modules/services/profile.ts";
 import errorHandle from '../../handleError/errorHandling'
 
 const state = {
-    nomineeStage: 'nomineeSummary',
+    nomineeStage: 'initialList',
     nomineeList: [],
     isMinor: false,
 
@@ -28,10 +28,10 @@ const actions = {
     //     }
     // },
 
-    async getNomineeDetails({ commit }, userId) {
+    async getNomineeDetails({ commit, rootGetters }, payload) {
         commit('setNomineeList', []);
         commit('setLoader', true, { root: true });
-
+        let userId = rootGetters['auth/getUserId']
 
         service.getNomineeDetails(userId)
             .then(resp => {

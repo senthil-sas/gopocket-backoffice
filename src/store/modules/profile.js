@@ -7,6 +7,8 @@ const state = {
     bankdetails: [],
     segments: [],
     loader: false,
+    isAddBank: false
+
 };
 
 const actions = {
@@ -71,13 +73,18 @@ const mutations = {
 
     setSegments(state, payload) {
         state.segments = payload;
-    }
+    },
+    setIsAddBank(state, payload) {
+        state.isAddBank = payload
+    },
 };
 
 const getters = {
     getProfileData: state => state.profileData,
     getbankdetails: state => state.bankdetails,
-    getSegments: state => state.segments
+    getSegments: state => state.segments,
+    getbankdetails: state => state.bankdetails
+
 };
 
 const profile = {

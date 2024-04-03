@@ -8,7 +8,7 @@
               <ListboxButton
                 class="min-h-[40px] relative w-full text-xs cursor-pointer   rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900  ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6"
               >
-                <span class="block truncate text-[14px]">{{ segment.name }}</span>
+                <span class="block truncate text-xs">{{ segment.name }}</span>
                 <span
                   class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4"
                 >
@@ -76,18 +76,18 @@
               :masks="{ input: 'DD-MM-YYYY', modelValue: 'YYYY-MM-DD' }"
               type="date"
               mode="date"
-              class=" min-h-[40px]   text-[14px]"
+              class=" min-h-[40px]  text-xs"
               :dateFormat="'YYYY-MM-DD'"
             >
               <template v-slot="{ togglePopover,inputValue, inputEvents }">
                 <div
-                  class=" flex min-h-[40px] relative w-full  text-[14px] cursor-pointer items-center justify-between  rounded-md bg-white py-1.5 pl-3 pr-2 text-left text-gray-900  ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6"
+                  class=" flex min-h-[40px] relative w-full text-xs cursor-pointer items-center justify-between  rounded-md bg-white py-1.5 pl-3 pr-2 text-left text-gray-900  ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6"
                 >
                   <input
                     :value="inputValue"
                     placeholder="DD-MM-YYYY"
                     v-on="inputEvents"
-                    class="w-full h-full ml-1  text-[14px] outline-none cursor-pointer"
+                    class="w-full h-full ml-1 text-xs outline-none cursor-pointer"
                     readonly
                   />
                   <button
@@ -120,13 +120,13 @@
             >
               <template v-slot="{ togglePopover,inputValue, inputEvents }">
                 <div
-                class=" flex  min-h-[40px] relative w-full  text-[14px] cursor-pointer items-center justify-between  rounded-md bg-white py-1.5 pl-3 pr-2 text-left text-gray-900  ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6"
+                class=" flex  min-h-[40px] relative w-full text-xs cursor-pointer items-center justify-between  rounded-md bg-white py-1.5 pl-3 pr-2 text-left text-gray-900  ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6"
                 >
                   <input
                     :value="inputValue"
                     placeholder="DD-MM-YYYY"
                     v-on="inputEvents"
-                    class="w-full h-full ml-1  text-[14px] outline-none cursor-pointer"
+                    class="w-full h-full ml-1 text-xs outline-none cursor-pointer"
                     readonly
                   />
                   <button
@@ -145,7 +145,7 @@
   
         <div class="flex align-center justify-end">
           <button class="commonbtn" @click="getTradeBook">
-            <span class=" text-[14px]">Get Reports </span>
+            <span class="text-xs">Get Reports </span>
           </button>
           <div class="h-5"></div>
         </div>
