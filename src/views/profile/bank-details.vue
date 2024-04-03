@@ -73,7 +73,7 @@ const getbankdetails = computed(() => store.getters['profile/getbankdetails']);
 // const getLoader = computed(() => store.getters['profile/getLoader']);
 
 const addBank = () => {
-    store.commit('bankDetails/setIsAddBank', true)
+    isAddBank.value = true;
 }
 
 </script>

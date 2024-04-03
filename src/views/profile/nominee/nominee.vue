@@ -38,7 +38,9 @@ export default {
     },
     computed: {
         ...mapGetters('nominee', ['getNomineeStage']),
-        ...mapGetters('auth', ['getUserId'])
+        ...mapGetters('auth', ['getUserId']),
+        ...mapGetters(['getLoader'])
+
 
     },
     methods: {

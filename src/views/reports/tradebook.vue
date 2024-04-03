@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <!-- <div>
     <div class="flex gap-4 items-end">
       <div>
         <div class="primary-color text-xs mb-1">Segment</div>
@@ -157,7 +157,7 @@
         <div class="h-5"></div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div>
     <!-- chart Start -->
@@ -177,8 +177,8 @@
     </div>
     <!-- chart End  -->
     <div class="my-10">
-      <div class="h-[calc(100vh-400px)] overflow-y-auto border-t">
-        <table class="w-full relative">
+      <div class="h-[calc(100vh-400px)] overflow-y-auto ">
+        <table class="w-full relative"  v-if="getTradeBookData?.length > 0">
           <thead>
             <tr>
               <th
@@ -237,25 +237,17 @@
             </tr>
           </tbody>
         </table>
+        <div v-else class="flex justify-center my-10 ">
+            No Trade Found
+        </div>
       </div>
-      <!-- <div class="flex justify-center my-10" v-else>
-        <no_data name="Tradebook"/>
-    </div> -->
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watchEffect } from "vue";
-import { mapGetters, useStore } from "vuex";
-import {
-  Listbox,
-  ListboxButton,
-  ListboxLabel,
-  ListboxOption,
-  ListboxOptions,
-} from "@headlessui/vue";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
+import { computed, onMounted, ref } from "vue";
+import { useStore } from "vuex";
 const store = useStore();
 
 // const segment = ref("");
@@ -265,6 +257,10 @@ const segments = ref([
   { name: "Futures & Options", id: 0, exch: "NFO" },
   { name: "Currency", id: 0, exch: "CDS" },
 ]);
+
+// const startDate = ref(""); // Define and initialize startDate
+// const endDate = ref(""); // Define and initialize endDate
+
 
 const popover = ref({
   visibility: "click",

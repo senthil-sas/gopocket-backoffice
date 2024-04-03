@@ -51,8 +51,10 @@ export default {
     },
     computed: {
         ...mapGetters('holdings', ['getHoldingsData']),
-        ...mapGetters('auth', ['getUserId'])
+        ...mapGetters('auth', ['getUserId']),
+        ...mapGetters(['getLoader'])
 
+        
 
     },
     methods: {

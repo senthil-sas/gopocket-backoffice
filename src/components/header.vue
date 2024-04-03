@@ -1,6 +1,6 @@
 <style scoped>
 .header {
-  @apply bg-white h-12 left-0 right-0 py-[5px] px-[10px] font-medium w-full border-b-[1px] my-0 mx-auto
+  @apply bg-white h-12 left-0 right-0 py-[5px] px-[10px] font-medium w-full  border-t-[1px] my-0 mx-auto
   dark:bg-[#181818] dark:text-[#94A3B8] dark:border-[#232325];
 }
 .menu-list {
@@ -62,7 +62,7 @@
 </style>
 <template>
   <div class="relative top-0 z-[9]">
-    <div class="flex header items-center justify-between py-[50px]">
+    <div class="flex header items-center justify-between py-[50px] ">
       <div class="flex items-center z-50 w-full">
         <div class="flex lg:hidden">
           <button
@@ -75,7 +75,7 @@
           </button>
         </div>
         <div class="-pointer logo mr-auto flex items-center">
-          <img :src="clientLogo" class="h-6 px-4" alt="logo" />
+          <img :src="clientLogo" class="h-6 px-4 max-w-[104px]" alt="logo" />
         </div>
         <div class="menu-list">
           <ul class="py-0 pl-0 pr-4 hidden lg:flex">
@@ -227,7 +227,7 @@
             <div class="flex items-center justify-between">
               <a href="#" class="">
                 <span class="sr-only">Your Company</span>
-                <img :src="clientLogo" class="h-6 px-4" alt="logo" />
+                <img :src="clientLogo" class="h-6 px-4  max-w-[104px]" alt="logo" />
               </a>
               <button
                 type="button"
