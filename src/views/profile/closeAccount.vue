@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="m-4">
-        <form class="gap-10 w-full">
+        <form class="gap-10 w-full" v-if="!isClosePocket">
             <p class="mb-4 primary-color !font-bold text-sm">Account Closure</p>
 
             <Listbox as="div" v-model="Closure" class="max-w-[350px] mb-4">
@@ -42,8 +42,9 @@
             <div>
                 <button type="submit" class="commonbtn" @click.prevent="handleClosePocket">Continue</button>
             </div>
-            <closepocket v-if="stage === 'closePocket'" />
         </form>
+        
+        <closepocket v-if="isClosePocket" />
         </div>
     </div>
 </template>
@@ -59,7 +60,7 @@ export default {
     data() {
         return {
             Closure: '',
-            stage: '', 
+            isClosePocket: false,
             Closures: [
                 { name: 'High brokerage and charges', id: 0 },
                 { name: 'Monthly maintenance charges', id: 0 },
@@ -81,7 +82,7 @@ export default {
     },
     methods: {
         handleClosePocket() {
-            this.stage = 'closePocket'; 
+            this.isClosePocket = true;
         }
     },
 }
