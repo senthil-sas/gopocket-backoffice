@@ -13,7 +13,7 @@
                 </p>
             </div>
             <div class="my-6 flex justify-center gap-4">
-                <button class="cancelbtn" @click="skip()">Opt Out</button>
+                <!-- <button class="cancelbtn" @click="skip()">Opt Out</button> -->
                 <button class="commonbtn" @click="addNominee()">Add Nominee</button>
             </div>
         </div>
