@@ -1,6 +1,6 @@
 <template>
     <div class="p-5" v-if="!getLoader">
-        <div class="py-8 min-h-[426px]" v-if="getNomineeStage != 'nomineeSummary' && getNomineeStage != 'nomineeList'">
+        <div class="py-8 min-h-[426px]" v-if="getNomineeStage == 'initialList'">
             <div class="flex justify-center items-center">
                 <img :src="nomineesvg" alt="nominee" class="max-w-[15%] h-auto" />
             </div>
@@ -57,8 +57,7 @@ export default {
         if(nomineeList && nomineeList?.length > 0) {
             this.$store.commit('nominee/setNomineeDetails', nomineeList)
         }
-        let userId = this.getUserId
-        this.$store.dispatch('nominee/getNomineeDetails',userId)
+        this.$store.dispatch('nominee/getNomineeDetails')
     }
 }
 </script>

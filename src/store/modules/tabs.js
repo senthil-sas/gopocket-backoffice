@@ -22,7 +22,11 @@ const state = {
         { name: 'Segments', id: 2, active: false, count: '0' },
         { name: 'Documents', id: 3, active: false, count: '0' },
         { name: 'Income Proof', id: 4, active: false, count: '0' },
-        { name: 'Personal Profile', id: 5, active: false, count: '0' }
+        { name: ' Account Details', id: 5, active: false, count: '0' },
+        { name: 'Close Account', id: 6, active: false, count: '0' },
+
+
+
     ],
     dashboardTabs: [
         { name: 'Accounts', id: 0, active: true, count: '0' },

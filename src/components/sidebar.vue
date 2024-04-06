@@ -65,7 +65,7 @@
             <p class="pb-3 text-[20px] violet-color">
               {{ getProfileData.fsl_demat_id ? getProfileData.fsl_demat_id : 'NA' }}
             </p>
-            <p class="primaryColor text-[14px]">Your Support code</p>
+            <p class="primaryColor text-[14px]">Call & Trade TPIN</p>
             <p class="pb-1 text-[#070A26] flex justify-between items-center" >
               <span class="text-[20px] violet-color" v-if="supportText != '....'">{{ getProfileData?.fsl_support_code ? getProfileData?.fsl_support_code : 'NA'}}</span>
               <span class="text-[18px]" v-if="supportText == '....'">&#x2022;&#x2022;&#x2022;&#x2022;</span>
@@ -147,7 +147,7 @@
             <p class="pb-3 text-[20px] violet-color">
               {{ getProfileData.fsl_demat_id ? getProfileData.fsl_demat_id : 'NA' }}
             </p>
-            <p class="primaryColor text-[14px]">Your Support code</p>
+            <p class="primaryColor text-[14px]">Call & Trade TPIN</p>
             <p class="pb-1 text-[#070A26] flex gap-[10rem] items-center" >
               <span class="text-[20px] violet-color" v-if="supportText != '....'">{{ getProfileData?.fsl_support_code ? getProfileData?.fsl_support_code : 'NA'}}</span>
               <span class="text-[18px]" v-if="supportText == '....'">&#x2022;&#x2022;&#x2022;&#x2022;</span>

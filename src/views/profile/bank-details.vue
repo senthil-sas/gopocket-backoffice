@@ -4,17 +4,21 @@
                     <div class="flex gap-3 grow flex-wrap">
             <div v-for="(bank, id) in getbankdetails" :key="id" class="bank-details-card">
                 <div class="flex justify-between">
-                    <span class="primary-color !font-semibold text-xs"> BANK {{ id + 1 }}</span>
+                    <span class="primary-color !font-semibold text-xs mt-1"> BANK {{ id + 1 }}</span>
                     <span v-if="bank.primary == 1">
-                        <button class="primarybtn">Primary</button>
+                        <button class="!font-semibold text-xs" style="color: #753ED7;">Primary</button>
                     </span>
                 </div>
                 <div class="flex gap-5 items-center my-4">
                     <img :src="hdfcImg" :alt="bank?.name" class="max-w-[60px] max-h-[60px] border rounded p-2">
                     <span>
                         <div class="primary-color text-sm">{{ bank.bank_name}}</div>
-                        <div class="secondary-color text-xs">{{ bank.account_no }}</div>
+                        <div class="secondary-color text-xs">{{ bank.branch }}</div>
                     </span>
+                </div>
+                <div class="my-4 flex flex-col">
+                    <div class="secondary-color text-xs mb-2">ACCOUNT NO</div>
+                    <div class="primary-color text-sm">{{ bank.account_no }}</div>
                 </div>
 
                 <div class="my-4 flex flex-col">
@@ -22,14 +26,14 @@
                     <div class="primary-color text-sm">{{ bank.ifsc_code }}</div>
                 </div>
 
-                <div class="my-4 flex flex-col">
+                <!-- <div class="my-4 flex flex-col">
                     <div class="secondary-color text-xs mb-2">MICR</div>
                     <div class="primary-color text-sm">{{ bank.micr_code }}</div>
-                </div>
+                </div> -->
 
-                <div class="my-4 flex flex-col">
+                <!-- <div class="my-4 flex flex-col">
                     <div class="secondary-color text-xs mb-2">+ Set as primary</div>
-                </div>
+                </div> -->
             </div>
         </div>
 
@@ -52,7 +56,7 @@
             <bank_mandates />
         </div> -->
 
-        <add_bank v-if="isAddBank"/>
+        <add_bank v-if="isAddBank" @cancel="cancelAddBank" />
     </div>
 </template>
 
@@ -68,6 +72,9 @@ const store = useStore()
 
 const isAddBank = ref(false)
 
+const cancelAddBank = () => {
+  isAddBank.value = false;
+}
 const getbankdetails = computed(() => store.getters['profile/getbankdetails']);
 
 // const getLoader = computed(() => store.getters['profile/getLoader']);

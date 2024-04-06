@@ -40,8 +40,8 @@
                                 <li :class="[active ? 'violet-bg text-white' : 'text-gray-900', 'relative cursor-pointer select-none py-2 pl-8 pr-4']">
                                     <span :class="[relationship ? 'font-semibold' : 'font-normal', 'block truncate']">{{ i.name }}</span>
                                     <span v-if="relationship" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 left-0 flex items-center pl-1.5']">
-                                        <CheckIcon class="h-5 w-5" aria-hidden="true" />
-                                    </span>
+    <CheckIcon class="h-5 w-5" aria-hidden="true" />
+</span>
                                 </li>
                             </ListboxOption>
                         </ListboxOptions>
@@ -244,11 +244,12 @@ export default {
             firstName: '',
             lastName: '',
             panNo: '',
-            isSameAsAddress: false,
+            isSameAsAddress: true,
             mobileNo: '',
             state: '',
             pincode: '',
             nomineeSharePercentage: 0,
+
 
             // 
             Address: '',
@@ -334,11 +335,10 @@ export default {
                 // this.$store.commit('nominee/setNomineeStage', 'nomineeSummary')
                 this.$store.dispatch('nominee/addNomineeDetails', json)
             }
-            
         },  
-
         backToNomineeDetails() {
-            this.$store.commit('nominee/setNomineeStage', 'initialList')
+            this.$store.dispatch('nominee/getNomineeDetails')
+            // this.$store.commit('nominee/setNomineeStage', 'initialList')
         },
 
         toUpperCaseModel(vmodel) {

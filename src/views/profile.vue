@@ -6,7 +6,9 @@
         <segments v-if="getProfileCurrentTab == 2" />
         <documents v-if="getProfileCurrentTab == 3" />
         <income_proof v-if="getProfileCurrentTab == 4"/>
-        <sidebar v-if="getProfileCurrentTab == 5" :isBox="false" />
+        <account_details  v-if="getProfileCurrentTab == 5"/>
+        <closeaccount v-if="getProfileCurrentTab == 6"  />
+        
     </div>
 </template>
 
@@ -18,11 +20,14 @@ import nominee from './profile/nominee/nominee.vue'
 import segments from './profile/segments.vue'
 import documents from './profile/documents.vue'
 import sidebar from '../components/sidebar.vue'
+import closeaccount from './profile/closeAccount.vue'
+import account_details from './profile/Account-details.vue'
+
 import { mapGetters } from 'vuex'
 // import { mapstate } from 'vuex'
 
 export default {
-    components: { tabs, income_proof, bank_details, nominee, segments, documents, sidebar },
+    components: { tabs, income_proof, bank_details, nominee, segments, documents, sidebar,closeaccount ,account_details },
     data() {
         return { }
     },

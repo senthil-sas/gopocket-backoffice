@@ -1,4 +1,5 @@
 <template>
+  <!-- <div>
   <div
     class="flex flex-col gap-4 item-start lg:flex-row lg:items-end my-8 mx-4"
   >
@@ -78,16 +79,14 @@
       >
         <div class="border-e pr-4">
           <p class="text-end text-sm">
-            <!-- {{ debitAmount ? parseFloat(debitAmount).toFixed(2) : debitAmount }} -->
+            {{ debitAmount ? parseFloat(debitAmount).toFixed(2) : debitAmount }}
             90
           </p>
           <p class="secondary-color font-semibold text-xs">Total Debit</p>
         </div>
         <div>
           <p class="text-end text-sm">
-            <!-- {{
-              creditAmount ? parseFloat(creditAmount).toFixed(2) : creditAmount
-             }} -->
+        
 
             80
           </p>
@@ -145,14 +144,15 @@
             >
               {{ i.camount }}
             </td>
-            <!-- <td class="px-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ i.entrycode }}</td> -->
+             <td class="px-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ i.entrycode }}</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
+  </div> -->
 </template>
-
+<!-- 
 <script setup lang="ts">
 import { computed, onMounted, ref, watchEffect } from "vue";
 import {
@@ -369,7 +369,7 @@ const setDate = () => {
 onMounted(() => {
   setDate();
 });
-</script>
-
+</script> -->
+<script setup></script>
 <style>
 </style>

@@ -73,13 +73,7 @@ export default {
         }
     },
     created() {
-        // nominee list retail with local store
-        let nomineeList = JSON.parse(sessionStorage.getItem('nomineeList'))
-        if(nomineeList && nomineeList?.length > 0) {
-            this.$store.commit('nominee/setNomineeDetails', nomineeList)
-        }
-        let userId = this.getUserId
-        this.$store.dispatch('nominee/getNomineeDetails',userId)
-    }
+        // this.$store.dispatch('nominee/')
+    },
 }
 </script>
