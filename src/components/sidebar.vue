@@ -17,7 +17,7 @@
             <div class="flex">
               <icon name="date" height="18" width="18" class="mr-4"/>
               <p class="primaryColor text-[14px]">
-                 {{ formatDate(getProfileData.fsl_dob) }} 
+                 {{ formatDate(getProfileData.fsl_dob) }}
               </p>
             </div>
              <div class="flex pl-5">
