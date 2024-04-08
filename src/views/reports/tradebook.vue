@@ -1,5 +1,5 @@
 <template>
-  <!-- <div>
+   <!-- <div>
     <div class="flex gap-4 items-end">
       <div>
         <div class="primary-color text-xs mb-1">Segment</div>
@@ -248,6 +248,14 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
+
+import {
+    Listbox,
+    ListboxButton,
+    ListboxOption,
+    ListboxOptions,
+  } from "@headlessui/vue";
+  import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
 const store = useStore();
 
 // const segment = ref("");

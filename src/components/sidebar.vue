@@ -56,7 +56,7 @@
             </div>
           </div>
         </box>
-        <box class="w-full py-[40px] px-[24px] " >
+        <!-- <box class="w-full py-[40px] px-[24px] " >
             <p class="primaryColor text-[14px]">Your PAN</p>
             <p class="pb-3 text-[20px] violet-color">
               {{ getProfileData.fsl_pan_card }}
@@ -75,7 +75,7 @@
                   <span class="text-[#070A26] ml-2 text-xs cursor-pointer" v-if="supportText != '....'" @click="resetSupportCode()">Reset</span>
               </span>
             </p>
-        </box>
+        </box> -->
       </div>
 
       <div v-if="isBox && $route.path == '/reports'">
@@ -138,7 +138,7 @@
           </div>
   
           <!--  -->
-          <div class="my-8">
+          <!-- <div class="my-8">
             <p class="primaryColor text-[14px]">Your PAN</p>
             <p class="pb-3 text-[20px] violet-color">
               {{ getProfileData.fsl_pan_card }}
@@ -157,7 +157,7 @@
                   <span class="text-[#070A26] ml-2 text-xs cursor-pointer" v-if="supportText != '....'" @click="resetSupportCode()">Reset</span>
               </span>
             </p>
-          </div>
+          </div> -->
     </div>
   </div>
   </template>
