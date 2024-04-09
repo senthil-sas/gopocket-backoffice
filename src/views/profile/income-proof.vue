@@ -123,7 +123,7 @@ export default {
             confirmations : [
                 { id: 'I accept above declaration', title: 'I accept above declaration' },
             ],
-            confirmationAccept: ''
+            confirmationAccept: 'true'
         }
     },
     watch: {
