@@ -289,7 +289,7 @@ export default {
           route: "/reports",
         },
         {
-          name: "Holdings",
+          name: "Portfolio",
           id: "head_holdings",
           route: "/holdings",
         },

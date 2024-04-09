@@ -71,7 +71,6 @@
             <VDatePicker
               :max-date="today"
               v-model="fromDate"
-              is-required
               :popover="popover"
               :masks="{ input: 'DD-MM-YYYY', modelValue: 'YYYY-MM-DD' }"
               type="date"
@@ -109,8 +108,9 @@
           <div>
             <VDatePicker
               :max-date="today"
-              v-model="toDate"
               is-required
+
+              v-model="toDate"
               :popover="popover"
               :masks="{ input: 'DD-MM-YYYY', modelValue: 'YYYY-MM-DD' }"
               type="date"
@@ -125,6 +125,8 @@
                   <input
                     :value="inputValue"
                     placeholder="DD-MM-YYYY"
+                    is-required
+
                     v-on="inputEvents"
                     class="w-full h-full ml-1  text-[14px] outline-none cursor-pointer"
                     readonly
