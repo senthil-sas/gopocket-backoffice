@@ -37,8 +37,8 @@ export default createStore({
     ],
     windowWidth: 0,
     windowHeigth: 0,
-    loader: false
-
+    loader: false,
+    currenttab: "0",
   },
 
   mutations: {
@@ -48,6 +48,10 @@ export default createStore({
     },
     setLoader(state, payload) {
       state.loader = payload
+    },
+    setcurrenttab(state, payload) {
+      state.currenttab = payload
+
     }
   },
 
@@ -56,7 +60,8 @@ export default createStore({
   getters: {
     getMonths: state => state.months,
     getWindowWidth: state => state.windowWidth,
-    getLoader: state => state.loader
+    getLoader: state => state.loader,
+    getcurrenttab: state => state.currenttab
 
   },
 

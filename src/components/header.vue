@@ -326,17 +326,17 @@ export default {
         switch (type) {
           case "family":
             this.$router.push("/holdings");
-            sessionStorage.setItem("portfolioTab", 1);
+            sessionStorage.setItem("portfolioTab", 2);
             break;
 
           case "giftStocks":
             this.$router.push("/holdings");
-            sessionStorage.setItem("portfolioTab", 2);
+            sessionStorage.setItem("portfolioTab", 3);
             break;
 
           case "myAccount":
             this.$router.push("/profile");
-            sessionStorage.setItem("profileTab", 5);
+            sessionStorage.setItem("profileTab", 0);
             break;
 
           default:

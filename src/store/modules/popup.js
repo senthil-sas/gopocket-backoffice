@@ -3,7 +3,8 @@ const state = {
     isOtpVerify: false,
     verificationType: '',
     isEmailOrMobileUpdate: false,
-    updateType: ''
+    updateType: '',
+    isNewEmailOrNewMobileUpdate: false,
 }
 
 const actions = {};
@@ -23,7 +24,10 @@ const mutations = {
     },
     setUpdateType(state, payload) {
         state.updateType = payload
-    }
+    },
+    setisNewEmailOrNewMobileUpdate(state, payload) {
+        state.isNewEmailOrNewMobileUpdate = payload
+    },
 };
 
 const getters = {
@@ -31,7 +35,9 @@ const getters = {
     getVerificationType: state => state.verificationType,
     getIsOtpVerify: state => state.isOtpVerify,
     getIsEmailOrMobileUpdate: state => state.isEmailOrMobileUpdate,
-    getUpdateType: state => state.updateType
+    getUpdateType: state => state.updateType,
+    getisNewEmailOrNewMobileUpdate: state => state.isNewEmailOrNewMobileUpdate,
+
 };
 
 const popup = {

@@ -266,8 +266,8 @@ const segments = ref([
   { name: "Currency", id: 0, exch: "CDS" },
 ]);
 
-// const startDate = ref(""); // Define and initialize startDate
-// const endDate = ref(""); // Define and initialize endDate
+// const startDate = ref(new Date()); // Define and initialize startDate
+// const endDate = ref(new Date()); // Define and initialize endDate
 
 
 const popover = ref({

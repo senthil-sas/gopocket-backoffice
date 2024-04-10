@@ -203,6 +203,7 @@ import tradebookfliter from '../views/reports/tradebookfliter.vue';
       store.commit('popup/setUpdateType', type);
       store.commit('popup/setIsEmailOrMobileUpdate', true);
   };
+  
   const resetSupportCode = async () => {
       store.commit('popup/setIsResetSupportCode', true);
   };
