@@ -5,6 +5,7 @@ const state = {
     loader: true,
     startDate: '',
     endDate: '',
+    activeReportTab:0
 }
 
 const actions = {
@@ -46,6 +47,9 @@ const mutations = {
 
         state.dataPoints = dataPoints
     },
+    setActiveReportTab(state, payload){
+        state.activeReportTab = payload
+    }
 };
 
 const getters = {
@@ -54,6 +58,7 @@ const getters = {
     getLoader: state => state.loader,
     getStartDate: state => state.startDate,
     getEndDate: state => state.endDate,
+    getActiveReportTab: (state)=> state.activeReportTab
 };
 
 const reports = {

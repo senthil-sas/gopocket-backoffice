@@ -1,8 +1,8 @@
 <template>
     <div>
-      <div class=" gap-4 items-end">
-        <div >
-          <div class="primary-color text-[14px] mb-2 mt-4">Segment</div>
+      <div class=" gap-4 items-end mt-4">
+        <div v-if="activeReportTab != 2">
+          <div class="primary-color text-[14px] mb-2">Segment</div>
           <Listbox as="div" v-model="segment" class="">
             <div class="relative">
               <ListboxButton
@@ -66,7 +66,7 @@
         </div>
   
         <div>
-          <div class="primaryColor text-[14px]  mb-2">From Date</div>
+          <div class="primaryColor text-[14px] mb-2">From Date</div>
           <div>
             <VDatePicker
               :max-date="today"
@@ -204,6 +204,7 @@
   
   const getLoader = computed(() => store.getters["reports/getLoader"]);
   const getUserId = computed(() => store.getters["auth/getUserId"]);
+  const activeReportTab = computed(() => store.getters["reports/getActiveReportTab"]);
   const getTradeBookData = computed(
     () => store.getters["tradebook/getTradeBookData"]
   );
