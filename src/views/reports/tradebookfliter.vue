@@ -1,8 +1,8 @@
 <template>
     <div>
-      <div class=" gap-4 items-end">
-        <div v-if="getcurrenttab !== 2" >
-           <div class="primary-color text-[14px] mb-2 mt-4" >Segment</div>
+      <div class=" gap-4 items-end mt-4">
+<div v-if="activeReportTab != 2">
+<div class="primary-color text-[14px] mb-2">Segment</div>
           <Listbox  as="div" v-model="segment" class="">
             <div class="relative">
               <ListboxButton
@@ -185,6 +185,7 @@
   store.dispatch('tabs/setActiveTab', { path: router.path, id });
 };
   
+const activeReportTab = computed(() => store.getters["reports/getActiveReportTab"]);
   const popover = ref({
     visibility: "click",
     placement: "bottom-start",

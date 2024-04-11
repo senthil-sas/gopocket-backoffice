@@ -1,6 +1,6 @@
 <template>
     <TransitionRoot as="template" :show="getisNewEmailOrNewMobileUpdate">
-      <Dialog as="div" class="relative z-10" @close="closeDialog">
+      <Dialog as="div" class="relative z-10" @close="closeDialog()">
         <TransitionChild
           as="template"
           enter="ease-out duration-300"
@@ -30,32 +30,44 @@
                   <div class="mb-6">
                     <img :src="brokerImg" alt="image" class="h-6 pr-4 max-w-[104px]" />
                   </div>
-  
+                 <div   v-if="getUpdateType === 'mobile'">
                   <div class="primary-color border-b pb-2 text-[14px]">
-                    Enter New {{ getVerificationType }}
+                    Enter New Mobile
                   </div>
   
-                  <div class="text-sm primary-color my-4 flex gap-3">
+                  <div class="text-sm primary-color my-4 flex gap-3 ">
                     <input
-                      v-if="getUpdateType === 'mobile'"
+                     
                       type="text"
                       maxlength="10"
                       v-model="NewMobile"
                       class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder="Enter the Number"
                     />
+                <button class="commonbtn">Continue</button>
+                </div>
+                <div class="text-red-500 text-xs h-3">{{ errorMessage }}</div>
+</div>
+                  <div  v-if="getUpdateType === 'email'">
+                  <div class="primary-color border-b pb-2 text-[14px]">
+                    Enter New Email
+                  </div>
+  
+                  <div class="text-sm primary-color my-4 flex gap-3">
                     <input
-                      v-else-if="getUpdateType === 'email'"
                       type="text"
                       name="emailId"
                       v-model="NewEmail"
                       class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder="Enter the Email"
                     />
-  
                     <button class="commonbtn">Continue</button>
-                  </div>
+
+                </div>
                   <div class="text-red-500 text-xs h-3">{{ errorMessage }}</div>
+</div>
+                
+  
   
                   <div v-if="isVerified">
                     <div class="text-sm primary-color my-4 flex gap-3">
@@ -109,8 +121,8 @@
     },
     methods: {
       closeDialog() {
-        // Implement close dialog functionality if needed
-      },
+            this.$store.commit('popup/setisNewEmailOrNewMobileUpdate', false)
+        },      
       verify() {
         this.errorMessage = '';
   
@@ -135,15 +147,18 @@
         this.isVerified = true;
       },
       validateOTP() {
-        this.otpErrorMessage = '';
-  
         if (this.otp.trim() === '') {
           this.otpErrorMessage = 'Please enter the OTP.';
           return;
         } else if (!/^\d{6}$/.test(this.otp.trim())) {
           this.otpErrorMessage = 'Please enter a valid 6-digit OTP.';
           return;
-        }
+
+        }else {
+        this.errorMessage = ''; // Clear error message when OTP is valid
+        this.$store.commit('popup/setisNewEmailOrNewMobileUpdate', false)
+        
+    }
   
         // Additional validation if needed
   

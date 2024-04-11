@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from "../store";
-
+import common from "../mixins/common.js"
 
 
 const router = createRouter({
@@ -34,7 +34,7 @@ export default router
 router.beforeEach((to, from, next) => {
   const clientId = localStorage.getItem("clientId");
   const sessionId = localStorage.getItem("sessionId");
-
+  common.methods.getDocumentTitle(to);
   if (clientId !== null) {
     store.commit("auth/setUserId", clientId);
   }

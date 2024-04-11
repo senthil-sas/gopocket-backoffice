@@ -150,7 +150,7 @@ body {
 
 /* new css */
 .commonbtn {
-  @apply !px-4 !py-2 !text-sm !bg-[#753ED7] !text-white !rounded-md
+  @apply !px-4 !py-2 !text-sm !bg-[#753ED7] !text-white !rounded-md min-w-[90px]
 }
 .commonbtn:disabled, .cancelbtn:disabled {
   @apply !opacity-60 !bg-gray-400 cursor-not-allowed

@@ -5,10 +5,11 @@ const state = {
     loader: true,
     startDate: '',
     endDate: '',
+    activeReportTab: 0,
 }
 
 const actions = {
-    async getTradeBookFromApi({state,commit }) {
+    async getTradeBookFromApi({ state, commit }) {
         state.loader = true
         try {
             service.getTradeBook().then(resp => {
@@ -19,7 +20,7 @@ const actions = {
                     commit('setTradeBookData', [])
                     commit('setDataPoints', {})
                 }
-            }).finally(()=>{
+            }).finally(() => {
                 state.loader = false
             })
         } catch (error) {
@@ -35,7 +36,7 @@ const mutations = {
     setDataPoints(state, payload) {
         let dataPoints = {}
         let dates = []
-        
+
         payload.forEach(el => {
             dates.push(new Date(el.trade_date))
             dataPoints[getTimeStamp(el.trade_date)] = el.qty
@@ -46,6 +47,9 @@ const mutations = {
 
         state.dataPoints = dataPoints
     },
+    setActiveReportTab(state, payload) {
+        state.activeReportTab = payload
+    }
 };
 
 const getters = {
@@ -54,6 +58,7 @@ const getters = {
     getLoader: state => state.loader,
     getStartDate: state => state.startDate,
     getEndDate: state => state.endDate,
+    getActiveReportTab: (state) => state.activeReportTab
 };
 
 const reports = {
