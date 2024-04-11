@@ -1,12 +1,12 @@
 <template>
     <div>
-      <div class=" gap-4 items-end">
-        <div >
-          <div class="primary-color text-[14px] mb-2 mt-4">Segment</div>
-          <Listbox as="div" v-model="segment" class="">
+      <div class=" gap-4 items-end mt-4">
+<div v-if="activeReportTab != 2">
+<div class="primary-color text-[14px] mb-2">Segment</div>
+          <Listbox  as="div" v-model="segment" class="">
             <div class="relative">
               <ListboxButton
-                class="min-h-[40px] relative w-full text-xs cursor-pointer   rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900  ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6"
+                class="min-h-[40px] relative w-full text-xs cursor-pointer  rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900  ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6"
               >
                 <span class="block truncate text-[14px]">{{ segment.name }}</span>
                 <span
@@ -168,7 +168,7 @@
   } from "@headlessui/vue";
   import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
   const store = useStore();
-  
+  const currentTab = ref(0);
   // const segment = ref("");
   const segment = ref({ name: "Equity", id: 0, exch: "NSE" });
   const segments = ref([
@@ -179,8 +179,13 @@
   
   // const startDate = ref(""); // Define and initialize startDate
   // const endDate = ref(""); // Define and initialize endDate
+  const changeTab = (id) => {
+    this.currentTab = id
+
+  store.dispatch('tabs/setActiveTab', { path: router.path, id });
+};
   
-  
+const activeReportTab = computed(() => store.getters["reports/getActiveReportTab"]);
   const popover = ref({
     visibility: "click",
     placement: "bottom-start",
@@ -206,6 +211,10 @@
   const getUserId = computed(() => store.getters["auth/getUserId"]);
   const getTradeBookData = computed(
     () => store.getters["tradebook/getTradeBookData"]
+  );
+  const getcurrenttab = computed(
+    () => store.getters["getcurrenttab"]
+    
   );
   
   const getFirstDayOfMonth = () => {

@@ -9,14 +9,14 @@
             <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leave-from="opacity-100 translate-y-0 sm:scale-100" leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
                 <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-xl sm:p-6">
                 <form @submit.prevent="verify()">
-                    <div class="primary-color border-b pb-2 text-lg font-bold">
+                  <div class="primary-color border-b pb-2  text-[14px]">
                         Confirm update
                     </div>
 
                     <div class="text-sm primary-color my-4 flex gap-3 items-start">
                         <input height="32px" width="32px" class="h-5 w-5 cursor-pointer" type="checkbox" v-model="isChecked">
-                        <span v-if="getUpdateType == 'mobile'">I/We hereby declare that the mobile number being updated here belongs to me/us. Further, I authorise {{$store.state.brokerName}} Broking Ltd. to use this to send me any information/ alert/ SMS. This change will affect the Trading and Demat account that I hold with {{$store.state.brokerName}} Broking Ltd.</span>
-                        <span v-if="getUpdateType == 'email'">I/We hereby declare that the email ID being updated here belongs to me/us. Further, I authorise {{$store.state.brokerName}} Broking Ltd. to use this to send me any information/alert/email. This change will affect the Trading and Demat account that I hold with {{$store.state.brokerName}} Broking Ltd.</span>
+                        <span v-if="getUpdateType == 'mobile'">I / We affirm ownership of the Mobile Number to be updated and authorise Sky Commodities India Private Limited to send me relevant information via this Mobile Number. This update will be reflected in my Trading and Demat accounts with Sky Commodities India Private Limited and respective exchanges.</span>
+                        <span v-if="getUpdateType == 'email'">I / We affirm ownership of the email ID to be updated and authorise Sky Commodities India Private Limited to send me relevant information via this email. This update will be reflected in my Trading and Demat accounts with Sky Commodities India Private Limited and respective exchanges.</span>
                     </div>
 
                     <div class="secondary-color text-xs my-4 flex gap-1">
@@ -41,8 +41,8 @@
 
                     <div class="mt-6 flex gap-3 justify-end">
                         <button type="button" class="cancelbtn" @click="closeDialog()">Cancel</button>
-                        <button type="submit" class="commonbtn">Submit</button>
-                    </div>
+                        <button type="submit" class="commonbtn" :disabled="!isChecked">Submit</button>
+                    </div> 
                 </form>
               </DialogPanel>
             </TransitionChild>

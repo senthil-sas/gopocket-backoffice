@@ -1,3 +1,8 @@
+import common from '../../mixins/common.js'
+import router from '@/router';
+
+
+
 const state = {
     reportTabs: [
         { name: 'Tradebook', id: 0, active: true, count: '0' },
@@ -74,6 +79,7 @@ const actions = {
         } else if (payload.path == '/dashboard') {
             state.dashboardTabs = data
         }
+        common.methods.getDocumentTitle(router.currentRoute._value)
     },
 };
 
