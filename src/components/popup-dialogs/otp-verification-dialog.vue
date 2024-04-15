@@ -46,8 +46,8 @@ export default {
         return {
             otp: '',
             errorMessage: '', // Error message variable
-
             brokerImg,
+            verifyType: ''
         }
     },
     computed: {
@@ -62,26 +62,34 @@ export default {
         
         verify() {
 
-          if (this.otp.trim() === '') {
+     if (this.otp.trim() === '') {
         this.errorMessage = 'Please enter the OTP.';
-        return;
+         return;
     } else if (!/^\d{6}$/.test(this.otp.trim())) {
         this.errorMessage = 'Please enter a valid 6-digit OTP.';
         return;
     } else {
-        this.errorMessage = ''; // Clear error message when OTP is valid
+        this.errorMessage = ''; 
         this.$store.commit('popup/setIsOtpVerify', false)
         this.$store.commit('popup/setisNewEmailOrNewMobileUpdate', true)
-
+        this.$store.dispatch('reekyc/verifyOTP', { option: this.option, otp: this.otp });
+       
         
     }
+    // let option = this.verifyType === 'email' ? 1 : 0;
+            this.verifylogin();
+            // let type = this.verifyType === 'email' ? 'Email' : 'SMS'; 
+            this.$store.commit('popup/setIsOtpVerify', true)
           
           if(this.getVerificationType == 'Email') {
 
           } else {
 
           }
-        }
+        },
+        verifylogin() {
+            this.$store.commit('reekyc/verifylogin',); 
+    },
     },
 }
 </script>

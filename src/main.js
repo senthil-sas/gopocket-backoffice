@@ -1,13 +1,20 @@
 import './assets/main.css'
+import { createApp } from 'vue';
 
-import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from "./store";
 import "./assets/tailwind/tailwind.css";
 import Chart from "vue-frappe-chart"
+import Vue from 'vue';
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css'; // You can import other themes as well
 
-const app = createApp(App)
+const app = createApp(App);
+
+// Register the plugin globally
+Vue.use(VueToast);
+
 
 
 import spinner from './components/utilComponents/spinner.vue'

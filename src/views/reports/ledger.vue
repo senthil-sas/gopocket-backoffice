@@ -1,6 +1,6 @@
-<!-- <template>
+<template>
  <div>
-  <div
+  <!-- <div
     class="flex flex-col gap-4 item-start lg:flex-row lg:items-end my-8 mx-4"
   >
     <div class="z-20">
@@ -94,7 +94,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <div class="px-4">
     <div class="h-[calc(100vh-200px)] overflow-y-auto border-t">
       <table class="w-full relative">
@@ -285,14 +285,14 @@ const popover = ref({
 const getUserId = computed(() => store.getters["auth/getUserId"]);
 const getLedgerData = computed(() => store.getters["ledger/getLedgerData"]);
 
-const getLedger = () => {
-  let json = {
-    ucc: getUserId.value,
-    from_date: fromDate.value,
-    to_date: toDate.value,
-  };
-  store.dispatch("ledger/getledgerApi", json);
-};
+// const getLedger = () => {
+//   let json = {
+//     ucc: getUserId.value,
+//     from_date: fromDate.value,
+//     to_date: toDate.value,
+//   };
+//   store.dispatch("ledger/getledgerApi", json);
+// };
 
 const daysinMonth = (year, month) => {
   return new Date(year, month, 0).getDate();
@@ -370,4 +370,4 @@ onMounted(() => {
 });
 </script> 
 <style>
-</style> --> -->
+</style>

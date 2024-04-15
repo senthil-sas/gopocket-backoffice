@@ -40,8 +40,6 @@ export default {
         ...mapGetters('nominee', ['getNomineeStage']),
         ...mapGetters('auth', ['getUserId']),
         ...mapGetters(['getLoader'])
-
-
     },
     methods: {
         addNominee() {
@@ -58,6 +56,10 @@ export default {
             this.$store.commit('nominee/setNomineeDetails', nomineeList)
         }
         this.$store.dispatch('nominee/getNomineeDetails')
+        this.$store.dispatch('reekyc/loginEmailAndMobile')
+        this.$store.dispatch('reekyc/verifylogin')
+
+
     }
 }
 </script>

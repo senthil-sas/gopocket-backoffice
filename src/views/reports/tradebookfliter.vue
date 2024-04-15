@@ -179,11 +179,6 @@
   
   // const startDate = ref(""); // Define and initialize startDate
   // const endDate = ref(""); // Define and initialize endDate
-  const changeTab = (id) => {
-    this.currentTab = id
-
-  store.dispatch('tabs/setActiveTab', { path: router.path, id });
-};
   
 const activeReportTab = computed(() => store.getters["reports/getActiveReportTab"]);
   const popover = ref({
@@ -234,16 +229,22 @@ const activeReportTab = computed(() => store.getters["reports/getActiveReportTab
   
     return `${year}-${month}-${day}`;
   };
-  
+
   const getTradeBook = () => {
     let payload = {
-      ucc: getUserId.value,
-      segment: segment.value.exch,
-      fromDate: formateDate(fromDate.value),
-      toDate: formateDate(toDate.value),
+        ucc: getUserId.value,
+        segment: segment.value.exch,
+        fromDate: formatDate(fromDate.value),
+        toDate: formatDate(toDate.value),
     };
-    store.dispatch("tradebook/getTradeBookFromApi", payload);
-  };
+    if (activeReportTab.value === 0) {
+        store.dispatch("tradebook/getTradeBookFromApi", payload);
+        console.log(activeReportTab.value);
+    } else if (activeReportTab.value === 2) {
+        delete payload.segment;
+        store.dispatch("ledger/getledgerApi", payload);
+    }
+};
   
   const formateDate = (data) => {
     const originalDate = new Date(data); // Assuming your original date is in YYYY-MM-DD format
@@ -331,7 +332,10 @@ const activeReportTab = computed(() => store.getters["reports/getActiveReportTab
   onMounted(() => {
     // store.dispatch("reports/getTradeBookFromApi");
     setDate();
-  });
+
+  }
+  
+,);
   </script>
   
   

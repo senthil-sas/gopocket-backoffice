@@ -18,6 +18,7 @@
     "vue": "^3.2.36",
     "vue-frappe-chart": "^0.1.10",
     "vue-router": "^4.2.2",
+    "vue-toast-notification": "^3.1.2",
     "vuex": "^4.0.2"
   },
   "devDependencies": {

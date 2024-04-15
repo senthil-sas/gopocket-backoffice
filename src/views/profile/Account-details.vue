@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 max-w-[600px] ">
+    <div class="px-4 py-5 max-w-[1200px] ">
       <div class=" mb-4 ">
         <h2 class="text-sm font-semibold mb-4">Account Details : </h2>
         <div class="flex mt-5 justify-between">
@@ -9,7 +9,6 @@
             {{ getProfileData.name }}
           </p>
         </div>
-        
         </div>
 
         <div class="flex mt-5 relative justify-between items-center divide">
