@@ -14,6 +14,7 @@ import reports from './modules/reports'
 import funds from './modules/funds'
 import popup from './modules/popup'
 import ledger from './modules/ledger'
+import reekyc from './modules/Re-ekyc'
 export default createStore({
   state: {
     brokerName: "GoPocket",
@@ -65,5 +66,5 @@ export default createStore({
 
   },
 
-  modules: { tabs, bankDetails, nominee, subAcc, giftStocks, auth, profile, segment, ledger, tradebook, holdings, positions, reports, funds, popup },
+  modules: { tabs, bankDetails, nominee, reekyc, subAcc, giftStocks, auth, profile, segment, ledger, tradebook, holdings, positions, reports, funds, popup },
 });

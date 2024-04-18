@@ -78,16 +78,17 @@ export default {
             this.$store.commit('popup/setIsEmailOrMobileUpdate', false)
         },
         verify() {
-            this.closeDialog();
-            let type = ''
-            if(this.verifyType == 'email') {
-                type = 'Email'
-            } else {
-                type = 'SMS'
-            }
-            this.$store.commit('popup/setIsOtpVerify', true)
+            // this.closeDialog();
+            let option = this.verifyType === 'email' ? 1 : 0;
+            this.loginEmailAndMobile(option);
+            let type = this.verifyType === 'email' ? 'Email' : 'SMS'; 
+            // this.$store.commit('popup/setIsOtpVerify', true)
             this.$store.commit('popup/setVerificationType', type)
-        }
+
+        },
+        loginEmailAndMobile(option) {
+            this.$store.dispatch('reekyc/loginEmailAndMobile',  option); 
     },
 }
+};
 </script>

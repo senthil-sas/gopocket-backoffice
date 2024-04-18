@@ -179,11 +179,6 @@
   
   // const startDate = ref(""); // Define and initialize startDate
   // const endDate = ref(""); // Define and initialize endDate
-  const changeTab = (id) => {
-    this.currentTab = id
-
-  store.dispatch('tabs/setActiveTab', { path: router.path, id });
-};
   
 const activeReportTab = computed(() => store.getters["reports/getActiveReportTab"]);
   const popover = ref({
@@ -212,38 +207,41 @@ const activeReportTab = computed(() => store.getters["reports/getActiveReportTab
   const getTradeBookData = computed(
     () => store.getters["tradebook/getTradeBookData"]
   );
-  const getcurrenttab = computed(
-    () => store.getters["getcurrenttab"]
-    
-  );
   
-  const getFirstDayOfMonth = () => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-based
-    const day = "01";
-    return `${year}-${month}-${day}`;
-  };
-  const getPreviousDay = () => {
-    const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1);
-    const year = yesterday.getFullYear();
-    const month = String(yesterday.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-based
-    const day = String(yesterday.getDate()).padStart(2, "0");
+  // const getFirstDayOfMonth = () => {
+  //   const today = new Date();
+  //   const year = today.getFullYear();
+  //   const month = String(today.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-based
+  //   const day = "01";
+  //   return `${year}-${month}-${day}`;
+  // };
+  // const getPreviousDay = () => {
+  //   const today = new Date();
+  //   const yesterday = new Date(today);
+  //   yesterday.setDate(today.getDate() - 1);
+  //   const year = yesterday.getFullYear();
+  //   const month = String(yesterday.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-based
+  //   const day = String(yesterday.getDate()).padStart(2, "0");
   
-    return `${year}-${month}-${day}`;
-  };
-  
+  //   return `${year}-${month}-${day}`;
+  // };
+
   const getTradeBook = () => {
-    let payload = {
-      ucc: getUserId.value,
-      segment: segment.value.exch,
-      fromDate: formateDate(fromDate.value),
-      toDate: formateDate(toDate.value),
-    };
-    store.dispatch("tradebook/getTradeBookFromApi", payload);
+  let payload = {
+    ucc: getUserId.value,
+    segment: segment.value.exch,
+    fromDate: formatDate(fromDate.value),
+    toDate: formatDate(toDate.value),
   };
+  if (activeReportTab.value === 0) {
+    store.dispatch("tradebook/getTradeBookFromApi", payload);
+    console.log(activeReportTab.value);
+  } else if (activeReportTab.value === 2) {
+    
+    store.dispatch("ledger/getledgerApi", payload);
+  }
+};
+
   
   const formateDate = (data) => {
     const originalDate = new Date(data); // Assuming your original date is in YYYY-MM-DD format
@@ -274,64 +272,67 @@ const activeReportTab = computed(() => store.getters["reports/getActiveReportTab
     return newDateFormat;
   };
   
-  const previousYear = () => {
-    const [toyeardate] = formatDate(toDate.value).split("-");
-    if (Number(toyeardate) <= curYear.value) {
-      const [fyear, fmon, fday] = formatDate(fromDate.value).split("-");
-      fromDate.value = (Number(fyear) - 1).toString() + "-" + fmon + "-" + fday;
-      const [tyear, tmon, tday] = formatDate(toDate.value).split("-");
-      toDate.value =
-        (Number(tyear) - 1).toString() +
-        "-" +
-        "03" +
-        "-" +
-        Number(daysinMonth(Number(tyear) - 1, 3).toString());
-    }
-  };
+  // const previousYear = () => {
+  //   const [toyeardate] = formatDate(toDate.value).split("-");
+  //   if (Number(toyeardate) <= curYear.value) {
+  //     const [fyear, fmon, fday] = formatDate(fromDate.value).split("-");
+  //     fromDate.value = (Number(fyear) - 1).toString() + "-" + fmon + "-" + fday;
+  //     const [tyear, tmon, tday] = formatDate(toDate.value).split("-");
+  //     toDate.value =
+  //       (Number(tyear) - 1).toString() +
+  //       "-" +
+  //       "03" +
+  //       "-" +
+  //       Number(daysinMonth(Number(tyear) - 1, 3).toString());
+  //   }
+  // };
   
-  const nextYear = () => {
-    const [toyeardate] = formatDate(toDate.value).split("-");
+  // const nextYear = () => {
+  //   const [toyeardate] = formatDate(toDate.value).split("-");
   
-    if (Number(toyeardate) !== curYear.value) {
-      console.log("toyeardate", toyeardate);
-      console.log("curyear", curYear.value);
-      const [fyear, fmon, fday] = formatDate(fromDate.value).split("-");
-      fromDate.value = new Date(
-        (Number(fyear) + 1).toString() + "-" + fmon + "-" + fday
-      );
-      const [tyear, tmon, tday] = formatDate(toDate.value).split("-");
-      toDate.value = new Date(
-        (Number(tyear) + 1).toString() + "-" + tmon + "-" + tday
-      );
-    }
-  };
-  const getPreviousDays = (dateString) => {
-    const date = new Date(dateString);
-    date.setDate(date.getDate() - 1);
-    const finalDate = date.toLocaleDateString().split("/");
-    const [mm, days, yyyy] = finalDate;
-    const dd = days.length == 1 ? `0${days}` : days;
-    const month = mm.length == 1 ? `0${mm}` : mm;
-    return `${yyyy}-${month}-${dd}`;
-  };
+  //   if (Number(toyeardate) !== curYear.value) {
+  //     console.log("toyeardate", toyeardate);
+  //     console.log("curyear", curYear.value);
+  //     const [fyear, fmon, fday] = formatDate(fromDate.value).split("-");
+  //     fromDate.value = new Date(
+  //       (Number(fyear) + 1).toString() + "-" + fmon + "-" + fday
+  //     );
+  //     const [tyear, tmon, tday] = formatDate(toDate.value).split("-");
+  //     toDate.value = new Date(
+  //       (Number(tyear) + 1).toString() + "-" + tmon + "-" + tday
+  //     );
+  //   }
+  // };
+  // const getPreviousDays = (dateString) => {
+  //   const date = new Date(dateString);
+  //   date.setDate(date.getDate() - 1);
+  //   const finalDate = date.toLocaleDateString().split("/");
+  //   const [mm, days, yyyy] = finalDate;
+  //   const dd = days.length == 1 ? `0${days}` : days;
+  //   const month = mm.length == 1 ? `0${mm}` : mm;
+  //   return `${yyyy}-${month}-${dd}`;
+  // };
   
-  const setDate = () => {
-    console.log("check");
-    const curfullYear = new Date();
-    const currentYear = curfullYear.getFullYear();
-    const currentMonth = curfullYear.getMonth();
-    const currentDay = curfullYear.getDate();
-    curYear.value = Number(currentYear);
-    fromDate.value = new Date(`${currentYear - 1}-0${4}-01`);
-    toDate.value = new Date(
-      getPreviousDays(`${currentYear}-${currentMonth + 1}-${currentDay}`)
-    );
-  };
+  // const setDate = () => {
+  //   console.log("check");
+  //   const curfullYear = new Date();
+  //   const currentYear = curfullYear.getFullYear();
+  //   const currentMonth = curfullYear.getMonth();
+  //   const currentDay = curfullYear.getDate();
+  //   curYear.value = Number(currentYear);
+  //   fromDate.value = new Date(`${currentYear - 1}-0${4}-01`);
+  //   toDate.value = new Date(
+  //     getPreviousDays(`${currentYear}-${currentMonth + 1}-${currentDay}`)
+  //   );
+  // };
   
   onMounted(() => {
     // store.dispatch("reports/getTradeBookFromApi");
-    setDate();
-  });
+    // setDate();
+
+  }
+  
+,);
   </script>
   
   

@@ -24,7 +24,7 @@
                     <div class="text-red-500 text-xs h-3" >{{ errorMessage }}</div>
 
                     <div class="mt-4 mb-10 text-xs border-t pt-2">
-                        Didn't receive the OTP? <span class="text-blue-400 underline">Resend</span>
+                        Didn't receive the OTP? <span class="text-blue-400 underline cursor-pointer" @click="resendOTP">Resend</span>
                     </div>
                 </form>
               </DialogPanel>
@@ -46,42 +46,46 @@ export default {
         return {
             otp: '',
             errorMessage: '', // Error message variable
-
             brokerImg,
+            verifyType: ''
         }
     },
     computed: {
 
-        ...mapGetters('popup', ['getIsOtpVerify', 'getVerificationType'])
-        
+        ...mapGetters('popup', ['getIsOtpVerify', 'getVerificationType']),
+        ...mapGetters('popup', ['getIsEmailOrMobileUpdate', 'getUpdateType'])
+
     },
     methods: {
         closeDialog() {
             this.$store.commit('popup/setIsOtpVerify', false)
         },
         
-        verify() {
+        async verify() {
+            if (this.otp.trim() === '') {
+                this.errorMessage = 'Please enter the OTP.';
+                return;
+            } else if (!/^\d{6}$/.test(this.otp.trim())) {
+                this.errorMessage = 'Please enter a valid 6-digit OTP.';
+                return;
+            } else {
+              this.errorMessage = ''; 
+              this.$store.dispatch('reekyc/verifyOTP', this.otp );
+            }
+        },
+        resendOTP() {
+            // this.closeDialog();
+            let option = this.verifyType === 'email' ? 1 : 0;
+            this.loginEmailAndMobile(option);
+            let type = this.verifyType === 'email' ? 'Email' : 'SMS'; 
+            // this.$store.commit('popup/setIsOtpVerify', true)
+            this.$store.commit('popup/setVerificationType', type)
 
-          if (this.otp.trim() === '') {
-        this.errorMessage = 'Please enter the OTP.';
-        return;
-    } else if (!/^\d{6}$/.test(this.otp.trim())) {
-        this.errorMessage = 'Please enter a valid 6-digit OTP.';
-        return;
-    } else {
-        this.errorMessage = ''; // Clear error message when OTP is valid
-        this.$store.commit('popup/setIsOtpVerify', false)
-        this.$store.commit('popup/setisNewEmailOrNewMobileUpdate', true)
-
-        
-    }
-          
-          if(this.getVerificationType == 'Email') {
-
-          } else {
-
-          }
-        }
+        },
+        loginEmailAndMobile(option) {
+            this.$store.dispatch('reekyc/loginEmailAndMobile',  option); 
+    },
+   
     },
 }
 </script>

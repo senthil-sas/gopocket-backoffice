@@ -6,7 +6,7 @@
                 <div class="flex justify-between">
                     <span class="primary-color !font-semibold text-xs mt-1"> BANK {{ id + 1 }}</span>
                     <span v-if="bank.primary == 1">
-                        <button class="!font-semibold text-xs p-1 rounded-sm !text-white !bg-[#753ED7]" >Primary</button>
+                        <button class="graybtn" >Primary</button>
                     </span>
                 </div>
                 <div class="flex gap-5 items-center my-4">
