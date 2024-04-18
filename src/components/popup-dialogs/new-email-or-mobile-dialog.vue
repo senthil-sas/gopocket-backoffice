@@ -83,7 +83,7 @@
                     <div class="text-red-500 text-xs h-3">{{ otpErrorMessage }}</div>
   
                     <div class="mt-4 mb-10 text-xs border-t pt-2">
-                      Didn't receive the OTP? <span class="text-blue-400 underline">Resend</span>
+                      Didn't receive the OTP? <span class="text-blue-400 underline cursor-pointer" @click="resendOTP">Resend</span>
                     </div>
                   </div>
                 </form>
@@ -125,15 +125,18 @@
         },      
       verify() {
         this.errorMessage = '';
-  
         if (this.getUpdateType === 'mobile') {
+
           if (!this.NewMobile) {
             this.errorMessage = 'Please enter a mobile number.';
+            
             return;
           } else if (!/^\d{10}$/.test(this.NewMobile)) {
             this.errorMessage = 'Please enter a valid 10-digit mobile number.';
             return;
-          }
+          } 
+          this.$store.dispatch('reekyc/UpdateMobileNumber', this.NewMobile);
+
         } else if (this.getUpdateType === 'email') {
           if (!this.NewEmail) {
             this.errorMessage = 'Please enter an email address.';
@@ -142,10 +145,13 @@
             this.errorMessage = 'Please enter a valid email address.';
             return;
           }
+          this.$store.dispatch('reekyc/UpdateEmailId', this.NewEmail);
+
         }
-  
+
         this.isVerified = true;
       },
+
       validateOTP() {
         if (this.otp.trim() === '') {
           this.otpErrorMessage = 'Please enter the OTP.';
@@ -153,18 +159,25 @@
         } else if (!/^\d{6}$/.test(this.otp.trim())) {
           this.otpErrorMessage = 'Please enter a valid 6-digit OTP.';
           return;
-
         }else {
-        this.errorMessage = ''; // Clear error message when OTP is valid
-        this.$store.commit('popup/setisNewEmailOrNewMobileUpdate', false)
-        
-    }
-  
-        // Additional validation if needed
-  
-        // Process verification
+            this.errorMessage = ''; // Clear error message when OTP is valid
+            if (this.getUpdateType === 'mobile') {
+              this.$store.dispatch('reekyc/verifyMobileNumber', this.otp);
+            } else if (this.getUpdateType === 'email') {
+              this.$store.dispatch('reekyc/UpdateEmailIdverify', this.otp);
+            }        
+        }
+
   
       },
+      resendOTP() {
+        if (this.getUpdateType === 'mobile') {
+          this.$store.dispatch('reekyc/UpdateMobileNumber', this.NewMobile);
+            } else if (this.getUpdateType === 'email') {
+              this.$store.dispatch('reekyc/UpdateEmailId', this.NewEmail);
+            }     
+      }
+
     },
   };
   </script>

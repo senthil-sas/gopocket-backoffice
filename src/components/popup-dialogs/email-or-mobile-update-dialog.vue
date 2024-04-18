@@ -78,11 +78,11 @@ export default {
             this.$store.commit('popup/setIsEmailOrMobileUpdate', false)
         },
         verify() {
-            this.closeDialog();
+            // this.closeDialog();
             let option = this.verifyType === 'email' ? 1 : 0;
             this.loginEmailAndMobile(option);
             let type = this.verifyType === 'email' ? 'Email' : 'SMS'; 
-            this.$store.commit('popup/setIsOtpVerify', true)
+            // this.$store.commit('popup/setIsOtpVerify', true)
             this.$store.commit('popup/setVerificationType', type)
 
         },

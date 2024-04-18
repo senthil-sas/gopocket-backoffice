@@ -57,7 +57,11 @@ export default {
         }
         this.$store.dispatch('nominee/getNomineeDetails')
         this.$store.dispatch('reekyc/loginEmailAndMobile')
-        this.$store.dispatch('reekyc/verifylogin')
+        this.$store.dispatch('reekyc/verifyOTP')
+        this.$store.dispatch('reekyc/UpdateMobileNumber')
+        this.$store.dispatch('reekyc/verifyMobileNumber')
+
+
 
 
     }
