@@ -312,46 +312,46 @@ const formateDate = (paloadDate) => {
   return newDateFormat;
 };
 
-const previousYear = () => {
-  const [toyeardate] = formateDate(toDate.value).split("-");
+// const previousYear = () => {
+//   const [toyeardate] = formateDate(toDate.value).split("-");
   
-  if (Number(toyeardate) <= curYear.value) {
-    const [fyear, fmon, fday] = formateDate(fromDate.value).split("-");
-    fromDate.value = (Number(fyear) - 1).toString() + "-" + fmon + "-" + fday;
-    const [tyear, tmon, tday] = formateDate(toDate.value).split("-");
-    toDate.value =
-      (Number(tyear) - 1).toString() +
-      "-" +
-      "03" +
-      "-" +
-      Number(daysinMonth(Number(tyear) - 1, 3).toString());
-  }
-};
+//   if (Number(toyeardate) <= curYear.value) {
+//     const [fyear, fmon, fday] = formateDate(fromDate.value).split("-");
+//     fromDate.value = (Number(fyear) - 1).toString() + "-" + fmon + "-" + fday;
+//     const [tyear, tmon, tday] = formateDate(toDate.value).split("-");
+//     toDate.value =
+//       (Number(tyear) - 1).toString() +
+//       "-" +
+//       "03" +
+//       "-" +
+//       Number(daysinMonth(Number(tyear) - 1, 3).toString());
+//   }
+// };
 
-const nextYear = () => {
-  const [toyeardate] = formateDate(toDate.value).split("-");
+// const nextYear = () => {
+//   const [toyeardate] = formateDate(toDate.value).split("-");
 
-  if (Number(toyeardate) !== curYear.value) {
-    const [fyear, fmon, fday] = formateDate(fromDate.value).split("-");
-    fromDate.value = new Date(
-      (Number(fyear) + 1).toString() + "-" + fmon + "-" + fday
-    );
-    const [tyear, tmon, tday] = formateDate(toDate.value).split("-");
-    toDate.value = new Date(
-      (Number(tyear) + 1).toString() + "-" + tmon + "-" + tday
-    );
-  }
-};
+//   if (Number(toyeardate) !== curYear.value) {
+//     const [fyear, fmon, fday] = formateDate(fromDate.value).split("-");
+//     fromDate.value = new Date(
+//       (Number(fyear) + 1).toString() + "-" + fmon + "-" + fday
+//     );
+//     const [tyear, tmon, tday] = formateDate(toDate.value).split("-");
+//     toDate.value = new Date(
+//       (Number(tyear) + 1).toString() + "-" + tmon + "-" + tday
+//     );
+//   }
+// };
 
-const getPreviousDays = (dateString) => {
-  const date = new Date(dateString);
-  date.setDate(date.getDate() - 1);
-  const finalDate = date.toLocaleDateString().split("/");
-  const [mm, days, yyyy] = finalDate;
-  const dd = days.length == 1 ? `0${days}` : days;
-  const month = mm.length == 1 ? `0${mm}` : mm;
-  return `${yyyy}-${month}-${dd}`;
-};
+// const getPreviousDays = (dateString) => {
+//   const date = new Date(dateString);
+//   date.setDate(date.getDate() - 1);
+//   const finalDate = date.toLocaleDateString().split("/");
+//   const [mm, days, yyyy] = finalDate;
+//   const dd = days.length == 1 ? `0${days}` : days;
+//   const month = mm.length == 1 ? `0${mm}` : mm;
+//   return `${yyyy}-${month}-${dd}`;
+// };
 
 const setDate = () => {
   const curfullYear = new Date();
