@@ -44,7 +44,7 @@
                       class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder="Enter the Number"
                     />
-                <button class="commonbtn">Continue</button>
+                <button class="commonbtn" @click="verifyMobile"> <spinner v-if="getLoader"/><span v-else>Continue</span></button>
                 </div>
                 <div class="text-red-500 text-xs h-3">{{ errorMessage }}</div>
 </div>
@@ -61,14 +61,11 @@
                       class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder="Enter the Email"
                     />
-                    <button class="commonbtn">Continue</button>
+                    <button class="commonbtn" @click="verifyEmail"> <spinner v-if="getLoader"/><span v-else>Continue</span></button>
 
                 </div>
                   <div class="text-red-500 text-xs h-3">{{ errorMessage }}</div>
-</div>
-                
-  
-  
+                </div>
                   <div v-if="isVerified">
                     <div class="text-sm primary-color my-4 flex gap-3">
                       <input
@@ -78,7 +75,7 @@
                         class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         placeholder="Enter the OTP"
                       />
-                      <button class="commonbtn" @click="validateOTP">Verify</button>
+                      <button class="commonbtn"  @click="validateOTP"><spinner v-if="getloginloader"/> <span v-else>Verify</span></button>
                     </div>
                     <div class="text-red-500 text-xs h-3">{{ otpErrorMessage }}</div>
   
@@ -118,39 +115,68 @@
     },
     computed: {
       ...mapGetters('popup', ['getisNewEmailOrNewMobileUpdate', 'getUpdateType', 'getVerificationType']),
+      ...mapGetters(['getLoader']),
+      ...mapGetters('reekyc', ['getloginloader']),
+
+
     },
     methods: {
       closeDialog() {
             this.$store.commit('popup/setisNewEmailOrNewMobileUpdate', false)
         },      
-      verify() {
-        this.errorMessage = '';
-        if (this.getUpdateType === 'mobile') {
+      // verify() {
+      //   this.errorMessage = '';
+      //   if (this.getUpdateType === 'mobile') {
 
-          if (!this.NewMobile) {
-            this.errorMessage = 'Please enter a mobile number.';
+      //     if (!this.NewMobile) {
+      //       this.errorMessage = 'Please enter a mobile number.';
             
-            return;
-          } else if (!/^\d{10}$/.test(this.NewMobile)) {
-            this.errorMessage = 'Please enter a valid 10-digit mobile number.';
-            return;
-          } 
-          this.$store.dispatch('reekyc/UpdateMobileNumber', this.NewMobile);
+      //       return;
+      //     } else if (!/^\d{10}$/.test(this.NewMobile)) {
+      //       this.errorMessage = 'Please enter a valid 10-digit mobile number.';
+      //       return;
+      //     } 
+      //     this.$store.dispatch('reekyc/UpdateMobileNumber', this.NewMobile);
 
-        } else if (this.getUpdateType === 'email') {
-          if (!this.NewEmail) {
-            this.errorMessage = 'Please enter an email address.';
-            return;
-          } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.NewEmail)) {
-            this.errorMessage = 'Please enter a valid email address.';
-            return;
-          }
-          this.$store.dispatch('reekyc/UpdateEmailId', this.NewEmail);
+      //   } else if (this.getUpdateType === 'email') {
+      //     if (!this.NewEmail) {
+      //       this.errorMessage = 'Please enter an email address.';
+      //       return;
+      //     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.NewEmail)) {
+      //       this.errorMessage = 'Please enter a valid email address.';
+      //       return;
+      //     }
+      //     this.$store.dispatch('reekyc/UpdateEmailId', this.NewEmail);
 
-        }
+      //   }
 
-        this.isVerified = true;
-      },
+      //   this.isVerified = true;
+      // },
+
+      verifyMobile() {
+      this.errorMessage = '';
+      if (!this.NewMobile) {
+        this.errorMessage = 'Please enter a mobile number.';
+        return;
+      } else if (!/^\d{10}$/.test(this.NewMobile)) {
+        this.errorMessage = 'Please enter a valid 10-digit mobile number.';
+        return;
+      } 
+      this.$store.dispatch('reekyc/UpdateMobileNumber', this.NewMobile);
+      this.isVerified = true;
+    },
+    verifyEmail() {
+      this.errorMessage = '';
+      if (!this.NewEmail) {
+        this.errorMessage = 'Please enter an email address.';
+        return;
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.NewEmail)) {
+        this.errorMessage = 'Please enter a valid email address.';
+        return;
+      }
+      this.$store.dispatch('reekyc/UpdateEmailId', this.NewEmail);
+      this.isVerified = true;
+    },
 
       validateOTP() {
         if (this.otp.trim() === '') {
