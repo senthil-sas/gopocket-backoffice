@@ -23,8 +23,10 @@
                     <div>
                         <input type="text" name="ifscCode" id="ifscCode" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                      </div>
-                     <!-- <div class="secondary-color text-xs mt-1 ml-1">STATE BANK OF INDIA, VELLAKOIL, ERODE</div> -->
-                </div>
+                     <!-- <div class="text-sm primaryColor pt-1 uppercase">
+                                <p  v-if="ifscCode?.length == 11 && !getbankErrormsg && getBranchdeatails">{{ getBranchdeatails.BANK }}, {{ getBranchdeatails.BRANCH }},  {{ getBranchdeatails.DISTRICT }}</p>
+                            </div>            -->
+                             </div>
                 <div class="h-5"></div>
 
                 <div>

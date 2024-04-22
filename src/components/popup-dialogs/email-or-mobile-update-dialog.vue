@@ -40,8 +40,10 @@
                     </div>
 
                     <div class="mt-6 flex gap-3 justify-end">
-                        <button type="button" class="cancelbtn" @click="closeDialog()">Cancel</button>
-                        <button type="submit" class="commonbtn" :disabled="!isChecked">Submit</button>
+                        <button type="button" class="cancelbtn" @click="closeDialog()">
+Cancel</button>
+                        <button type="submit" class="commonbtn" :disabled="!isChecked" >                       <spinner v-if="getloginloader"/>
+<span v-else>Submit</span></button>
                     </div> 
                 </form>
               </DialogPanel>
@@ -71,7 +73,10 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('popup', ['getIsEmailOrMobileUpdate', 'getUpdateType'])
+        ...mapGetters('popup', ['getIsEmailOrMobileUpdate', 'getUpdateType']),
+        ...mapGetters('reekyc', ['getloginloader']),
+        
+
     },
     methods: {
         closeDialog() {

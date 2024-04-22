@@ -11,12 +11,18 @@ const state = {
     isOtpVerify: false,
     verifyMobileNumber: [],
     LoginId: '',
+    isNewEmailOrNewMobileUpdate: false,
+    loginloader: false,
+
+
 
 };
 
 const actions = {
     loginEmailAndMobile({ commit, rootState }, option) {
         commit('setloginEmailAndMobile', []);
+        commit('setloginloader', true,);
+
         const requestData = {
             ucc: rootState.auth.userId,
             option: option,
@@ -40,10 +46,15 @@ const actions = {
                     errorHandle.handleError(err)
                 })
             .finally(() => {
+                commit('setloginloader', false,);
+
             });
     },
 
     verifyOTP({ commit }, otp) {
+        commit('setLoader', true, { root: true });
+
+
         const requestData = {
             option: state.active,
             mobileNo: state.active == 0 ? rootState.profile.mobileNO : null,
@@ -63,7 +74,7 @@ const actions = {
                     notify({
                         group: "auth",
                         type: "error",
-                        title: "Invalid OTP", // Notify for invalid OTP
+                        title: resp.data.reason, // Notify for invalid OTP
                     });
                 }
                 return resp
@@ -73,12 +84,16 @@ const actions = {
                 notify({
                     group: "auth",
                     type: "error",
-                    title: "Invalid OTP", // Notify for invalid OTP
+                    title: err.response.data.reason, // Corrected reference to err
                 });
+            })
+            .finally(() => {
+                commit('setLoader', false, { root: true });
             });
     },
     UpdateMobileNumber({ commit, state }, NewMobile) {
         commit('setUpdateMobileNumber', []);
+        commit('setLoader', true, { root: true });
 
 
         service.UpdateMobileNumber(NewMobile, state.LoginId)
@@ -87,16 +102,21 @@ const actions = {
                 if ((resp.data.message.toString().trim() == "Success" && resp.status == "200")) {
                     commit('setUpdateMobileNumber', resp.data.result);
                 } else {
+
                 }
             },
                 (err) => {
                     errorHandle.handleError(err)
                 })
             .finally(() => {
+                commit('setLoader', false, { root: true });
+
             });
     },
     verifyMobileNumber({ commit, state }, otp) {
         commit('setverifyMobileNumber', []);
+        commit('setloginloader', true,);
+
 
         service.verifyMobileNumber(otp, state.LoginId)
             .then(resp => {
@@ -108,23 +128,27 @@ const actions = {
                     notify({
                         group: "auth",
                         type: "error",
-                        title: "Invalid OTP",
+                        title: resp.data.reason,
                     });
                 }
             })
             .catch(err => {
-                // Handle error
                 errorHandle.handleError(err);
-                // Notify for invalid OTP
                 notify({
                     group: "auth",
                     type: "error",
-                    title: "Invalid OTP",
+                    title: err.response.data.reason,
                 });
+            })
+            .finally(() => {
+                commit('setloginloader', false,);
             });
+
     },
     UpdateEmailId({ commit, state }, NewEmail) {
         commit('setUpdateEmailId', []);
+        commit('setLoader', true, { root: true });
+
 
         service.UpdateEmailId(NewEmail, state.LoginId)
             .then(resp => {
@@ -144,6 +168,8 @@ const actions = {
     },
     UpdateEmailIdverify({ commit }, otp) {
         commit('setUpdateEmailIdverify', []);
+        commit('setloginloader', true,);
+
         service.UpdateEmailIdverify(otp, state.LoginId)
             .then(resp => {
                 if ((resp.data.message.toString().trim() == "Success" && resp.status == "200")) {
@@ -155,19 +181,20 @@ const actions = {
                     notify({
                         group: "auth",
                         type: "error",
-                        title: "Invalid  email OTP",
+                        title: resp.data.reason,
                     });
                 }
             })
             .catch(err => {
-                // Handle error
                 errorHandle.handleError(err);
-                // Notify for invalid OTP
                 notify({
                     group: "auth",
                     type: "error",
-                    title: "Invalid  OTP",
+                    title: err.response.data.reason,
                 });
+            })
+            .finally(() => {
+                commit('setloginloader', false,);
             });
     },
 
@@ -201,13 +228,16 @@ const mutations = {
     setUpdateEmailIdverify(state, payload) {
         state.UpdateEmailIdverify = payload;
     },
+    setloginloader(state, payload) {
+        state.loginloader = payload
+    },
 };
 
 const getters = {
     getloginEmailAndMobile: state => state.loginEmailAndMobile,
     getverifyOTP: state => state.verifyOTP,
     getverifyMobileNumber: state => state.verifyMobileNumber,
-
+    getloginloader: state => state.loginloader,
 };
 
 const reekyc = {

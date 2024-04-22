@@ -19,7 +19,7 @@
 
                     <div class="text-sm primary-color my-4 flex gap-3">
                        <input type="text" maxlength="6" v-model="otp"  class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Enter the OTP">
-                       <button class="commonbtn" >Verify</button>
+                       <button class="commonbtn" ><spinner v-if="getLoader"/> <span v-else>Verify</span></button>
                     </div>
                     <div class="text-red-500 text-xs h-3" >{{ errorMessage }}</div>
 
@@ -53,7 +53,9 @@ export default {
     computed: {
 
         ...mapGetters('popup', ['getIsOtpVerify', 'getVerificationType']),
-        ...mapGetters('popup', ['getIsEmailOrMobileUpdate', 'getUpdateType'])
+        ...mapGetters('popup', ['getIsEmailOrMobileUpdate', 'getUpdateType']),
+        ...mapGetters(['getLoader'])
+
 
     },
     methods: {
