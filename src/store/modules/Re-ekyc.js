@@ -14,8 +14,6 @@ const state = {
     isNewEmailOrNewMobileUpdate: false,
     loginloader: false,
 
-
-
 };
 
 const actions = {
@@ -51,9 +49,8 @@ const actions = {
             });
     },
 
-    verifyOTP({ commit }, otp) {
+    verifyOTP({ commit, rootState }, otp) {
         commit('setLoader', true, { root: true });
-
 
         const requestData = {
             option: state.active,
