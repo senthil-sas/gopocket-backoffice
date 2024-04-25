@@ -5,17 +5,6 @@
         </div>
 
         <form @submit.prevent="handleSubmit()">
-            <!-- <div class="my-6">
-                <div class="primary-color text-sm mb-1">Select bank account type</div>
-                <fieldset class="mt-4">
-                  <div class="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
-                    <div v-for="account in accountTypes" :key="account.id" class="flex items-center">
-                      <input v-model="accountType" :value="account.title" :id="account.id" name="notification-method" type="radio" class="h-4 w-4 border-gray-300 accent-[#753ED7] cursor-pointer" />
-                      <label :for="account.id" class="ml-3 block text-sm font-medium leading-6 text-gray-900 cursor-pointer">{{ account.title }}</label>
-                    </div>
-                  </div>
-                </fieldset>
-            </div> -->
 
             <div class="my-4 flex-col items-center gap-5 flex-wrap">
                 <div>

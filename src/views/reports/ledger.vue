@@ -94,10 +94,10 @@
         </div>
       </div>
     </div>
-  </div> -->
+  </div>  -->
   <div class="px-4">
     <div class="h-[calc(100vh-200px)] overflow-y-auto border-t">
-      <table class="w-full relative">
+      <table class="w-full relative" v-if="getLedgerData?.length > 0">
         <thead>
           <tr class="h-12">
             <th
@@ -148,6 +148,9 @@
           </tr>
         </tbody>
       </table>
+      <div v-else class="flex justify-center my-10 ">
+            No Ledger Found
+        </div>
     </div>
   </div>
   </div> 
@@ -175,107 +178,11 @@ const tableHeads = ref([
   { name: "Date", class: "text-left" },
   { name: "Description", class: "text-left" },
   { name: "Voucher No", class: "text-center" },
-  { name: "Debit", class: "text-center" },
+  { name: "Debit", class: "text-right" },
   { name: "Credit.", class: "text-right" },
 ]);
 
-const ledgerData = ref([
-  {
-    branchcode: "DIGI",
-    drcr: "C",
-    dtoftran: "2024-02-08",
-    damount: 0.0,
-    voucher: "RECSEC 2213756",
-    tradingcode: "124492",
-    camount: 100.0,
-    entrycode: "3",
-    descript: "RECEIVED ON ACCOUNT124492",
-  },
-  {
-    branchcode: "DIGI",
-    drcr: "D",
-    dtoftran: "2024-02-20",
-    damount: 82.74,
-    voucher: "NTN/035/211",
-    tradingcode: "124492",
-    camount: 0.0,
-    entrycode: "5",
-    descript:
-      "TO BILL NTN/035/211    FOR EX: NSE- BT: T1-NORMAL - SETTLEMENT=2024035GST INVOICE # : 3323240000586006",
-  },
-  {
-    branchcode: "DIGI",
-    drcr: "D",
-    dtoftran: "2024-02-21",
-    damount: 0.22,
-    voucher: "NTN/036/208",
-    tradingcode: "124492",
-    camount: 0.0,
-    entrycode: "5",
-    descript:
-      "TO BILL NTN/036/208    FOR EX: NSE- BT: T1-NORMAL - SETTLEMENT=2024036GST INVOICE # : 3323240000588512",
-  },
-  {
-    branchcode: "DIGI",
-    drcr: "D",
-    dtoftran: "2024-02-26",
-    damount: 4.0,
-    voucher: "NTW/039/25",
-    tradingcode: "124492",
-    camount: 0.0,
-    entrycode: "5",
-    descript:
-      "TO BILL NTW/039/25     FOR EX: NSE- BT: T1-DEPOS. (O) - SETTLEMENT=2024039GST INVOICE # : 3323240000596496",
-  },
-  {
-    branchcode: "DIGI",
-    drcr: "D",
-    dtoftran: "2024-02-28",
-    damount: 3.6,
-    voucher: "NTW/041/32",
-    tradingcode: "124492",
-    camount: 0.0,
-    entrycode: "5",
-    descript:
-      "TO BILL NTW/041/32 FOR EX: NSE- BT: T1-DEPOS. (O) - SETTLEMENT=2024041GST INVOICE # : 3323240000602903",
-  },
-  {
-    branchcode: "DIGI",
-    drcr: "D",
-    dtoftran: "2024-03-07",
-    damount: 4.55,
-    voucher: "NTN/047/266",
-    tradingcode: "124492",
-    camount: 0.0,
-    entrycode: "5",
-    descript:
-      "TO BILL NTN/047/266 FOR EX: NSE- BT: T1-NORMAL - SETTLEMENT=2024047GST INVOICE # : 3323240000623233",
-  },
-  {
-    branchcode: "DIGI",
-    drcr: "D",
-    dtoftran: "2024-03-06",
-    damount: 0.56,
-    voucher: "NTN/046/231",
-    tradingcode: "124492",
-    camount: 0.0,
-    entrycode: "5",
-    descript:
-      "TO BILL NTN/046/231    FOR EX: NSE- BT: T1-NORMAL - SETTLEMENT=2024046GST INVOICE # : 3323240000619576",
-  },
-  {
-    branchcode: "DIGI",
-    drcr: "D",
-    dtoftran: "2024-03-15",
-    damount: 3.85,
-    voucher: "NTW/052/23",
-    tradingcode: "124492",
-    camount: 0.0,
-    entrycode: "5",
-    descript:
-      "TO BILL NTW/052/23     FOR EX: NSE- BT: T1-DEPOS. (O) - SETTLEMENT=2024052GST INVOICE # : 3323240000642742",
-  },
-]);
+
 
 const popover = ref({
   visibility: "click",
@@ -285,14 +192,14 @@ const popover = ref({
 const getUserId = computed(() => store.getters["auth/getUserId"]);
 const getLedgerData = computed(() => store.getters["ledger/getLedgerData"]);
 
-// const getLedger = () => {
-//   let json = {
-//     ucc: getUserId.value,
-//     from_date: fromDate.value,
-//     to_date: toDate.value,
-//   };
-//   store.dispatch("ledger/getledgerApi", json);
-// };
+const getLedger = () => {
+  let json = {
+    ucc: getUserId.value,
+    from_date: fromDate.value,
+    to_date: toDate.value,
+  };
+  store.dispatch("ledger/getledgerApi", json);
+};
 
 const daysinMonth = (year, month) => {
   return new Date(year, month, 0).getDate();
@@ -360,9 +267,7 @@ const setDate = () => {
   const currentDay = curfullYear.getDate();
   curYear.value = Number(currentYear);
   fromDate.value = new Date(`${currentYear - 1}-0${4}-01`);
-  toDate.value = new Date(
-    getPreviousDays(`${currentYear}-${currentMonth + 1}-${currentDay}`)
-  );
+  toDate.value = new Date(`${currentYear - 1}-0${4}-01`);
 };
 
 onMounted(() => {

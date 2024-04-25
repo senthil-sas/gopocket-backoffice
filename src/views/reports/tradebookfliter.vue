@@ -1,8 +1,8 @@
 <template>
     <div>
       <div class=" gap-4 items-end mt-4">
-<div v-if="activeReportTab != 2">
-<div class="primary-color text-[14px] mb-2">Segment</div>
+           <div v-if="activeReportTab != 2">
+           <div class="primary-color text-[14px] mb-2">Segment</div>
           <Listbox  as="div" v-model="segment" class="">
             <div class="relative">
               <ListboxButton
@@ -146,9 +146,11 @@
         </div>
   
         <div class="flex align-center justify-end">
+         
           <button class="commonbtn" @click="getTradeBook">
-            <span class=" text-[14px]">Get Reports </span>
-          </button>
+          <spinner v-if="loader" />
+          <span v-else>Get Reports</span>
+        </button>
           <div class="h-5"></div>
         </div>
       </div>
@@ -168,7 +170,6 @@
   } from "@headlessui/vue";
   import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
   const store = useStore();
-  const currentTab = ref(0);
   // const segment = ref("");
   const segment = ref({ name: "Equity", id: 0, exch: "NSE" });
   const segments = ref([
@@ -186,27 +187,14 @@ const activeReportTab = computed(() => store.getters["reports/getActiveReportTab
     placement: "bottom-start",
   });
   
-  const tableHeads = ref([
-    { name: "Trade Date", class: "text-left" },
-    { name: "Symbol", class: "text-left" },
-    { name: "Trans Type", class: "text-center" },
-    { name: "UCC", class: "text-center" },
-    { name: "Qty.", class: "text-right" },
-    { name: "Price", class: "text-right" },
-    { name: "Value", class: "text-right" },
-  ]);
   
   const fromDate = ref("");
   const toDate = ref("");
   const today = ref(new Date());
-  const curMonth = ref("");
-  const curYear = ref(0);
   
-  const getLoader = computed(() => store.getters["reports/getLoader"]);
+  const loader = computed(() => store.getters["getLoader"]); 
+
   const getUserId = computed(() => store.getters["auth/getUserId"]);
-  const getTradeBookData = computed(
-    () => store.getters["tradebook/getTradeBookData"]
-  );
   
   // const getFirstDayOfMonth = () => {
   //   const today = new Date();
@@ -227,15 +215,17 @@ const activeReportTab = computed(() => store.getters["reports/getActiveReportTab
   // };
 
   const getTradeBook = () => {
+    console.log(fromDate);
+    
   let payload = {
     ucc: getUserId.value,
     segment: segment.value.exch,
-    fromDate: formatDate(fromDate.value),
-    toDate: formatDate(toDate.value),
+    fromDate: formateDate(fromDate.value),
+    toDate: formateDate(toDate.value),
   };
+  
   if (activeReportTab.value === 0) {
     store.dispatch("tradebook/getTradeBookFromApi", payload);
-    console.log(activeReportTab.value);
   } else if (activeReportTab.value === 2) {
     
     store.dispatch("ledger/getledgerApi", payload);
@@ -254,23 +244,7 @@ const activeReportTab = computed(() => store.getters["reports/getActiveReportTab
     return formattedDate;
   };
   
-  const daysinMonth = (year, month) => {
-    return new Date(year, month, 0).getDate();
-  };
   
-  const formatDate = (paloadDate) => {
-    const dateObject = new Date(paloadDate);
-  
-    // Get year, month, and day from the Date object
-    const year = dateObject.getFullYear();
-    const month = ("0" + (dateObject.getMonth() + 1)).slice(-2); // Adding 1 because getMonth() returns zero-based month index
-    const day = ("0" + dateObject.getDate()).slice(-2);
-  
-    // New date string in yyyy-mm-dd format
-    const newDateFormat = year + "-" + month + "-" + day;
-  
-    return newDateFormat;
-  };
   
   // const previousYear = () => {
   //   const [toyeardate] = formatDate(toDate.value).split("-");

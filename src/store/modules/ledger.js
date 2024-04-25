@@ -5,31 +5,30 @@ const apiservice = apiledgerservice();
 
 const state = {
     ledgerData: [],
-    dataPoints: {}
+    dataPoints: {},
+    loader: false,
+
 }
 
 const actions = {
     async getledgerApi({ commit }, payload) {
-        // console.log(payload,"vvv");
+        commit('setLoader', true, { root: true });
+
         try {
-            apiservice.getLedgerData(payload).then(resp => {
+            const resp = await apiservice.getLedgerData(payload);
 
-                // console.log(resp.data.message.customer_ledger, "resp");
+            if (resp?.data?.message?.customer_ledger) {
+                commit('setledgerData', resp.data.message.customer_ledger);
+            } else {
+                commit('setTradeBookData', []);
+            }
 
-                if (resp?.data?.message?.customer_ledger) {
-
-                    commit('setledgerData', resp.data.message.customer_ledger);
-
-                } else {
-
-                    commit('setTradeBookData', [])
-
-                }
-            })
         } catch (error) {
-
         }
+        commit('setLoader', false, { root: true });
+
     }
+
 };
 
 const mutations = {

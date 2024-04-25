@@ -14,9 +14,7 @@ const actions = {
     async IFSCDetails({ commit, rootState }, ifscCode) {
         commit('setIFSCDetails', []);
 
-        // const requestData = {
-        //     ucc: rootState.auth.userId,
-        // };
+
         await service.getIFSCDetails(rootState.auth.userId, ifscCode)
             .then(resp => {
                 if (resp.status == 200 && resp?.data?.stat === 1) {
