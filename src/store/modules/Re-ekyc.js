@@ -194,9 +194,6 @@ const actions = {
                 commit('setloginloader', false,);
             });
     },
-
-
-
 };
 
 

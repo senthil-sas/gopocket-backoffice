@@ -19,20 +19,27 @@
 
             <div class="my-4 flex-col items-center gap-5 flex-wrap">
                 <div>
-                    <div class="primary-color text-sm mb-1">Bank IFSC Code</div>
+                    <div class="primary-color text-sm mb-1">Bank IFSC Code </div>
                     <div>
-                        <input type="text" name="ifscCode" id="ifscCode" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                        <input type="text" name="ifscCode" id="ifscCode" v-model="ifscCode" maxlength="11" placeholder="Bank IFSC Code" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" @input="validateIfsc(),keyPressIfsc($event),ifscCode?.length < 11 ? $store.commit('bankDetails/setIFSCDetails', '', {root:true}) : ''">
+                                    <!-- Error Msg for First Name --> 
                      </div>
-                     <!-- <div class="text-sm primaryColor pt-1 uppercase">
-                                <p  v-if="ifscCode?.length == 11 && !getbankErrormsg && getBranchdeatails">{{ getBranchdeatails.BANK }}, {{ getBranchdeatails.BRANCH }},  {{ getBranchdeatails.DISTRICT }}</p>
-                            </div>            -->
+                     <div class="text-red-500 text-xs pt-1 h-3">{{ geterrormsg }}
+                        <span class="text-red-500 text-xs pt-1 h-3" v-if="ifscCode == '' && isSubmit">Enter IFSC code</span>
+
+</div>
+
+                     <div class="text-sm primaryColor pt-1 uppercase">
+                                <p  v-if="ifscCode?.length == 11 && getIFSCDetails.BANK || getIFSCDetails.BRANCH || getIFSCDetails.DISTRICT && getIFSCDetails">{{ getIFSCDetails.BANK }}, {{ getIFSCDetails.BRANCH }},{{ getIFSCDetails.DISTRICT }}</p>
+
+                            </div>       
                              </div>
                 <div class="h-5"></div>
 
                 <div>
                     <div class="primary-color text-sm mb-1">Bank’s MICR Code</div>
                     <div>
-                        <input type="text" name="micrCode" id="micrCode" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="micrCode"/>
+                        <input type="text" name="MICRcode" id="MICRcode" maxlength="25" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Bank’s MICR Code"  v-model="MICRcode" @input="keyPressAlphaNumericMicr" />
                      </div>
                      <div class="h-5"></div>
                 </div>
@@ -42,7 +49,10 @@
                 <div >
                     <div class="primary-color text-sm mb-1">Enter your account number</div>
                     <div>
-                        <input type="text" name="accountNo" id="accountNo" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="accountNo"/>
+                        <input type="text"  maxlength="15" name="accountNo" id="accountNo" class="pw block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"  autocomplete="off" v-model="accountNumber" placeholder="Bank Account Number" @input="keyPressAlphaNumericAcc"/>
+                    </div>
+                    <div class="h-4">
+                       <span class="text-red-500 text-xs pt-1 h-3" v-if="accountNo == '' && isSubmit">Enter Account Number</span>
                     </div>
                 </div>
                 <div class="h-5"></div>
@@ -50,7 +60,11 @@
                 <div>
                     <div class="primary-color text-sm mb-1">Re-enter your account number</div>
                     <div>
-                        <input type="text" name="reAccountNo" id="reAccountNo" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="reAccountNo"/>
+                        <input type="text" name="reAccountNo" id="reAccountNo" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"  @paste.prevent @keyup="clrMisMatchErr" placeholder="Bank Account Number" maxlength="15" v-model="reEnterAccountNumber" autocomplete="off" @input="keyPressAlphaNumericReAcc" />
+                    </div>
+                    <div class="h-4">
+                       <span class="text-red-500 text-xs pt-1 h-3" v-if="reEnterAccountNumber == '' && isSubmit">Re-enter Account Number</span>
+                       <span class="text-red-500 text-xs pt-1 h-3" v-else-if="reEnterAccountNumber != accountNo && isSubmit">Account number Mismatch</span>
                     </div>
                 </div>
             </div>
@@ -67,7 +81,7 @@
             
             <div class="my-10 flex gap-3">
                 <button type="button" class="cancelbtn" @click="cancel()">Cancel</button>
-                <button type="submit" class="commonbtn">Submit</button>
+                <button type="submit" class="commonbtn" @click="savebankDetails">Submit</button>
             </div>
         </form>
     </div>
@@ -76,30 +90,87 @@
 <script>
 import icon from '../../components/utilComponents/icons.vue'
 import { Switch } from '@headlessui/vue'
+import { mapGetters } from 'vuex'
+
 export default {
     components: { icon, Switch },
     data() {
         return {
             accountNo: '',
             reAccountNo: '',
-            ifscCode: 'SBIN0004272',
-            micrCode: '',
+            ifscCode: '',
             accountTypes : [
                 { id: 'Savings', title: 'Savings' },
                 { id: 'Current', title: 'Current' },
             ],
             accountType: 'Savings',
-            isPrimaryAcc: false
+            isPrimaryAcc: false,
+            MICRcode:'',
+            accountNumber:'',
+            reEnterAccountNumber: '',
+            isSubmit: false
+
+
+
+
         }
     },
-    methods: {
-        cancel() {
-      this.$emit('cancel');
-    }
-      
+    computed: {
+        ...mapGetters('bankDetails', ['getIFSCDetails','geterrormsg']),
     },
-    watch: {
+    methods: {
+    cancel() {
+      this.$emit('cancel');
+    },
+    
+    async validateIfsc(){
+            if(this.ifscCode.length == 11){
+                await this.$store.dispatch('bankDetails/IFSCDetails', this.ifscCode)
+                this.MICRcode = this.getIFSCDetails.MICR || '';
+                console.log(this.getIFSCDetails.MICR)
+
+            }else{
+                this.MICRcode = '' 
+                this.$store.commit('bankDetails/seterrormsg','');
+            }
+        },
+        keyPressIfsc(event){
+            this.$store.commit('bankDetails/seterrormsg','');
+            const newValue = event.target.value.replace(/[^a-zA-Z0-9\s]/g, '').toUpperCase();
+            this.ifscCode = newValue.replace(/\s+/g, '');
+        },
+        keyPressAlphaNumericMicr(event){
+            const newValue = event.target.value.replace(/[^a-zA-Z0-9\s]/g, '');
+            this.MICRcode = newValue.replace(/\s+/g, '');
+        },
+        keyPressAlphaNumericAcc(event) {
+            const newValue = event.target.value.replace(/[^0-9]/g, '');
+            this.accountNumber = newValue.replace(/\s+/g, '');
+        },
+        keyPressAlphaNumericReAcc(event) {
+            const newValue = event.target.value.replace(/[^0-9]/g, '');
+            this.reEnterAccountNumber = newValue.replace(/\s+/g, '');
+        },
         
+      
+        async handleSubmit() {
+            this.isSubmit = true
+
+        }    
+    },
+    mounted() {
+        this.$store.commit('bankDetails/seterrormsg','');
+
+    },
+
+    watch: {
+     
     }
 }
 </script>
+<style scoped>
+input.pw{
+    -webkit-text-security: disc;
+    text-security: disc;
+}
+</style>

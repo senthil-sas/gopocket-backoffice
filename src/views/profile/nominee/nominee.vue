@@ -60,7 +60,8 @@ export default {
         // this.$store.dispatch('reekyc/verifyOTP')
         // this.$store.dispatch('reekyc/UpdateMobileNumber')
         // this.$store.dispatch('reekyc/verifyMobileNumber')
-
+        this.$store.dispatch('bankDetails/IFSCDetails') 
+        this.$store.dispatch('bankDetails/saveBankDetails') 
 
 
 
