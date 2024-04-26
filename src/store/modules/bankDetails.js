@@ -31,32 +31,44 @@ const actions = {
             });
     },
 
-    async saveBankDetails({ commit, dispatch, rootGetters }, payload) {
-        commit("setLoader", true, { root: true });
-        try {
-            let json = {
-                "applicationId": rootGetters['login/getUserId'],
-                "micr": payload.MICR,
-                "address": payload.address,
-                "ifsc": payload.ifsc,
-                "accountNo": payload.accountNo,
-                "branchName": payload.branchName,
-                "pincode": payload.pincode,
-                "verifyAccNumber": payload.verifyAccNumber
+    // async saveBankDetails({ commit, dispatch, rootGetters }, payload) {
+    //     commit("setLoader", true, { root: true });
+    //     try {
+    //         // let json = {
+    //         //     "applicationId": rootGetters['auth/getUserId'],
+    //         //     "micr": payload.MICR,
+    //         //     "address": payload.address,
+    //         //     "ifsc": payload.ifsc,
+    //         //     "accountNo": payload.accountNo,
+    //         //     "branchName": payload.branchName,
+    //         //     "pincode": payload.pincode,
+    //         //     "verifyAccNumber": payload.verifyAccNumber
+    //         // }
+    //         let response = await service.saveBankDetails(json);
+    //         if (response.status == 200 && response?.data?.stat === 1) {
+    //             console.log(response.status)
+    //             commit('common/setcurrentTab', '3', { root: true })
+    //             commit('common/setIsPenny', true, { root: true })
+    //         } else {
+    //         }
+    //     } catch (error) {
+    //         commit("setLoader", false, { root: true });
+    //     }
+    //     commit("setLoader", false, { root: true });
+    // },
+    async saveBankDetails({ commit, dispatch }, payload) {
+        // commit('setLoader', true)
+        service.saveBankDetails(payload).then(resp => {
+            if (resp.status == 200 && resp.data.message.Success == 1) {
+                dispatch('getBankDataFromApi')
+                commit('setIsAddBank', false)
             }
-            let response = await service.saveBankDetails(json);
-            if (response.status == 200 && response?.data?.stat === 1) {
-                console.log(response.status)
-                commit('common/setcurrentTab', '3', { root: true })
-                commit('common/setIsPenny', true, { root: true })
-            } else {
-            }
-        } catch (error) {
-            commit("setLoader", false, { root: true });
-        }
-        commit("setLoader", false, { root: true });
+        }).catch((error) => {
+            errorHandle.handleError(error)
+        }).finally(() => {
+            // commit('setLoader', false)
+        })
     },
-
 
 };
 

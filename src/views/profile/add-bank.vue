@@ -41,7 +41,7 @@
                         <input type="text"  maxlength="15" name="accountNo" id="accountNo" class="pw block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"  autocomplete="off" v-model="accountNumber" placeholder="Bank Account Number" @input="keyPressAlphaNumericAcc"/>
                     </div>
                     <div class="h-4">
-                       <span class="text-red-500 text-xs pt-1 h-3" v-if="accountNo == '' && isSubmit">Enter Account Number</span>
+                       <span class="text-red-500 text-xs pt-1 h-3" v-if="accountNumber == '' && isSubmit">Enter Account Number</span>
                     </div>
                 </div>
                 <div class="h-5"></div>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="h-4">
                        <span class="text-red-500 text-xs pt-1 h-3" v-if="reEnterAccountNumber == '' && isSubmit">Re-enter Account Number</span>
-                       <span class="text-red-500 text-xs pt-1 h-3" v-else-if="reEnterAccountNumber != accountNo && isSubmit">Account number Mismatch</span>
+                       <span class="text-red-500 text-xs pt-1 h-3" v-else-if="reEnterAccountNumber != accountNumber && isSubmit">Account number Mismatch</span>
                     </div>
                 </div>
             </div>
@@ -106,12 +106,17 @@ export default {
     },
     computed: {
         ...mapGetters('bankDetails', ['getIFSCDetails','geterrormsg']),
+        ...mapGetters("auth", ["getUserId"]),
+
     },
     methods: {
     cancel() {
       this.$emit('cancel');
     },
     
+    validateForm() {
+            return this.ifscCode != '' && this.accountNumber == this.reEnterAccountNumber && this.ifscCode.length == 11
+        },
     async validateIfsc(){
             if(this.ifscCode.length == 11){
                 await this.$store.dispatch('bankDetails/IFSCDetails', this.ifscCode)
@@ -140,12 +145,30 @@ export default {
             const newValue = event.target.value.replace(/[^0-9]/g, '');
             this.reEnterAccountNumber = newValue.replace(/\s+/g, '');
         },
-        
-      
         async handleSubmit() {
-            this.isSubmit = true
-
-        }    
+    this.isSubmit = true
+    if (this.validateForm()) { 
+        let json = {
+                        "uccCode": this.getUserId,
+                        "micr": this.getIFSCDetails?.MICR,
+                        "address":this.getIFSCDetails?.ADDRESS,
+                        "branchName": this.getIFSCDetails?.BRANCH,
+                        "ifsc": this.ifscCode,
+                        "accountNo": this.accountNumber, 
+                        "verifyAccNumber": this.reEnterAccountNumber,
+                        "bank": this.getIFSCDetails?.BANK,
+                        "bankCity":this.getIFSCDetails?.CENTRE,
+                        "bankState":this.getIFSCDetails?.STATE,
+                        "isPrimary": this.isPrimaryAcc ? 1 : 0,
+                        // "pincode":this.getIFSCDetails?.ADDRESS,
+            
+        }
+        console.log(json)
+        await this.$store.dispatch('bankDetails/saveBankDetails', json)
+        this.isSubmit = true
+    }
+},
+ 
     },
     mounted() {
         this.$store.commit('bankDetails/seterrormsg','');
