@@ -66,7 +66,7 @@ const actions = {
 
             }
             else {
-
+                commmit("setIsAddBank", false)
                 notify({
                     group: "auth",
                     type: "error",
