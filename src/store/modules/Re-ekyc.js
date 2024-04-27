@@ -194,6 +194,32 @@ const actions = {
                 commit('setloginloader', false,);
             });
     },
+    getDigilocker({ commit, rootState },) {
+        commit('setloginloader', true,);
+
+        service.getDigilocker(rootState.auth.userId,)
+            .then(resp => {
+                console.log(resp.data.result);
+
+                if (resp.status == 200 && resp?.data?.stat === 1) {
+                    state.digiURL = resp?.data?.result;
+                    window.open(state.digiURL, '_self')
+
+                } else {
+                }
+            })
+            .catch(err => {
+                errorHandle.handleError(err);
+                //    notify({
+                //         group: "auth",
+                //          type: "error",
+                //         title: err.response.data.reason,
+                //     });
+            })
+            .finally(() => {
+                commit('setloginloader', false,);
+            });
+    },
 };
 
 

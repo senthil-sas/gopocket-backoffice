@@ -67,10 +67,9 @@
                     <span aria-hidden="true" :class="[isPrimaryAcc ? 'translate-x-5' : 'translate-x-0', 'pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out']" />
                 </Switch>
             </div>
-            
             <div class="my-10 flex gap-3">
                 <button type="button" class="cancelbtn" @click="cancel()">Cancel</button>
-                <button type="submit" class="commonbtn" @click="savebankDetails">Submit</button>
+                <button type="submit" class="commonbtn" @click="savebankDetails"><spinner v-if="getLoader"/><span v-else>Submit</span></button>
             </div>
         </form>
     </div>
@@ -97,16 +96,14 @@ export default {
             MICRcode:'',
             accountNumber:'',
             reEnterAccountNumber: '',
-            isSubmit: false
-
-
-
-
+            isSubmit: false,
         }
     },
     computed: {
         ...mapGetters('bankDetails', ['getIFSCDetails','geterrormsg']),
         ...mapGetters("auth", ["getUserId"]),
+        ...mapGetters(['getLoader']),
+
 
     },
     methods: {

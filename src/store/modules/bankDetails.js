@@ -5,7 +5,7 @@ const state = {
     IFSCDetails: [],
     isAddBank: false,
     errormsg: '',
-    branchDeatils: [],
+    saveBankDetails: [],
 
 }
 
@@ -13,7 +13,6 @@ const actions = {
 
     async IFSCDetails({ commit, rootState }, ifscCode) {
         commit('setIFSCDetails', []);
-
 
         await service.getIFSCDetails(rootState.auth.userId, ifscCode)
             .then(resp => {
@@ -56,17 +55,17 @@ const actions = {
     //     }
     //     commit("setLoader", false, { root: true });
     // },
-    async saveBankDetails({ commit, dispatch }, payload) {
-        // commit('setLoader', true)
+    async saveBankDetails({ commit }, payload) {
+        commit('setLoader', true, { root: true });
         service.saveBankDetails(payload).then(resp => {
             if (resp.status == 200 && resp.data.message.Success == 1) {
-                dispatch('getBankDataFromApi')
-                commit('setIsAddBank', false)
+                commit('setsaveBankDetails', resp.data.result);
+
             }
         }).catch((error) => {
             errorHandle.handleError(error)
         }).finally(() => {
-            // commit('setLoader', false)
+            commit('setLoader', false, { root: true });
         })
     },
 
@@ -82,15 +81,15 @@ const mutations = {
     seterrormsg(state, payload) {
         state.errormsg = payload
     },
-    setBranchdeatails(state, payload) {
-        state.branchDeatils = payload
+    setsaveBankDetails(state, payload) {
+        state.saveBankDetails = payload
     }
 };
 
 const getters = {
     getIFSCDetails: state => state.IFSCDetails,
     getIsAddBank: state => state.isAddBank,
-    getBankDetails: state => state.bankDetails,
+    getsaveBankDetails: state => state.saveBankDetails,
     geterrormsg: state => state.errormsg,
 
 

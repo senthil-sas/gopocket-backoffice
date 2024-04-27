@@ -42,5 +42,11 @@ export default {
         };
         return axios.get(`${kycURI}reEkyc/updateEmailIdVerify?id=${id}&updateEmailIdOtp=${otp}`, requestOptions);
     },
+    async getDigilocker(userId) {
+        const requestOptions = {
+            headers: authHeader(),
+        };
+        return axios.get(`${kycURI}reEkycDigio/iniDigio?uccCode=${userId}`, requestOptions);
+    },
 }
 
