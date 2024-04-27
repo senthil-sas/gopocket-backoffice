@@ -10,12 +10,19 @@
                 <div>
                     <input type="text" name="firstName" id="firstName" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" @input="toUpperCaseModel('firstName')" v-model="firstName"/>
                 </div>
+                
+                <div class="h-4">
+                    <span class="error-msg" v-if="firstName == '' && isSubmit">Enter first name</span>
+                </div>
             </div>
 
             <div>
                 <div class="primary-color text-sm mb-1">Last Name</div>
                 <div>
                     <input type="text" name="lastName" id="lastName" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" @input="toUpperCaseModel('lastName')" v-model="lastName"/>
+                </div>
+                <div class="h-4">
+                    <span class="error-msg" v-if="lastName == '' && isSubmit">Enter last name</span>
                 </div>
             </div>
         </div>
@@ -27,7 +34,7 @@
                 <Listbox as="div" v-model="relationship" class="min-w-[350px]">
                 <ListboxLabel class="block text-sm font-medium leading-6 text-gray-900">Relationship </ListboxLabel>
                 <div class="relative">
-                    <ListboxButton class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <ListboxButton class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
                         <span class="block truncate">{{ relationship.name }}</span>
                         <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                             <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -40,14 +47,17 @@
                                 <li :class="[active ? 'violet-bg text-white' : 'text-gray-900', 'relative cursor-pointer select-none py-2 pl-8 pr-4']">
                                     <span :class="[relationship ? 'font-semibold' : 'font-normal', 'block truncate']">{{ i.name }}</span>
                                     <span v-if="relationship" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 left-0 flex items-center pl-1.5']">
-    <CheckIcon class="h-5 w-5" aria-hidden="true" />
-</span>
+                                        <CheckIcon class="h-5 w-5" aria-hidden="true" />
+                                    </span>
                                 </li>
                             </ListboxOption>
                         </ListboxOptions>
                     </transition>
                 </div>
                 </Listbox>
+                <div class="h-4">
+                    <span class="error-msg" v-if="relationship == '' && isSubmit">Select relationship</span>
+                </div>
             </div>
 
             <div class="my-3">
@@ -56,7 +66,7 @@
                     <!-- Days dropdown -->
                     <Listbox as="div" v-model="nomineeDate" class="w-full">
                         <div class="relative">
-                            <ListboxButton class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <ListboxButton class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
                                 <span class="block truncate">{{ nomineeDate }}</span>
                                 <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                     <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -81,7 +91,7 @@
                     <!-- Months dropdown -->
                     <Listbox as="div" v-model="nomineeMonth" class="w-full">
                         <div class="relative">
-                            <ListboxButton class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <ListboxButton class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
                                 <span class="block truncate">{{ nomineeMonth.month }}</span>
                                 <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                     <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -106,7 +116,7 @@
                      <!-- years dropdown -->
                      <Listbox as="div" v-model="nomineeYear" class="w-full">
                         <div class="relative">
-                            <ListboxButton class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <ListboxButton class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
                                 <span class="block truncate">{{ nomineeYear }}</span>
                                 <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                     <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -128,14 +138,20 @@
                         </div>
                     </Listbox>
                 </div>
+                <div class="h-4">
+                    <span class="error-msg" v-if="(nomineeDate == '' || nomineeMonth == '' || nomineeYear == '') && isSubmit">Enter the Date of birth</span>
+                </div>
             </div>
         </div>
+
         
         <div class="my-3 flex gap-5 items-center">
             <div class="my-3">
                 <div class="primary-color text-sm mb-1">PAN (optional)</div>
                 <div>
                     <input maxlength="10" @input="panNo ? panNo = panNo?.toUpperCase() : panNo" type="text" name="panNo" id="panNo" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="panNo"/>
+                </div>
+                <div class="h-4">
                 </div>
             </div>
 
@@ -144,14 +160,24 @@
                 <div>
                     <input maxlength="10" @input="digitKeyOnly($event, 'mobileNo')" type="text" name="mobileNo" id="mobileNo" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="mobileNo"/>
                 </div>
+                <div class="h-4">
+                    <span class="error-msg" v-if="!isValidMobile() && isSubmit">Enter valid mobile number</span>
+                </div>
             </div>
         </div>
 
         <div class="my-3 flex gap-5 items-center">
             <div class="my-3">
-                <div class="primary-color text-sm mb-1">Nominee Share Percentage</div>
+                <div class="flex items-center justify-between">
+                    <div class="primary-color text-sm mb-1">Nominee Share Percentage</div> <span class="text-xs">Total available shares: ({{ totalAvilableShare }})</span>
+                </div>
                 <div>
                     <input maxlength="3" @input="digitKeyOnly($event, 'nomineeSharePercentage')" type="text" name="sharePercentage" id="sharePercentage" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="nomineeSharePercentage"/>
+                </div>
+
+                <div class="h-4">
+                    <span class="error-msg" v-if="nomineeSharePercentage == '' && isSubmit">Share percentage cannot be empty</span>
+                    <span class="error-msg" v-else-if="nomineeSharePercentage > totalAvilableShare && isSubmit">Cannot allocate percentage more than available share</span>
                 </div>
             </div>
         </div>
@@ -176,12 +202,18 @@
                 <div>
                     <input type="text" name="Address" id="Address" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="Address"/>
                 </div>
+                <div class="h-4">
+                    <span class="error-msg" v-if="Address == '' && isSubmit">Enter the Address</span>
+                </div>
             </div>
 
             <div>
                 <div class="primary-color text-sm mb-1">Address line 2</div>
                 <div>
                     <input type="text" name="pincode" id="Address2" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="AddressLine2"/>
+                </div>
+                <div class="h-4">
+                    <span class="error-msg" v-if="AddressLine2 == '' && isSubmit">Enter the Address line 2</span>
                 </div>
             </div>
         </div>
@@ -192,6 +224,9 @@
                 <div>
                     <input type="text" name="state" id="state" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="state"/>
                 </div>
+                <div class="h-4">
+                    <span class="error-msg" v-if="state == '' && isSubmit">Enter the Address line 2</span>
+                </div>
             </div>
 
             <div>
@@ -199,11 +234,15 @@
                 <div>
                     <input maxlength="6" @input="digitKeyOnly($event, 'pincode')" type="text" name="pincode" id="pincode" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="pincode"/>
                 </div>
+                <div class="h-4">
+                    <span class="error-msg" v-if="pincode == '' && isSubmit">Enter the pincode</span>
+                    <span class="error-msg" v-if="pincode.length != 6 && isSubmit">Enter valid pincode</span>
+                </div>
             </div>
         </div>
 
         <div v-if="getIsMinor">
-            <div class="bg-violet-200 leading-6 text-sm rounded-md p-4 my-4 max-w-[800px]">
+            <div class="bg-[#ccedfb] leading-6 text-sm rounded-md p-4 my-4 max-w-[800px]">
                 <div class="primary-color !font-semibold mb-2">Why do you need a Guardian?</div>
                 <p class="primary-color">The Nominee for your account is a Minor (below 18 years). For a minor nominee, you are requested to add a 
                 guardian (who is above 18 years old). For obvious reasons, you can not be a Guardian or Nominee for your own account.</p>
@@ -212,7 +251,10 @@
 
         <div class="my-10 flex gap-3">
             <button type="button" class="cancelbtn" @click="backToNomineeDetails()">Cancel</button>
-            <button type="submit" class="commonbtn">Submit</button>
+            <button type="submit" class="commonbtn">
+                <span v-if="!getLoader">Submit</span>
+                <button_spinner v-else />
+            </button>
         </div>
     </form>
 </template>
@@ -250,18 +292,19 @@ export default {
             pincode: '',
             nomineeSharePercentage: 0,
 
-
             // 
             Address: '',
             AddressLine2:'',
             nomineeDate:'',
             nomineeMonth:'',
-            nomineeYear:''
+            nomineeYear:'',
+            isSubmit: false
         }
     },
     computed: {
         ...mapGetters(['getMonths']),
         ...mapGetters('nominee',['getIsMinor', 'getNomineeList']),
+        ...mapGetters('auth', ['getUserId']),
         days() {
             const daysInMonth = new Date(this.nomineeYear || 2023, this.nomineeMonth.month || 'JAN', 0).getDate() || 31
             let arr = []
@@ -291,54 +334,60 @@ export default {
 
         dateOfBirth() {
             return `${this.nomineeYear}-${this.nomineeMonth.id}-${this.nomineeDate}`
+        },
+
+        totalAvilableShare() {
+            const sum = this.getNomineeList.reduce((accumulator, object) => {
+                return accumulator + object.percentage_allocation;
+            }, 0);
+            return 100 - sum
         }
     },
     methods: {
-        addNominee() {
-            // let json = {
-            //     firstName: this.firstName,
-            //     lastName: this.lastName,
-            //     panNo: this.panNo,
-            //     relationship: this.relationship.name
-            // }
-
-            let address = this.Address.split(',')
-            
-            let json = {
-                "data": {
-                    "fsl_nominee_details": [ ]
+        async addNominee() {
+            this.isSubmit = true
+            if (this.validateForm()) {
+                let address = this.Address.split(',')
+                let json = {
+                    "data": {
+                        "ucc" :this.getUserId,
+                        "fsl_nominee_details": []
+                    }
                 }
+                if (this.getNomineeList.length)
+                    json.data.fsl_nominee_details = [...this.getNomineeList]
+                    json.data.fsl_nominee_details.push({
+                        "nominee_name": this.firstName,
+                        "percentage_allocation": Number(this.nomineeSharePercentage),
+                        "relationship": this.relationship.name,
+                        "date_of_birth": this.dateOfBirth,
+                        "pan": this.panNo,
+                        "mobile_number": this.mobileNo,
+                        "email_id": "",
+                        "address": address[0] ? address[0].trim() : address[0],
+                        "address_2": address[1] ? address[1].trim() : address[1],
+                        "address_3": address[2] ? address[2].trim() : address[2],
+                        "city": this.AddressLine2,
+                        "state": this.state,
+                        "pincode": this.pincode,
+                        "nominee_number": "",
+                        "guardian": null
+                    })
+                if (this.getIsMinor) {
+                    this.$store.commit('nominee/setNomineeStage', 'addGuardian')
+                } else {
+                    await this.$store.dispatch('nominee/addNomineeDetails', json)
+                }
+                this.isSubmit = false
             }
-            if(this.getNomineeList.length)
-            json.data.fsl_nominee_details = [...this.getNomineeList ]
-            json.data.fsl_nominee_details.push({
-                "nominee_name": this.firstName,
-                "percentage_allocation": Number(this.nomineeSharePercentage),
-                "relationship": this.relationship.name,
-                "date_of_birth": this.dateOfBirth,
-                "pan": this.panNo,
-                "mobile_number": this.mobileNo,
-                "email_id": "",
-                "address": address[0] ? address[0].trim() : address[0],
-                "address_2": address[1] ? address[1].trim() : address[1],
-                "address_3": address[2] ? address[2].trim() : address[2],
-                "city": this.AddressLine2,
-                "state": this.state,
-                "pincode": this.pincode,
-                "nominee_number": ""
-            })
+        },
 
-            // this.$store.commit('nominee/setNomineeList', json)
-            if(this.getIsMinor) {
-                this.$store.commit('nominee/setNomineeStage', 'addGuardian')
-            } else {
-                // this.$store.commit('nominee/setNomineeStage', 'nomineeSummary')
-                this.$store.dispatch('nominee/addNomineeDetails', json)
-            }
-        },  
         backToNomineeDetails() {
-            this.$store.dispatch('nominee/getNomineeDetails')
-            // this.$store.commit('nominee/setNomineeStage', 'initialList')
+            if(this.getNomineeList.length) {
+                this.$store.commit('nominee/setNomineeStage', 'nomineeSummary')
+            } else {
+                this.$store.commit('nominee/setNomineeStage', 'initialList')
+            }
         },
 
         toUpperCaseModel(vmodel) {
@@ -377,6 +426,17 @@ export default {
             this[type] = event.target.value
         },
 
+        validateForm() {
+            return this.firstName != '' && this.lastName != '' && this.relationship != '' && (this.nomineeDate != '' && this.nomineeMonth != '' && this.nomineeYear != '') 
+            && this.isValidMobile() && this.nomineeSharePercentage <= this.totalAvilableShare && this.Address != '' && this.AddressLine2
+            && this.state != '' &&( this.pincode != '' && this.pincode.length == 6)
+        },
+
+        isValidMobile() {
+            const panPattern = /^[6-9]\d{9}$/gi;
+            const str = this.mobileNo;
+            return panPattern.test(str)
+        },
     },
     watch: {
         isAgeModified(val) { }

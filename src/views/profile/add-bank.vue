@@ -112,6 +112,7 @@ export default {
     },
     
     validateForm() {
+        
             return this.ifscCode != '' && this.accountNumber == this.reEnterAccountNumber && this.ifscCode.length == 11
         },
     async validateIfsc(){
@@ -160,15 +161,16 @@ export default {
                         // "pincode":this.getIFSCDetails?.ADDRESS,
             
         }
-        console.log(json)
         await this.$store.dispatch('bankDetails/saveBankDetails', json)
         this.isSubmit = true
     }
 },
  
     },
-    mounted() {
+    unmounted() {
         this.$store.commit('bankDetails/seterrormsg','');
+        this.$store.commit('bankDetails/setIFSCDetails','' )
+
 
     },
 

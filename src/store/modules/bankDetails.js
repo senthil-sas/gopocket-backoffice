@@ -1,5 +1,7 @@
 import service from "../modules/services/Bank_Details.ts"
 import errorHandle from '../../handleError/errorHandling'
+import { useNotification } from "@kyvg/vue3-notification";
+const { notify } = useNotification();
 
 const state = {
     IFSCDetails: [],
@@ -58,12 +60,26 @@ const actions = {
     async saveBankDetails({ commit }, payload) {
         commit('setLoader', true, { root: true });
         service.saveBankDetails(payload).then(resp => {
+            console.log(resp)
             if (resp.status == 200 && resp.data.message.Success == 1) {
                 commit('setsaveBankDetails', resp.data.result);
 
             }
+            else {
+
+                notify({
+                    group: "auth",
+                    type: "error",
+                    title: resp.data.message,
+                });
+            }
         }).catch((error) => {
             errorHandle.handleError(error)
+            notify({
+                group: "auth",
+                type: "error",
+                title: error.response.data.message,
+            });
         }).finally(() => {
             commit('setLoader', false, { root: true });
         })

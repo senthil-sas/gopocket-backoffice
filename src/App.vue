@@ -85,7 +85,9 @@ body {
   color: #ff00a8 !important;
   @apply dark:text-[#c53794] dark:bg-[#33242d] !font-semibold;
 }
-
+.error-msg {
+  @apply text-red-400 text-xs  
+}
 ::-webkit-scrollbar {
   width: 0.4rem;
   height: 0.4rem;
