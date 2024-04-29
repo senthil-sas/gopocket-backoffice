@@ -9,24 +9,24 @@ const state = {
 }
 
 const actions = {
-    async getTradeBookFromApi({ state, commit }) {
-        state.loader = true
-        try {
-            service.getTradeBook().then(resp => {
-                if (resp?.data?.data) {
-                    commit('setTradeBookData', resp?.data?.data)
-                    commit('setDataPoints', resp?.data?.data)
-                } else {
-                    commit('setTradeBookData', [])
-                    commit('setDataPoints', {})
-                }
-            }).finally(() => {
-                state.loader = false
-            })
-        } catch (error) {
-            state.loader = false
-        }
-    }
+    // async getTradeBookFromApi({ state, commit }) {
+    //     state.loader = true
+    //     try {
+    //         service.getTradeBook().then(resp => {
+    //             if (resp?.data?.data) {
+    //                 commit('setTradeBookData', resp?.data?.data)
+    //                 commit('setDataPoints', resp?.data?.data)
+    //             } else {
+    //                 commit('setTradeBookData', [])
+    //                 commit('setDataPoints', {})
+    //             }
+    //         }).finally(() => {
+    //             state.loader = false
+    //         })
+    //     } catch (error) {
+    //         state.loader = false
+    //     }
+    // }
 };
 
 const mutations = {

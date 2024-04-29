@@ -39,7 +39,8 @@
                 Please use the dropdown menu to choose the document(s) you would like to receive at your registered email address.
             </p>
             <div>
-                <button type="submit" class="commonbtn">Email to me</button>
+                <button type="submit" class="commonbtn"> <spinner v-if="getLoader"/><span v-else>Email to me</span></button>
+
             </div>
         </form>
         </div>
@@ -49,25 +50,37 @@
 <script>
 import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
+import { mapGetters } from 'vuex';
+
 export default {
     components: { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions, CheckIcon, ChevronUpDownIcon },
     data() {
         return {
             document: '',
             documents: [
-                { name: 'Income Proof', id: 0 },
-                { name: 'Identity Proof', id: 0 },
-                { name: 'Signature Proof', id: 0 },
-                { name: 'photo', id: 0 },
+                { name: 'Income Proof', id: 'INCOME_PROOF' },
+                { name: 'Identity Proof', id: 'PAN' },
+                { name: 'Signature Proof', id: 'SIGNATURE' },
+                { name: 'photo', id:'IPV' },
                 { name: `${this.$store.state.brokerName} CMR Copy`, id: 0 },
                 { name: 'Equity application form', id: 0 }
             ]
         }
     },
-    methods: {
-        sendMail() {
-
-        }
+    computed: {
+      ...mapGetters(['getLoader']),
     },
+    methods: {
+
+
+sendMail() {
+        if (this.document) { 
+            // console.log(this.document);
+            this.$store.dispatch('Documents/getDocuments', this.document.id);
+        }
+    }
+
+},
+
 }
 </script>

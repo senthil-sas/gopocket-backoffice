@@ -51,9 +51,12 @@
               <div class="primaryColor text-[14px] leading-[1.3rem]">
                 <!-- {{ getProfileData.address ? getProfileData.address.join(', ') : 'NA' }} -->
                 {{ getProfileData.primary_address  }}
-  
+
               </div>
+
             </div>
+            <span class="ml-auto cursor-pointer"  @click="getDigioLink(val)" ><icon name="edit" height="16" width="16" /></span>
+
           </div>
         </box>
         <!-- <box class="w-full py-[40px] px-[24px] " >
@@ -216,8 +219,9 @@ import tradebookfliter from '../views/reports/tradebookfliter.vue';
   }
   
   
-  ;
-  
+  const getDigioLink = (val) => {
+    store.dispatch('reekyc/getDigilocker',val)
+        };
   const props = defineProps({
     isBox: { type: Boolean, default: true }
   });
