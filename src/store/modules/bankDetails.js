@@ -137,6 +137,7 @@ const getters = {
     getIsAddBank: state => state.isAddBank,
     getsaveBankDetails: state => state.saveBankDetails,
     geterrormsg: state => state.errormsg,
+    getupdatebankdetails: state => state.updatebankdetails,
 
 
 };

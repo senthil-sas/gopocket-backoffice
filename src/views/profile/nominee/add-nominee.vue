@@ -183,21 +183,21 @@
         </div> -->
         <div>
           <p class="text-sm textColor pb-1">Nominee Proof Type</p>
-          <Menu as="div" class="relative inline-block text-left w-full" id="nominee_proof_type_drop_down">
+          <Listbox as="div" class="relative inline-block text-left w-full" id="nominee_proof_type_drop_down">
             <div id="nominee_proof_type_select">
-              <MenuButton class="menuButton radius4rem height bg-white" v-model="nomineeProoftype" id="nom_Proof">
+              <ListboxButton class="menuButton radius4rem height bg-white" v-model="nomineeProoftype" id="nom_Proof">
                 {{ nomineeProoftype == 'Aadhar card' ? 'Aadhar (Masked)' : nomineeProoftype}}
                 <ChevronDownIcon id="nominee_proof_icon_dropdown" class="ml-auto h-5 w-5" aria-hidden="true" />
-              </MenuButton>
+              </ListboxButton>
             </div>
 
             <transition enter-active-class="transition ease-out duration-100"
               enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
               leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
               leave-to-class="transform opacity-0 scale-95">
-              <MenuItems id="menu_items_nominee_proof" class="menuItems"
-                @change="this.$store.commit('nominee/setPanErrMsg', '', { root: true })">
-                <div class="py-1" v-for="item in typeOfProof" :key="item" :id="`${item.name}_dropdown`">
+              <ListboxOptions id="menu_items_nominee_proof" class="menuItems"
+                > 
+                <ListboxOption class="py-1" v-for="item in typeOfProof" :key="item" :id="`${item.name}_dropdown`">
                   <MenuItem v-slot="{ active }">
                   <a :class="[
                     active
@@ -208,10 +208,10 @@
                    {{ item.name == 'Aadhar card' ? 'Aadhar (Masked)' : item.name }}
                   </a>
                   </MenuItem>
-                </div>
-              </MenuItems>
+                </ListboxOption>
+            </ListboxOptions>
             </transition>
-          </Menu>
+          </Listbox>
 
           <div class="h-7 mt-1">
             <errorMessage className="error" errMsg="Please select proof type" v-show="!nomineeProoftype && submitted">
@@ -350,6 +350,13 @@ export default {
                 { name: 'Not provided', id: 0 },
                 { name: 'Others', id: 0 }
             ],
+            typeOfProof: [
+        { name: 'Aadhar card' },
+        { name: 'Pan' },
+        { name: 'Voter ID' },
+        { name: 'Driving licence' },
+        { name: 'Passport' },
+      ],
             firstName: '',
             lastName: '',
             panNo: '',
