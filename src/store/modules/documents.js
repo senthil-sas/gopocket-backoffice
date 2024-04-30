@@ -1,5 +1,9 @@
 import service from "../modules/services/Documents.ts";
-import errorHandle from '../../handleError/errorHandling'
+import errorHandle from '../../handleError/errorHandling';
+import { useNotification } from "@kyvg/vue3-notification";
+
+const { notify } = useNotification();
+
 
 
 const state = {
@@ -15,22 +19,36 @@ const actions = {
 
         service.getDocuments(rootState.auth.userId, documentId)
             .then(resp => {
+                console.log(resp.data.result)
                 if (resp.data.message.toString().trim() == "Success" && resp?.data?.stat === 1) {
                     commit('setDocuments', resp.data.success);
-
-                } else {
+                    notify({
+                        group: "auth",
+                        type: "error",
+                        title: resp.data.result,
+                    });
                 }
-            },
-                (err) => {
-                    errorHandle.handleError(err)
-                })
-            .finally(() => {
+                else {
+                    notify({
+                        group: "auth",
+                        type: "error",
+                        title: resp.data.result,
+                    });
+                }
+            }).catch((error) => {
+                errorHandle.handleError(error)
+                notify({
+                    group: "auth",
+                    type: "error",
+                    title: error.response.data.result,
+                });
+            }).finally(() => {
                 commit('setLoader', false, { root: true });
-
-            });
+            })
     },
 
 };
+
 
 const mutations = {
     setDocuments(state, payload) {

@@ -8,6 +8,7 @@ const state = {
     isAddBank: false,
     errormsg: '',
     saveBankDetails: [],
+    updatebankdetails: [],
 
 }
 
@@ -66,7 +67,6 @@ const actions = {
 
             }
             else {
-                commmit("setIsAddBank", false)
                 notify({
                     group: "auth",
                     type: "error",
@@ -84,6 +84,23 @@ const actions = {
             commit('setLoader', false, { root: true });
         })
     },
+    async updatebankdetails({ commit, rootState },) {
+        commit('setupdatebankdetails', []);
+
+        await service.getBankDetails(rootState.auth.userId,)
+            .then(resp => {
+                if (resp.status == 200 && resp?.data?.stat === 1) {
+                    commit('setupdatebankdetails', resp.data.result);
+                } else {
+
+                }
+            },
+                (err) => {
+                    errorHandle.handleError(err)
+                })
+            .finally(() => {
+            });
+    },
 
 };
 
@@ -99,7 +116,14 @@ const mutations = {
     },
     setsaveBankDetails(state, payload) {
         state.saveBankDetails = payload
-    }
+    },
+    setsaveBankDetails(state, payload) {
+        state.saveBankDetails = payload
+    },
+    setupdatebankdetails(state, payload) {
+        state.updatebankdetails = payload
+    },
+
 };
 
 const getters = {

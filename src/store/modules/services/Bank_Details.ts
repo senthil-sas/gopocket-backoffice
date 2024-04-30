@@ -22,4 +22,10 @@ export default {
         }
         return axios.post(`${kycURI}reEkycBank/saveBank`, payload, requestOptions);
     },
+    async getBankDetails(userId) {
+        const requestOptions = {
+            headers: authHeader(),
+        }
+        return axios.post(`${kycURI}reEkycBank/getBank?uccCode=${userId}`, requestOptions);
+    },
 }
