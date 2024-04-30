@@ -26,6 +26,6 @@ export default {
         const requestOptions = {
             headers: authHeader(),
         }
-        return axios.post(`${kycURI}reEkycBank/getBank?uccCode=${userId}`, requestOptions);
+        return axios.get(`${kycURI}reEkycBank/getBank?uccCode=${userId}`, requestOptions);
     },
 }

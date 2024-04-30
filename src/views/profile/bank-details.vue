@@ -62,6 +62,8 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
+import { mapGetters } from 'vuex';
+
 import add_bank from './add-bank.vue'
 import icon from '../../components/utilComponents/icons.vue'
 // import bank_mandates from './bank-mandates.vue'
@@ -70,17 +72,16 @@ import { useStore } from 'vuex'
 
 const store = useStore()
 
-const isAddBank = ref(false)
-
 const cancelAddBank = () => {
-  isAddBank.value = false;
+    store.commit('bankDetails/setIsAddBank', false)
 }
 const getbankdetails = computed(() => store.getters['profile/getbankdetails']);
+const isAddBank = computed(() => store.getters['bankDetails/getIsAddBank']);
 
 // const getLoader = computed(() => store.getters['profile/getLoader']);
 
 const addBank = () => {
-    isAddBank.value = true;
+    store.commit('bankDetails/setIsAddBank', true)
 }
 
 </script>

@@ -166,7 +166,7 @@
             </div>
         </div>
 
-        <div class="my-3 flex gap-5 items-center">
+        <!-- <div class="my-3 flex gap-5 items-center">
             <div class="my-3">
                 <div class="flex items-center justify-between">
                     <div class="primary-color text-sm mb-1">Nominee Share Percentage</div> <span class="text-xs">Total available shares: ({{ totalAvilableShare }})</span>
@@ -180,8 +180,74 @@
                     <span class="error-msg" v-else-if="nomineeSharePercentage > totalAvilableShare && isSubmit">Cannot allocate percentage more than available share</span>
                 </div>
             </div>
-        </div>
+        </div> -->
+        <div>
+          <p class="text-sm textColor pb-1">Nominee Proof Type</p>
+          <Menu as="div" class="relative inline-block text-left w-full" id="nominee_proof_type_drop_down">
+            <div id="nominee_proof_type_select">
+              <MenuButton class="menuButton radius4rem height bg-white" v-model="nomineeProoftype" id="nom_Proof">
+                {{ nomineeProoftype == 'Aadhar card' ? 'Aadhar (Masked)' : nomineeProoftype}}
+                <ChevronDownIcon id="nominee_proof_icon_dropdown" class="ml-auto h-5 w-5" aria-hidden="true" />
+              </MenuButton>
+            </div>
 
+            <transition enter-active-class="transition ease-out duration-100"
+              enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+              leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
+              leave-to-class="transform opacity-0 scale-95">
+              <MenuItems id="menu_items_nominee_proof" class="menuItems"
+                @change="this.$store.commit('nominee/setPanErrMsg', '', { root: true })">
+                <div class="py-1" v-for="item in typeOfProof" :key="item" :id="`${item.name}_dropdown`">
+                  <MenuItem v-slot="{ active }">
+                  <a :class="[
+                    active
+                      ? 'bg-gray-100 text-gray-900'
+                      : 'text-gray-700',
+                    'inline-block px-4 py-2 text-sm w-full cursor-pointer text-[13px]',
+                  ]" @click="proofOfNominee(item)">
+                   {{ item.name == 'Aadhar card' ? 'Aadhar (Masked)' : item.name }}
+                  </a>
+                  </MenuItem>
+                </div>
+              </MenuItems>
+            </transition>
+          </Menu>
+
+          <div class="h-7 mt-1">
+            <errorMessage className="error" errMsg="Please select proof type" v-show="!nomineeProoftype && submitted">
+            </errorMessage>
+          </div>
+        </div>
+        <div id="nominee_proof_no_group">
+          <div class="flex justify-between">
+            <p class="text-sm textColor pb-1" id="nominee_proof_number_header">Nominee Proof No</p>
+          </div>
+          <input type="text" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            :placeholder="nomineeProoftype == 'Aadhar card' ? 'Enter Aadhar Number' : nomineeProoftype ? `Enter ${nomineeProoftype} Number` : 'Enter Proof Number'"
+            v-model="nomineeProofNumber" @input="nomineeProoftype == 'Aadhar card' ? nomineeProofNumber = nomineeProofNumber.replace(/[^0-9]/g, '') : ''"
+            :maxlength="nomineeProoftype == 'Aadhar card' ? 4 : 45"
+            id="nom_proofNum"
+          />
+          <span v-if="nomineeProoftype == 'Aadhar card'" class="text-[11px] secondaryColor">(Note:Enter Last 4 Digit of Aadhar)</span>
+          <div class="h-7 mt-1">
+            <errorMessage className="error" errMsg="Enter Proof Number" v-show="submitted && !nomineeProofNumber">
+            </errorMessage>
+          </div>
+        </div>
+        <div class="">
+          <div class="">
+            <label for="formFile" class="text-sm textColor pb-1 w-full">Nominee Proof</label>
+            <input
+              class="relative block commonInputWidth secondaryColor flex-auto cursor-pointer radius4rem border border-solid  bg-white bg-clip-padding px-3 outline-none transition duration-300 ease-in-out file:-mx-3 file:cursor-pointer file:overflow-hidden file:radius4rem-none file:border-0  file:px-3 h-10 file:h-full file:secondaryColor file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem]"
+              type="file" @change="nomineeProof($event)" capture id="formFile" accept=".pdf, .png, .jpg, .jpeg" />
+            <span class="text-xs textColor pb-1">(Note: File size sholud not be exceed 5MB)</span>
+            <div class="h-7 mt-1">
+              <errorMessage className="error" errMsg="Please Upload Proof"
+                v-show="submitted && !this.nomineeProofFileName">
+              </errorMessage>
+            </div>
+          </div>
+        </div>
         <div class="my-3">
             <div class="relative flex items-start">
                 <div class="flex h-6 items-center">
@@ -260,6 +326,7 @@
 </template>
 
 <script>
+
 import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
 import icon from '../../../components/utilComponents/icons.vue'
@@ -377,6 +444,7 @@ export default {
                     this.$store.commit('nominee/setNomineeStage', 'addGuardian')
                 } else {
                     await this.$store.dispatch('nominee/addNomineeDetails', json)
+                    
                 }
                 this.isSubmit = false
             }

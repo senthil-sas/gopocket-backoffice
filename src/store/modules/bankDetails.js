@@ -58,11 +58,13 @@ const actions = {
     //     }
     //     commit("setLoader", false, { root: true });
     // },
-    async saveBankDetails({ commit }, payload) {
+    async saveBankDetails({ commit, dispatch }, payload) {
         commit('setLoader', true, { root: true });
+
         service.saveBankDetails(payload).then(resp => {
-            console.log(resp)
-            if (resp.status == 200 && resp.data.message.Success == 1) {
+            if (resp.status == 200 && resp.data.message == 'Success') {
+                dispatch('updatebankdetails',)
+                commit('setIsAddBank', false)
                 commit('setsaveBankDetails', resp.data.result);
 
             }
@@ -75,10 +77,13 @@ const actions = {
             }
         }).catch((error) => {
             errorHandle.handleError(error)
+            console.log(error)
+
             notify({
                 group: "auth",
                 type: "error",
-                title: error.response.data.message,
+                title: error.resp.data.message,
+
             });
         }).finally(() => {
             commit('setLoader', false, { root: true });
@@ -110,6 +115,7 @@ const mutations = {
     },
     setIsAddBank(state, payload) {
         state.isAddBank = payload
+        console.log(payload)
     },
     seterrormsg(state, payload) {
         state.errormsg = payload
