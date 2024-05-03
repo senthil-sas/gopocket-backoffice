@@ -20,11 +20,11 @@ const actions = {
         service.getDocuments(rootState.auth.userId, documentId)
             .then(resp => {
                 console.log(resp.data.result)
-                if (resp.data.message.toString().trim() == "Success" && resp?.data?.stat === 1) {
+                if (resp.data.message.toString().trim() == "Success" && resp?.data?.stat == 1) {
                     commit('setDocuments', resp.data.success);
                     notify({
                         group: "auth",
-                        type: "error",
+                        type: "success",
                         title: resp.data.result,
                     });
                 }
@@ -32,7 +32,8 @@ const actions = {
                     notify({
                         group: "auth",
                         type: "error",
-                        title: resp.data.result,
+                        title: resp.data.reason
+                        ,
                     });
                 }
             }).catch((error) => {
@@ -40,7 +41,7 @@ const actions = {
                 notify({
                     group: "auth",
                     type: "error",
-                    title: error.response.data.result,
+                    title: error.resp.data.reason,
                 });
             }).finally(() => {
                 commit('setLoader', false, { root: true });

@@ -24,12 +24,13 @@ const actions = {
         const requestData = {
             ucc: rootState.auth.userId,
             option: option,
-            mobileNo: option == 0 ? rootState.profile.mobileNO : null,
-            emailId: option == 1 ? rootState.profile.EmailID : null,
+            mobileNo: option == 0 ? "9787036838" : null,
+            emailId: option == 1 ? "akashraja@codifi.in" : null,
         };
         state.active = option
         service.loginEmailAndMobile(requestData)
             .then(resp => {
+                console.log(resp)
                 if (resp.data.message.toString().trim() == "Success" && resp.status == "200") {
                     commit('setloginEmailAndMobile', resp.data.result);
                     state.LoginId = resp.data.result.id
@@ -37,11 +38,20 @@ const actions = {
                     commit('popup/setIsEmailOrMobileUpdate', false, { root: true })
                     // console.log(resp.data.result.id);
                 } else {
-
+                    notify({
+                        group: "auth",
+                        type: "error",
+                        title: resp.data.reason,
+                    });
                 }
             },
                 (err) => {
                     errorHandle.handleError(err)
+                    notify({
+                        group: "auth",
+                        type: "error",
+                        title: err.resp.data.reason,
+                    });
                 })
             .finally(() => {
                 commit('setloginloader', false,);
@@ -54,8 +64,8 @@ const actions = {
 
         const requestData = {
             option: state.active,
-            mobileNo: state.active == 0 ? rootState.profile.mobileNO : null,
-            emailId: state.active == 1 ? rootState.profile.EmailID : null,
+            mobileNo: state.active == 0 ? "9787036838" : null,
+            emailId: state.active == 1 ? "akashraja@codifi.in" : null,
             otp: otp,
         };
         service.verifyOTP(requestData)
@@ -71,7 +81,7 @@ const actions = {
                     notify({
                         group: "auth",
                         type: "error",
-                        title: resp.data.reason, // Notify for invalid OTP
+                        title: resp.data.reason,
                     });
                 }
                 return resp
@@ -81,7 +91,7 @@ const actions = {
                 notify({
                     group: "auth",
                     type: "error",
-                    title: err.response.data.reason, // Corrected reference to err
+                    title: err.resp.data.reason,
                 });
             })
             .finally(() => {
@@ -98,12 +108,22 @@ const actions = {
                 // console.log(resp);
                 if ((resp.data.message.toString().trim() == "Success" && resp.status == "200")) {
                     commit('setUpdateMobileNumber', resp.data.result);
-                } else {
 
+                } else {
+                    notify({
+                        group: "auth",
+                        type: "error",
+                        title: resp.data.reason,
+                    });
                 }
             },
                 (err) => {
                     errorHandle.handleError(err)
+                    notify({
+                        group: "auth",
+                        type: "error",
+                        title: err.resp.data.reason,
+                    });
                 })
             .finally(() => {
                 commit('setLoader', false, { root: true });
@@ -120,6 +140,11 @@ const actions = {
                 if ((resp.data.message.toString().trim() == "Success" && resp.status == "200")) {
                     commit('setverifyMobileNumber', resp.data.result);
                     commit('popup/setisNewEmailOrNewMobileUpdate', false, { root: true }); // Assuming you have a 'popup' module
+                    notify({
+                        group: "auth",
+                        type: "success",
+                        title: resp.data.message,
+                    });
                 } else {
 
                     notify({
@@ -146,7 +171,6 @@ const actions = {
         commit('setUpdateEmailId', []);
         commit('setLoader', true, { root: true });
 
-
         service.UpdateEmailId(NewEmail, state.LoginId)
             .then(resp => {
                 // console.log(resp);
@@ -154,13 +178,24 @@ const actions = {
                     commit('setUpdateEmailId', resp.data.result);
 
                 } else {
-
+                    notify({
+                        group: "auth",
+                        type: "error",
+                        title: resp.data.reason,
+                    });
                 }
             },
                 (err) => {
                     errorHandle.handleError(err)
+                    notify({
+                        group: "auth",
+                        type: "error",
+                        title: err.resp.data.reason,
+                    });
                 })
             .finally(() => {
+                commit('setLoader', false, { root: true });
+
             });
     },
     UpdateEmailIdverify({ commit }, otp) {
@@ -172,6 +207,11 @@ const actions = {
                 if ((resp.data.message.toString().trim() == "Success" && resp.status == "200")) {
                     commit('setUpdateEmailIdverify', resp.data.result);
                     commit('popup/setisNewEmailOrNewMobileUpdate', false, { root: true });
+                    notify({
+                        group: "auth",
+                        type: "success",
+                        title: resp.data.message,
+                    });
 
                 } else {
 

@@ -8,7 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@headlessui/vue": "^1.7.14",
+    "@headlessui/vue": "^1.7.21",
     "@heroicons/vue": "^2.0.18",
     "@kyvg/vue3-notification": "^3.2.1",
     "@popperjs/core": "^2.11.8",

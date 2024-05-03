@@ -44,7 +44,7 @@
                     <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
                         <ListboxOptions class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                             <ListboxOption as="template" v-for="i in relationships" :key="i.id" :value="i" v-slot="{ active, relationship }">
-                                <li :class="[active ? 'violet-bg text-white' : 'text-gray-900', 'relative cursor-pointer select-none py-2 pl-8 pr-4']">
+                                <li :class="[active ? 'violet-bg text-white' : 'text-gray-900', 'relative cursor-pointer select-none py-2 pl-8 pr-4 ']">
                                     <span :class="[relationship ? 'font-semibold' : 'font-normal', 'block truncate']">{{ i.name }}</span>
                                     <span v-if="relationship" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 left-0 flex items-center pl-1.5']">
                                         <CheckIcon class="h-5 w-5" aria-hidden="true" />
@@ -181,46 +181,51 @@
                 </div>
             </div>
         </div> -->
-        <div>
-          <p class="text-sm textColor pb-1">Nominee Proof Type</p>
-          <Listbox as="div" class="relative inline-block text-left w-full" id="nominee_proof_type_drop_down">
+        <div class="my-3 flex gap-5 items-center">
+
+            <div>
+          <p class="block text-sm font-medium leading-6 text-gray-900">Nominee Proof Type</p>
+          <Menu as="div" class="relative  min-w-[350px] xinline-block text-left w-full" id="nominee_proof_type_drop_down">
             <div id="nominee_proof_type_select">
-              <ListboxButton class="menuButton radius4rem height bg-white" v-model="nomineeProoftype" id="nom_Proof">
+              <MenuButton class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" v-model="nomineeProoftype" id="nom_Proof">
                 {{ nomineeProoftype == 'Aadhar card' ? 'Aadhar (Masked)' : nomineeProoftype}}
+                <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+
                 <ChevronDownIcon id="nominee_proof_icon_dropdown" class="ml-auto h-5 w-5" aria-hidden="true" />
-              </ListboxButton>
+           </span> 
+          </MenuButton>
             </div>
 
             <transition enter-active-class="transition ease-out duration-100"
               enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
               leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
               leave-to-class="transform opacity-0 scale-95">
-              <ListboxOptions id="menu_items_nominee_proof" class="menuItems"
-                > 
-                <ListboxOption class="py-1" v-for="item in typeOfProof" :key="item" :id="`${item.name}_dropdown`">
+              <MenuItems id="menu_items_nominee_proof" class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm  w-full'"
+                @change="">
+                <div class="py-1" v-for="item in typeOfProof" :key="item" :id="`${item.name}_dropdown`">
                   <MenuItem v-slot="{ active }">
                   <a :class="[
                     active
-                      ? 'bg-gray-100 text-gray-900'
-                      : 'text-gray-700',
-                    'inline-block px-4 py-2 text-sm w-full cursor-pointer text-[13px]',
+                      ? 'violet-bg text-white w-full'
+                      : 'text-gray-900', 'relative cursor-pointer select-none py-2 pl-8 pr-4 w-full',
                   ]" @click="proofOfNominee(item)">
                    {{ item.name == 'Aadhar card' ? 'Aadhar (Masked)' : item.name }}
                   </a>
                   </MenuItem>
-                </ListboxOption>
-            </ListboxOptions>
+                </div>
+              </MenuItems>
             </transition>
-          </Listbox>
+          </Menu>
 
-          <div class="h-7 mt-1">
-            <errorMessage className="error" errMsg="Please select proof type" v-show="!nomineeProoftype && submitted">
-            </errorMessage>
-          </div>
+            <div class="h-4">
+                    <span class="error-msg" v-if="!proofType && isSubmit">Select proof type</span>
+                </div>
         </div>
+
+
         <div id="nominee_proof_no_group">
           <div class="flex justify-between">
-            <p class="text-sm textColor pb-1" id="nominee_proof_number_header">Nominee Proof No</p>
+            <p class="block text-sm font-medium leading-6 text-gray-900" id="nominee_proof_number_header">Nominee Proof No</p>
           </div>
           <input type="text" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             :placeholder="nomineeProoftype == 'Aadhar card' ? 'Enter Aadhar Number' : nomineeProoftype ? `Enter ${nomineeProoftype} Number` : 'Enter Proof Number'"
@@ -229,19 +234,19 @@
             id="nom_proofNum"
           />
           <span v-if="nomineeProoftype == 'Aadhar card'" class="text-[11px] secondaryColor">(Note:Enter Last 4 Digit of Aadhar)</span>
-          <div class="h-7 mt-1">
-            <errorMessage className="error" errMsg="Enter Proof Number" v-show="submitted && !nomineeProofNumber">
-            </errorMessage>
+          <div class="h-4">
+                    <span class="error-msg" v-if="!nomineeProofNumber && isSubmit">Enter proof number</span>
+                </div>
           </div>
         </div>
         <div class="">
           <div class="">
-            <label for="formFile" class="text-sm textColor pb-1 w-full">Nominee Proof</label>
+            <label for="formFile" class="block text-sm font-medium leading-6 text-gray-900">Nominee Proof</label>
             <input
-              class="relative block commonInputWidth secondaryColor flex-auto cursor-pointer radius4rem border border-solid  bg-white bg-clip-padding px-3 outline-none transition duration-300 ease-in-out file:-mx-3 file:cursor-pointer file:overflow-hidden file:radius4rem-none file:border-0  file:px-3 h-10 file:h-full file:secondaryColor file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem]"
+              class="relative block  w-[350px] rounded-md commonInputWidth secondaryColor flex-auto cursor-pointer radius4rem border border-solid  bg-white bg-clip-padding px-3 outline-none transition duration-300 ease-in-out file:-mx-3 file:cursor-pointer file:overflow-hidden file:radius4rem-none file:border-0  file:px-3 h-10 file:h-full file:secondaryColor file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem]"
               type="file" @change="nomineeProof($event)" capture id="formFile" accept=".pdf, .png, .jpg, .jpeg" />
             <span class="text-xs textColor pb-1">(Note: File size sholud not be exceed 5MB)</span>
-            <div class="h-7 mt-1">
+            <div class="h-4 ">
               <errorMessage className="error" errMsg="Please Upload Proof"
                 v-show="submitted && !this.nomineeProofFileName">
               </errorMessage>
@@ -328,11 +333,13 @@
 <script>
 
 import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+
+import { CheckIcon, ChevronUpDownIcon ,ChevronDownIcon} from '@heroicons/vue/20/solid'
 import icon from '../../../components/utilComponents/icons.vue'
 import { mapGetters } from 'vuex'
 export default {
-    components: { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions, CheckIcon, ChevronUpDownIcon, icon },
+    components: { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions, ChevronDownIcon,CheckIcon, ChevronUpDownIcon, icon,Menu, MenuButton, MenuItem, MenuItems },
     data() {
         return {
             relationship: '',
@@ -351,12 +358,13 @@ export default {
                 { name: 'Others', id: 0 }
             ],
             typeOfProof: [
-        { name: 'Aadhar card' },
-        { name: 'Pan' },
-        { name: 'Voter ID' },
-        { name: 'Driving licence' },
-        { name: 'Passport' },
+                { name: 'Aadhar card' },
+                 { name: 'Pan' },
+                { name: 'Voter ID' },
+                  { name: 'Driving licence' },
+                  { name: 'Passport' },
       ],
+      nomineeProoftype:'',
             firstName: '',
             lastName: '',
             panNo: '',
@@ -512,9 +520,23 @@ export default {
             const str = this.mobileNo;
             return panPattern.test(str)
         },
+        
+    proofOfNominee(val) {
+      this.nomineeProoftype = val.name
+      this.nomineeProofNumber = ''
+    },
     },
     watch: {
         isAgeModified(val) { }
     },
 }
 </script>
+<style>
+.menuButton {
+  @apply inline-flex w-full border items-center px-4 py-2 text-sm focus:outline-none whitespace-nowrap text-[#070A26]
+}
+
+.menuItems {
+  @apply absolute right-0 z-10 mt-1 max-h-[200px] overflow-y-auto w-full border origin-top-right drop-shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none bg-white
+}
+</style>

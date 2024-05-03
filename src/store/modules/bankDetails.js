@@ -66,7 +66,11 @@ const actions = {
                 dispatch('updatebankdetails',)
                 commit('setIsAddBank', false)
                 commit('setsaveBankDetails', resp.data.result);
-
+                notify({
+                    group: "auth",
+                    type: "success",
+                    title: resp.data.message,
+                });
             }
             else {
                 notify({

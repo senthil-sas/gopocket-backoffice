@@ -41,10 +41,10 @@
                       type="text"
                       maxlength="10"
                       v-model="NewMobile"
-                      class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      class="block w-[300px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder="Enter the Number"
                     />
-                <button class="commonbtn" @click="verifyMobile"> <spinner v-if="getLoader"/><span v-else>Continue</span></button>
+                <button class="commonbtn" @click="verifyMobile " v-if="!isVerified"> <spinner v-if="getLoader"/><span v-else>Continue</span></button>
                 </div>
                 <div class="text-red-500 text-xs h-3">{{ errorMessage }}</div>
 </div>
@@ -58,10 +58,10 @@
                       type="text"
                       name="emailId"
                       v-model="NewEmail"
-                      class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      class="block w-[300px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder="Enter the Email"
                     />
-                    <button class="commonbtn" @click="verifyEmail"> <spinner v-if="getLoader"/><span v-else>Continue</span></button>
+                    <button class="commonbtn" @click="verifyEmail"  v-if="!isVerified"> <spinner v-if="getLoader"/><span v-else>Continue</span></button>
 
                 </div>
                   <div class="text-red-500 text-xs h-3">{{ errorMessage }}</div>
@@ -72,7 +72,7 @@
                         type="text"
                         maxlength="6"
                         v-model="otp"
-                        class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        class="block w-[300px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         placeholder="Enter the OTP"
                       />
                       <button class="commonbtn"  @click="validateOTP"><spinner v-if="getloginloader"/> <span v-else>Verify</span></button>

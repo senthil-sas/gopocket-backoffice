@@ -192,14 +192,14 @@ const popover = ref({
 const getUserId = computed(() => store.getters["auth/getUserId"]);
 const getLedgerData = computed(() => store.getters["ledger/getLedgerData"]);
 
-const getLedger = () => {
-  let json = {
-    ucc: getUserId.value,
-    from_date: fromDate.value,
-    to_date: toDate.value,
-  };
-  store.dispatch("ledger/getledgerApi", json);
-};
+// const getLedger = () => {
+//   let json = {
+//     ucc: getUserId.value,
+//     from_date: fromDate.value,
+//     to_date: toDate.value,
+//   };
+//   store.dispatch("ledger/getledgerApi", json);
+// };
 
 const daysinMonth = (year, month) => {
   return new Date(year, month, 0).getDate();
@@ -260,18 +260,9 @@ const formateDate = (paloadDate) => {
 //   return `${yyyy}-${month}-${dd}`;
 // };
 
-const setDate = () => {
-  const curfullYear = new Date();
-  const currentYear = curfullYear.getFullYear();
-  const currentMonth = curfullYear.getMonth();
-  const currentDay = curfullYear.getDate();
-  curYear.value = Number(currentYear);
-  fromDate.value = new Date(`${currentYear - 1}-0${4}-01`);
-  toDate.value = new Date(`${currentYear - 1}-0${4}-01`);
-};
+
 
 onMounted(() => {
-  setDate();
 });
 </script> 
 <style>

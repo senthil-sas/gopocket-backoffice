@@ -244,6 +244,17 @@ const activeReportTab = computed(() => store.getters["reports/getActiveReportTab
     return formattedDate;
   };
   
+  const setDefaultFinancialYear = () => {
+  const todayDate = new Date();
+  const currentYear = todayDate.getFullYear();
+  const previousYear = currentYear - 1;
+  
+  // Set fromDate to April 1st of previous year
+  fromDate.value = `${previousYear}-04-01`;
+  
+  // Set toDate to March 31st of current year
+  toDate.value = `${currentYear}-03-31`;
+};
   
   
   // const previousYear = () => {
@@ -303,6 +314,7 @@ const activeReportTab = computed(() => store.getters["reports/getActiveReportTab
   onMounted(() => {
     // store.dispatch("reports/getTradeBookFromApi");
     // setDate();
+    setDefaultFinancialYear();
 
   }
   

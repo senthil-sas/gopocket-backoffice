@@ -7,10 +7,13 @@
 
                 <div class="flex justify-between">
                     <span class="primary-color !font-semibold text-xs mt-1"> BANK {{ id + 1 }}</span>
-                    <span v-if="bank.isPrimary || bank.primary == 1">
+                    <span v-if="(bank.isPrimary == 1|| bank.primary == 1) && bank.bankStatus != 0">
                         <button class="graybtn" >Primary</button>
                     </span>
-                </div>
+                    <span v-if="bank.bankStatus == 0">
+                        <button class="graybtn" >Pending</button>
+                    </span>           
+                     </div>
                 <div class="flex gap-5 items-center my-4">
                     <img :src="hdfcImg" :alt="bank?.name" class="max-w-[60px] max-h-[60px] border rounded p-2">
                     <span>
@@ -20,12 +23,12 @@
                 </div>
                 <div class="my-4 flex flex-col">
                     <div class="secondary-color text-xs mb-2">ACCOUNT NO</div>
-                    <div class="primary-color text-sm">{{  bank.bankStatus != 0 ? (bank.account_no || bank.accountNo) : 'Pending' }}</div>
+                    <div class="primary-color text-sm">{{bank.account_no || bank.accountNo }}</div>
                 </div>
 
                 <div class="my-4 flex flex-col">
                     <div class="secondary-color text-xs mb-2">IFSC</div>
-                    <div class="primary-color text-sm">{{ bank.bankStatus != 0 ? (bank.ifsc_code || bank.ifsc) : 'Pending' }}</div>
+                    <div class="primary-color text-sm">{{ bank.ifsc_code || bank.ifsc }}</div>
                 </div>
                 
 

@@ -19,7 +19,7 @@
 
                     <div class="text-sm primary-color my-4 flex gap-3">
                        <input type="text" maxlength="6" v-model="otp"  class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Enter the OTP">
-                       <button class="commonbtn" ><spinner v-if="getLoader"/> <span v-else>Verify</span></button>
+                       <button class="commonbtn" > <spinner v-if="getLoader"/> <span v-else>Verify</span></button>
                     </div>
                     <div class="text-red-500 text-xs h-3" >{{ errorMessage }}</div>
 
@@ -47,13 +47,12 @@ export default {
             otp: '',
             errorMessage: '', // Error message variable
             brokerImg,
-            verifyType: ''
         }
     },
     computed: {
 
-        ...mapGetters('popup', ['getIsOtpVerify', 'getVerificationType']),
-        ...mapGetters('popup', ['getIsEmailOrMobileUpdate', 'getUpdateType']),
+        ...mapGetters('popup', ['getIsOtpVerify', 'getUpdateType']),
+        ...mapGetters('popup', ['getIsEmailOrMobileUpdate', 'getVerificationType' ,]),
         ...mapGetters(['getLoader'])
 
 
@@ -77,11 +76,11 @@ export default {
         },
         resendOTP() {
             // this.closeDialog();
-            let option = this.verifyType === 'email' ? 1 : 0;
+            let option = this.getVerificationType?.toLowerCase() == 'email' ? 1 : 0;
             this.loginEmailAndMobile(option);
-            let type = this.verifyType === 'email' ? 'Email' : 'SMS'; 
+            // let type = this.getVerificationType?.toLowercase() == 'email' ? 'Email' : 'SMS'; 
             // this.$store.commit('popup/setIsOtpVerify', true)
-            this.$store.commit('popup/setVerificationType', type)
+            // this.$store.commit('popup/setVerificationType', type)
 
         },
         loginEmailAndMobile(option) {
