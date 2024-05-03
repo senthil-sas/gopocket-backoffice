@@ -24,8 +24,8 @@ const actions = {
         const requestData = {
             ucc: rootState.auth.userId,
             option: option,
-            mobileNo: option == 0 ? "9787036838" : null,
-            emailId: option == 1 ? "akashraja@codifi.in" : null,
+            mobileNo: option == 0 ? rootState.profile.mobileNO : null,
+            emailId: option == 1 ? rootState.profile.EmailID : null,
         };
         state.active = option
         service.loginEmailAndMobile(requestData)
@@ -64,8 +64,8 @@ const actions = {
 
         const requestData = {
             option: state.active,
-            mobileNo: state.active == 0 ? "9787036838" : null,
-            emailId: state.active == 1 ? "akashraja@codifi.in" : null,
+            mobileNo: state.active == 0 ? rootState.profile.mobileNO : null,
+            emailId: state.active == 1 ? rootState.profile.EmailID : null,
             otp: otp,
         };
         service.verifyOTP(requestData)
