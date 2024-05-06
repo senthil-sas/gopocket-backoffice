@@ -58,6 +58,8 @@ const actions = {
     //     }
     //     commit("setLoader", false, { root: true });
     // },
+
+
     async saveBankDetails({ commit, dispatch }, payload) {
         commit('setLoader', true, { root: true });
 

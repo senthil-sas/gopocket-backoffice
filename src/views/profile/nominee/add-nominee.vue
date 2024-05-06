@@ -216,28 +216,27 @@
               </MenuItems>
             </transition>
           </Menu>
-
             <div class="h-4">
-                    <span class="error-msg" v-if="!proofType && isSubmit">Select proof type</span>
+                    <span class="error-msg" v-if="!nomineeProoftype && isSubmit">Select proof type</span>
                 </div>
         </div>
 
 
         <div id="nominee_proof_no_group">
-          <div class="flex justify-between">
-            <p class="block text-sm font-medium leading-6 text-gray-900" id="nominee_proof_number_header">Nominee Proof No</p>
-          </div>
-          <input type="text" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            :placeholder="nomineeProoftype == 'Aadhar card' ? 'Enter Aadhar Number' : nomineeProoftype ? `Enter ${nomineeProoftype} Number` : 'Enter Proof Number'"
-            v-model="nomineeProofNumber" @input="nomineeProoftype == 'Aadhar card' ? nomineeProofNumber = nomineeProofNumber.replace(/[^0-9]/g, '') : ''"
-            :maxlength="nomineeProoftype == 'Aadhar card' ? 4 : 45"
-            id="nom_proofNum"
-          />
-          <span v-if="nomineeProoftype == 'Aadhar card'" class="text-[11px] secondaryColor">(Note:Enter Last 4 Digit of Aadhar)</span>
-          <div class="h-4">
-                    <span class="error-msg" v-if="!nomineeProofNumber && isSubmit">Enter proof number</span>
-                </div>
-          </div>
+    <div class="flex justify-between">
+      <p class="block text-sm font-medium leading-6 text-gray-900" id="nominee_proof_number_header">Nominee Proof No</p>
+    </div>
+    <input type="text" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      :placeholder="nomineeProoftype == 'Aadhar card' ? 'Enter Aadhar Number' : nomineeProoftype ? `Enter ${nomineeProoftype} Number` : 'Enter Proof Number'"
+      v-model="nomineeProofNumber" @input="nomineeProoftype == 'Aadhar card' ? nomineeProofNumber = nomineeProofNumber.replace(/[^0-9]/g, '') : ''"
+      :maxlength="nomineeProoftype == 'Aadhar card' ? 4 : 45"
+      id="nom_proofNum"
+    />
+    <div class="h-4">
+      <span v-if="nomineeProoftype == 'Aadhar card'" class="text-[11px] secondaryColor">(Note: Enter Last 4 Digits of Aadhar)</span>
+      <span class="error-msg" v-if="!nomineeProoftype && isSubmit">Enter proof number</span>
+    </div>
+  </div>
         </div>
         <div class="">
           <div class="">
@@ -247,9 +246,9 @@
               type="file" @change="nomineeProof($event)" capture id="formFile" accept=".pdf, .png, .jpg, .jpeg" />
             <span class="text-xs textColor pb-1">(Note: File size sholud not be exceed 5MB)</span>
             <div class="h-4 ">
-              <errorMessage className="error" errMsg="Please Upload Proof"
+              <!-- <errorMessage className="error" errMsg="Please Upload Proof"
                 v-show="submitted && !this.nomineeProofFileName">
-              </errorMessage>
+              </errorMessage> -->
             </div>
           </div>
         </div>
@@ -323,8 +322,8 @@
         <div class="my-10 flex gap-3">
             <button type="button" class="cancelbtn" @click="backToNomineeDetails()">Cancel</button>
             <button type="submit" class="commonbtn">
-                <span v-if="!getLoader">Submit</span>
-                <button_spinner v-else />
+                <span >Submit</span>
+                <!-- <button_spinner v-else /> -->
             </button>
         </div>
     </form>
@@ -364,6 +363,7 @@ export default {
                   { name: 'Driving licence' },
                   { name: 'Passport' },
       ],
+      nomineeProofNumber:'',
       nomineeProoftype:'',
             firstName: '',
             lastName: '',
@@ -386,7 +386,7 @@ export default {
     computed: {
         ...mapGetters(['getMonths']),
         ...mapGetters('nominee',['getIsMinor', 'getNomineeList']),
-        ...mapGetters('auth', ['getUserId']),
+        ...mapGetters("auth", ["getUserId"]),
         days() {
             const daysInMonth = new Date(this.nomineeYear || 2023, this.nomineeMonth.month || 'JAN', 0).getDate() || 31
             let arr = []
@@ -432,7 +432,7 @@ export default {
                 let address = this.Address.split(',')
                 let json = {
                     "data": {
-                        "ucc" :this.getUserId,
+                        "uccCode": this.getUserId,
                         "fsl_nominee_details": []
                     }
                 }
@@ -461,6 +461,7 @@ export default {
                     await this.$store.dispatch('nominee/addNomineeDetails', json)
                     
                 }
+                console.log(addNomineeDetails)
                 this.isSubmit = false
             }
         },
@@ -478,6 +479,14 @@ export default {
                 this[vmodel] = this[vmodel]?.toUpperCase()
             }
         },
+    nomineeProof(event) {
+      if (event.target.files[0]?.size < 5000000) {
+        this.nomineeProofFileName = event?.target?.files[0]
+      } else {
+        alert("File size limit upto 5MB");
+        event.target.value = ""
+      }
+    },
 
         findUserIsMinor() {
             if (this.nomineeDate && this.nomineeMonth.month && this.nomineeYear) {
@@ -521,10 +530,11 @@ export default {
             return panPattern.test(str)
         },
         
-    proofOfNominee(val) {
-      this.nomineeProoftype = val.name
-      this.nomineeProofNumber = ''
-    },
+     proofOfNominee(val) {
+       this.nomineeProoftype = val.name;
+       this.nomineeProofNumber = '';
+},
+
     },
     watch: {
         isAgeModified(val) { }

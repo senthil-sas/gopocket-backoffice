@@ -56,6 +56,8 @@ export default {
             this.$store.commit('nominee/setNomineeDetails', nomineeList)
         }
         this.$store.dispatch('nominee/getNomineeDetails')
+        this.$store.dispatch('nominee/addNomineeDetails')
+
         
 
 
