@@ -10,4 +10,11 @@ export default {
         return axios.get(`${kycURI}reEkycdoc/sendDocMail?docType=${userId}&uccCode=${documentId}`, requestOptions);
     },
 
+    async incomeupload() {
+        const requestOptions = {
+            headers: authHeader(),
+        }
+        return axios.post(`${kycURI}reEkycdoc/upload/`, requestOptions);
+    },
+
 }

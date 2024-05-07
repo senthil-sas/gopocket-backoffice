@@ -246,9 +246,10 @@
               type="file" @change="nomineeProof($event)" capture id="formFile" accept=".pdf, .png, .jpg, .jpeg" />
             <span class="text-xs textColor pb-1">(Note: File size sholud not be exceed 5MB)</span>
             <div class="h-4 ">
-              <!-- <errorMessage className="error" errMsg="Please Upload Proof"
-                v-show="submitted && !this.nomineeProofFileName">
-              </errorMessage> -->
+                <div class="h-4">
+                    <span class="error-msg" v-if="!nomineeProofFileName && isSubmit">Enter proof number</span>
+                </div>   
+
             </div>
           </div>
         </div>
@@ -322,9 +323,9 @@
         <div class="my-10 flex gap-3">
             <button type="button" class="cancelbtn" @click="backToNomineeDetails()">Cancel</button>
             <button type="submit" class="commonbtn">
-                <span >Submit</span>
-                <!-- <button_spinner v-else /> -->
-            </button>
+                <spinner v-if="getLoader"/>
+                <span v-else>Submit</span>
+                            </button>
         </div>
     </form>
 </template>
@@ -370,6 +371,8 @@ export default {
             panNo: '',
             isSameAsAddress: true,
             mobileNo: '',
+            nomineeProofFileName: '',
+
             state: '',
             pincode: '',
             nomineeSharePercentage: 0,
@@ -387,6 +390,8 @@ export default {
         ...mapGetters(['getMonths']),
         ...mapGetters('nominee',['getIsMinor', 'getNomineeList']),
         ...mapGetters("auth", ["getUserId"]),
+        ...mapGetters(['getLoader']),
+
         days() {
             const daysInMonth = new Date(this.nomineeYear || 2023, this.nomineeMonth.month || 'JAN', 0).getDate() || 31
             let arr = []
@@ -429,42 +434,45 @@ export default {
         async addNominee() {
             this.isSubmit = true
             if (this.validateForm()) {
-                let address = this.Address.split(',')
-                let json = {
-                    "data": {
-                        "uccCode": this.getUserId,
-                        "fsl_nominee_details": []
-                    }
-                }
-                if (this.getNomineeList.length)
-                    json.data.fsl_nominee_details = [...this.getNomineeList]
-                    json.data.fsl_nominee_details.push({
-                        "nominee_name": this.firstName,
-                        "percentage_allocation": Number(this.nomineeSharePercentage),
-                        "relationship": this.relationship.name,
-                        "date_of_birth": this.dateOfBirth,
-                        "pan": this.panNo,
-                        "mobile_number": this.mobileNo,
-                        "email_id": "",
-                        "address": address[0] ? address[0].trim() : address[0],
-                        "address_2": address[1] ? address[1].trim() : address[1],
-                        "address_3": address[2] ? address[2].trim() : address[2],
-                        "city": this.AddressLine2,
-                        "state": this.state,
-                        "pincode": this.pincode,
-                        "nominee_number": "",
-                        "guardian": null
-                    })
-                if (this.getIsMinor) {
-                    this.$store.commit('nominee/setNomineeStage', 'addGuardian')
-                } else {
-                    await this.$store.dispatch('nominee/addNomineeDetails', json)
+     let json = {
+    "uccCode": "AB0009",
+    "firstname": "rithika",
+    "lastname": "",
+    "relationship": "yrt4BLING",
+    "dateOfbirth": "01-03-2020",
+    "mobilenumber": 8320181845,
+    "address1": "6,tpm",
+    "address2": "6, second STREET",
+    "pincode": "624616",
+    "state": "TAMILNADU",
+    "nomOneAllocation": 50,
+    "nomTwoAllocation": 50,
+    "nomThreeAllocation": 0,
+    "attachementUrl": "",
+    "proofId": "dsd",
+    "typeOfProof": "pan",
+
+      };
+      let proof = this.nomineeProofFileName
+             this.$store.dispatch("nominee/saveNomineeDetails", [json, proof]).finally(()=>{
+            //   this.$store.commit("nominee/setNomineepassword", '')
+            })
+
+            //     if (this.getIsMinor ) {
+            //         this.$store.commit('nominee/setNomineeStage', 'addGuardian')
+            //         this.$store.dispatch("nominee/saveNomineeDetails", [json, proof]).finally(()=>{
+            //   this.$store.commit("nominee/setNomineepassword", '');
+            // })
+            //     } else {
+            //         await this.$store.dispatch('nominee/addNomineeDetails', json)
                     
-                }
-                console.log(addNomineeDetails)
-                this.isSubmit = false
-            }
-        },
+            //     }
+
+            this.$store.commit('nominee/setNomineeStage', 'nomineeSummary')
+        
+        }
+            },
+
 
         backToNomineeDetails() {
             if(this.getNomineeList.length) {
@@ -520,7 +528,7 @@ export default {
 
         validateForm() {
             return this.firstName != '' && this.lastName != '' && this.relationship != '' && (this.nomineeDate != '' && this.nomineeMonth != '' && this.nomineeYear != '') 
-            && this.isValidMobile() && this.nomineeSharePercentage <= this.totalAvilableShare && this.Address != '' && this.AddressLine2
+            && this.isValidMobile()  && this.nomineeProofFileName != '' && this.Address != '' && this.AddressLine2
             && this.state != '' &&( this.pincode != '' && this.pincode.length == 6)
         },
 

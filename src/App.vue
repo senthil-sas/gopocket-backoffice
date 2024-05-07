@@ -44,6 +44,10 @@ body {
   font-family: "Open Sans", sans-serif !important;
 }
 
+.tcText{
+  @apply text-[#717182] pl-2 text-sm text-justify
+}
+
 .red-btn-c {
   background-color: #fceeed !important;
   color: #df514c !important;
