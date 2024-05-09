@@ -1,21 +1,24 @@
 <template>
     <div class="p-5 bank-details">
-        <div v-if="!getIsAddBank" >
-        <div class="flex gap-3 grow flex-wrap">
-            <div v-for="(bank, id) in getBankDetails" :key="id" class="bank-details-card">
+        <div v-if="!isAddBank">
+                    <div class="flex gap-3 grow flex-wrap">
+            <div v-for="(bank, id) in getbankdetails" :key="id" class="bank-details-card">
                 <div class="flex justify-between">
-                    <span class="primary-color !font-semibold text-xs"> BANK {{ id + 1 }}</span>
+                    <span class="primary-color !font-semibold text-xs mt-1"> BANK {{ id + 1 }}</span>
                     <span v-if="bank.primary == 1">
-                        <button class="primarybtn">Primary</button>
+                        <button class="!font-semibold text-xs" style="color: #753ED7;">Primary</button>
                     </span>
                 </div>
-
                 <div class="flex gap-5 items-center my-4">
                     <img :src="hdfcImg" :alt="bank?.name" class="max-w-[60px] max-h-[60px] border rounded p-2">
                     <span>
-                        <div class="primary-color text-sm">{{ bank.bank_name }}</div>
-                        <div class="secondary-color text-xs">{{ bank.account_no }}</div>
+                        <div class="primary-color text-sm">{{ bank.bank_name}}</div>
+                        <div class="secondary-color text-xs">{{ bank.branch }}</div>
                     </span>
+                </div>
+                <div class="my-4 flex flex-col">
+                    <div class="secondary-color text-xs mb-2">ACCOUNT NO</div>
+                    <div class="primary-color text-sm">{{ bank.account_no }}</div>
                 </div>
 
                 <div class="my-4 flex flex-col">
@@ -23,72 +26,68 @@
                     <div class="primary-color text-sm">{{ bank.ifsc_code }}</div>
                 </div>
 
-                <div class="my-4 flex flex-col">
+                <!-- <div class="my-4 flex flex-col">
                     <div class="secondary-color text-xs mb-2">MICR</div>
                     <div class="primary-color text-sm">{{ bank.micr_code }}</div>
-                </div>
+                </div> -->
 
-                <div class="my-4 flex flex-col">
+                <!-- <div class="my-4 flex flex-col">
                     <div class="secondary-color text-xs mb-2">+ Set as primary</div>
-                </div>
+                </div> -->
             </div>
         </div>
 
         <div class="my-6">
-                <button class="commonbtn" @click="addBank()">Add New bank</button>
+            <button class="commonbtn" @click="addBank()">Add New bank</button>
             </div>
 
             <!-- Recent Transactions -->
-            <button @click="viewBankMandates()">
+            <!-- <button @click="viewBankMandates()">
                 <span class="flex items-center gap-2 py-4">
                     <span class="text-blue-400 hover:text-blue-600">Bank Mandates</span> 
                     <icon name="upArrow" height="16" width="16" v-if="isShowBankMandates"/> 
                     <icon name="downArrow" height="16" width="16" v-if="!isShowBankMandates"/>
                 </span>
-            </button>
+            </button> -->
         </div>
 
 
-        <div v-if="isShowBankMandates">
+        <!-- <div v-if="isShowBankMandates">
             <bank_mandates />
-        </div>
+        </div> -->
 
-        <add_bank v-if="getIsAddBank"/>
+        <add_bank v-if="isAddBank" @cancel="cancelAddBank" />
     </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script lang="ts" setup>
+import { ref, computed } from 'vue'
 import add_bank from './add-bank.vue'
 import icon from '../../components/utilComponents/icons.vue'
-import bank_mandates from './bank-mandates.vue'
+// import bank_mandates from './bank-mandates.vue'
 import hdfcImg from '../../assets/images/hdfc.png'
+import { useStore } from 'vuex'
 
-export default {
-    components: { add_bank, icon, bank_mandates },
-    data() {
-        return {
-            isAddBank: false,
-            isShowBankMandates: false,
-            hdfcImg
-        }
-    },
-    computed: {
-        ...mapGetters('bankDetails', ['getBankDetails','getIsAddBank'])
-    },
-    methods: {
-        addBank() {
-            this.$store.commit('bankDetails/setIsAddBank', true)
-        },
-        viewBankMandates() {
-            this.isShowBankMandates = !this.isShowBankMandates
-        }
-    },
-    created() {
-        this.$store.dispatch('bankDetails/getBankDataFromApi')
-    },
+const store = useStore()
+
+const isAddBank = ref(false)
+
+const cancelAddBank = () => {
+  isAddBank.value = false;
 }
+const getbankdetails = computed(() => store.getters['profile/getbankdetails']);
+
+// const getLoader = computed(() => store.getters['profile/getLoader']);
+
+const addBank = () => {
+    isAddBank.value = true;
+}
+
 </script>
+
+
+
+
 
 <style>
 .bank-details-card {

@@ -12,7 +12,7 @@ export default {
         //
     }),
     computed: {
-        ...mapGetters('auth',['getUserId'])
+        ...mapGetters('auth', ['getUserId'])
     },
 
     authHeader() {
@@ -23,23 +23,23 @@ export default {
     },
 
     authHeaderWeb() {
-        let token = localStorage.getItem('sessionId') ? localStorage.getItem('sessionId')  : ''
+        let token = localStorage.getItem('sessionId') ? localStorage.getItem('sessionId') : ''
         let headers = {
             'Authorization': `Bearer ${token}`,
         };
         return headers;
     },
 
-    async ssoLogin (payload) {
+    async ssoLogin(payload) {
         return await axios.post(`${baseUrl}am/sso/vendor/auth/getUserDetails`, payload)
     },
 
-    async getProfileDetails() {
-        const requestOptions = {
-            headers: this.authHeader(),
-        };
-        return axios.get(`${baseUrlTemp}method/ninjafox.custom_api.get_customer_profile?customer=${userId}`, requestOptions).then();
-    },
+    // async getProfileDetails() {
+    //     const requestOptions = {
+    //         headers: this.authHeader(),
+    //     };
+    //     return axios.get(`${baseUrlTemp}method/ninjafox.custom_api.get_customer_profile?customer=${userId}`, requestOptions).then();
+    // },
 
     async getBankDetails() {
         const requestOptions = {
@@ -48,25 +48,19 @@ export default {
         return axios.get(`${baseUrlTemp}method/ninjafox.custom_api.get_customer_Bank_details?customer=${userId}`, requestOptions).then();
     },
 
-    async getNomineeDetails() {
-        const requestOptions = {
-            headers: this.authHeader(),
-        };
-        return axios.get(`${baseUrlTemp}method/ninjafox.custom_api.get_customer_nominee_details?customer=${userId}`, requestOptions).then();
-    },
+    // async getNomineeDetails() {
+    //     const requestOptions = {
+    //         headers: this.authHeader(),
+    //     };
+    //     return axios.get(`${baseUrlTemp}method/ninjafox.custom_api.get_customer_nominee_details?customer=${userId}`, requestOptions).then();
+    // },
 
-    async getmisreport(payload) {
-            
-        return await axios.get(`https://kyc.skybroking.com/skybo/mis/ExcelDownload?frmDate=${payload.fromDate}&toDate=${payload.toDate}`).then();
-    },
-
-
-    async addNomineeDetails(payload) {
-        const requestOptions = {
-            headers: this.authHeader(),
-        };
-        return axios.put(`${baseUrlTemp}resource/Customer/${userId}`, payload, requestOptions).then();
-    },
+    // async addNomineeDetails(payload) {
+    //     const requestOptions = {
+    //         headers: this.authHeader(),
+    //     };
+    //     return axios.put(`${baseUrlTemp}resource/Customer/${userId}`, payload, requestOptions).then();
+    // },
     async getSegments() {
         let fields = `["fsl_nse","fsl_bse","fsl_nfo","fsl_bfo","fsl_cds","fsl_bcd","fsl_mcx"]`
         let filters = `[["fsl_ucc_code","=","SKY34914"]]`
@@ -100,8 +94,8 @@ export default {
         const requestOptions = {
             headers: this.authHeaderWeb(),
         };
-        return axios.get(`${baseUrl}po-rest/positions`,requestOptions).then();
-    }, 
+        return axios.get(`${baseUrl}po-rest/positions`, requestOptions).then();
+    },
 
     async getHoldings() {
         // const requestOptions = {
@@ -128,6 +122,15 @@ export default {
             headers: this.authHeader(),
         };
         return axios.get(`${baseUrlTemp}resource/Withdraw?fields=${fields}&filters=${filters}`, requestOptions).then();
-    }
-    
+    },
+
+    // async getProfileDataFromApi() {
+    //     const requestOptions = {
+    //         headers: this.authHeader(),
+    //     };
+    //     return axios.get(`${baseUrl}api/resource/Customer/SKY40491`, requestOptions)
+    //         .then();
+    // }
+
+
 }

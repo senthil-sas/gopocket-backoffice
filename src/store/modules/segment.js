@@ -1,18 +1,18 @@
 import service from "../httpService";
 const state = {
-    segments : []
+    segments: []
 }
 
 const actions = {
-    async getSegmentsFromApi({state,commit}, payload) {
+    async getSegmentsFromApi({ state, commit }, payload) {
         try {
-            service.getSegments().then(resp=>{
-                if(resp.data.data[0]) {
+            service.getSegments().then(resp => {
+                if (resp.data.data[0]) {
                     commit('setSegments', resp.data.data[0])
                 }
             })
         } catch (error) {
-            
+
         }
     }
 };

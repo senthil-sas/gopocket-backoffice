@@ -1,50 +1,98 @@
-import service from "../httpService"
+import service from "../modules/services/profile.ts";
+import errorHandle from '../../handleError/errorHandling'
+
 
 const state = {
     profileData: [],
-    loader: false
-}
+    bankdetails: [],
+    segments: [],
+    loader: false,
+    isAddBank: false
+
+};
 
 const actions = {
-    async getProfileDataFromApi({ commit }) {
-        try {
-            commit('setLoader', true)
-            service.getProfileDetails().then(resp => {
-                if(resp.data?.message?.data) {
-                    commit('setProfileData',resp.data.message.data)
+    // async getProfileDataFromApi({ commit }, userId) {
+    //     commit('setProfileData', []);
+    //     commit('setbankdetails', []);
+    //     commit("setSegments", []);
+    //     try {
+    //         commit('setLoader', true);
+    //         const resp = await service.getProfileDataFromApi(userId);
+    //         // console.log(resp.data.data.fsl_bank_table)
+
+    //         if (resp.data?.data) {
+    //             commit('setProfileData', resp.data.data);
+    //             commit('setbankdetails', resp.data.data.fsl_bank_table);
+    //             commit('setSegments', resp.data.data);
+
+
+    //         } else {
+    //         }
+    //     } catch (error) {
+    //         // Handle error
+    //         console.error(error);
+    //     } finally {
+    //         commit('setLoader', false);
+    //     }
+    // }
+
+    getProfileDataFromApi({ commit }, userId) {
+        commit('setProfileData', []);
+        commit('setbankdetails', []);
+        commit("setSegments", []);
+        commit('setLoader', true, { root: true });
+
+        service.getProfileDataFromApi(userId)
+            .then(resp => {
+                if (resp.data?.data) {
+                    commit('setProfileData', resp.data.data);
+                    commit('setbankdetails', resp.data.data.fsl_bank_table);
+                    commit('setSegments', resp.data.data);
                 } else {
-                    commit('setProfileData', [])
                 }
-            }).finally(()=> {
-                commit('setLoader', false)
-            })
-        } catch (error) {
-            
-        }
+            },
+                (err) => {
+                    errorHandle.handleError(err)
+                })
+            .finally(() => {
+                commit('setLoader', false, { root: true });
+            });
+
     }
+
 };
 
 const mutations = {
     setProfileData(state, payload) {
-        state.profileData = payload
+        state.profileData = payload;
     },
-    setLoader(state, payload) {
-        state.loader = payload
-    }
+    setbankdetails(state, payload) {
+        state.bankdetails = payload;
+    },
+
+    setSegments(state, payload) {
+        state.segments = payload;
+    },
+    setIsAddBank(state, payload) {
+        state.isAddBank = payload
+    },
 };
 
 const getters = {
     getProfileData: state => state.profileData,
-    getLoader: state => state.loader
+    getbankdetails: state => state.bankdetails,
+    getSegments: state => state.segments,
+    getbankdetails: state => state.bankdetails
+
 };
 
-const nominee = {
+const profile = {
     namespaced: true,
-    state: state,
-    mutations: mutations,
-    actions: actions,
-    getters: getters,
-}
+    state,
+    mutations,
+    actions,
+    getters
+};
 
-export default nominee
-
+export default profile;

@@ -1,6 +1,6 @@
 <style scoped>
 .header {
-  @apply bg-white h-12 left-0 right-0 py-[5px] px-[10px] font-medium w-full border-b-[1px] my-0 mx-auto
+  @apply bg-white h-12 left-0 right-0 py-[5px] px-[10px] font-medium w-full  border-t-[1px] my-0 mx-auto
   dark:bg-[#181818] dark:text-[#94A3B8] dark:border-[#232325];
 }
 .menu-list {
@@ -62,13 +62,23 @@
 </style>
 <template>
   <div class="relative top-0 z-[9]">
-    <div class="flex header items-center justify-between py-[50px]">
+    <div class="flex header items-center justify-between py-[50px] ">
       <div class="flex items-center z-50 w-full">
+        <div class="flex lg:hidden">
+          <button
+            type="button"
+            class="inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+            @click="mobileMenuOpen = true"
+          >
+            <span class="sr-only">Open main menu</span>
+            <Bars3Icon class="h-6 w-6" aria-hidden="true" />
+          </button>
+        </div>
         <div class="-pointer logo mr-auto flex items-center">
-          <img :src="clientLogo" class="h-6 px-4" alt="logo" />
+          <img :src="clientLogo" class="h-6 px-4 max-w-[104px]" alt="logo" />
         </div>
         <div class="menu-list">
-          <ul class="py-0 pl-0 pr-4">
+          <ul class="py-0 pl-0 pr-4 hidden lg:flex">
             <li class="primary-color" v-for="(head, id) in headers" :key="id">
               <router-link :id="head.id" :to="head.route"
                 ><span class="pb-[4px] px-[20px]">{{
@@ -204,55 +214,100 @@
             </transition>
           </Menu>
         </div>
+        <Dialog
+          as="div"
+          class="lg:hidden"
+          @close="mobileMenuOpen = false"
+          :open="mobileMenuOpen"
+        >
+          <div class="fixed inset-0 z-10" />
+          <DialogPanel
+            class="fixed inset-y-0 left-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+          >
+            <div class="flex items-center justify-between">
+              <a href="#" class="">
+                <span class="sr-only">Your Company</span>
+                <img :src="clientLogo" class="h-6 px-4  max-w-[104px]" alt="logo" />
+              </a>
+              <button
+                type="button"
+                class="-m-2.5 rounded-md p-2.5 text-gray-700"
+                @click="mobileMenuOpen = false"
+              >
+                <span class="sr-only">Close menu</span>
+                <XMarkIcon class="h-6 w-6" aria-hidden="true" />
+              </button>
+            </div>
+            <div class="flow-root">
+              <div class="-my-6 divide-y divide-gray-500/10">
+                <div class="space-y-2 py-6">
+                  <ul class="py-10 pl-0 pr-4 flex flex-col gap-4">
+                    <li
+                      @click="mobileMenuOpen = false"
+                      class="primary-color"
+                      v-for="(head, id) in headers"
+                      :key="id"
+                    >
+                      <router-link :id="head.id" :to="head.route"
+                        ><span class="pb-[4px] px-[20px]">{{
+                          head.name
+                        }}</span></router-link
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </DialogPanel>
+        </Dialog>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import clientLogo from "../assets/images/client-logo.svg";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import { mapGetters } from "vuex";
+import clientLogo from '../assets/images/client-logo.svg'
+import { Menu, MenuButton, MenuItem, MenuItems,DialogPanel,Dialog } from '@headlessui/vue'
+import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
+
+import { mapGetters } from 'vuex';
 export default {
+  
   data() {
     return {
-        clientLogo,
-        userRole: 'NORMAL_USER',
-        headers: [
-            {
-                name: 'Dashboard',
-                id: 'head_dashboard',
-                route:'/dashboard',
-            },
-            {
-                name: 'Reports',
-                id: 'head_reports',
-                route:'/reports',
-            },
-            {
-                name: 'Holdings',
-                id: 'head_holdings',
-                route:'/holdings',
-            },
-            {
-                name: 'Action',
-                id: 'head_action',
-                route:'/action',
-            },
-            {
-                name: 'Journey Report',
-                id: 'head_misreport',
-                route:'/mis_report',
-            },
-            {
-                name: 'Profile',
-                id: 'head_profile',
-                route:'/profile',
-            }
-        ],
-    }
+      clientLogo,
+      userRole: "NORMAL_USER",
+      headers: [
+        {
+          name: "Dashboard",
+          id: "head_dashboard",
+          route: "/dashboard",
+        },
+        {
+          name: "Reports",
+          id: "head_reports",
+          route: "/reports",
+        },
+        {
+          name: "Holdings",
+          id: "head_holdings",
+          route: "/holdings",
+        },
+        //{
+        //     name: 'Action',
+        //     id: 'head_action',
+        //     route:'/action',
+        //},
+        {
+          name: "Profile",
+          id: "head_profile",
+          route: "/profile",
+        },
+      ],
+      mobileMenuOpen: false
+    };
   },
-  components: { Menu, MenuButton, MenuItems, MenuItem },
+  components: { Menu, MenuButton, MenuItems, MenuItem,Bars3Icon ,XMarkIcon,DialogPanel,Dialog},
   computed: {
     ...mapGetters("auth", ["getUserId"]),
     ...mapGetters("profile", ["getProfileData"]),

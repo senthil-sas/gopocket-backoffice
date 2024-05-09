@@ -1,5 +1,5 @@
 <template>
-    <div class="p-5">
+    <div class="p-5" v-if="!getLoader">
         <div class="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-col-3 sm:grid-cols-2 gap-8 h-auto">
             <div class="rounded-lg p-3 border-[0.02rem] dark:border-[#232325]">
                 <label class="my-2 primary-color !font-semibold text-sm" id="accinfo_label_eq">Equities</label>
@@ -10,8 +10,8 @@
                 </div>
                 <p class="secondary-color dark:text-[#94A3B8] mb-4 text-sm">Equity derivatives, as well as contract-based assets,such as bonds, commodities and currencies, on NSE.</p>
                     <button v-if="getSegments.fsl_nse == 'Active'" id="accinfo_eq_isactive" class="commonbtn green" disabled>Active</button>   
-                    <button v-if="getSegments.fsl_nse == 'Inactive'" id="accinfo_eq_isactive" class="commonbtn">Enable Segment</button>  
-                    <button v-if="getSegments.fsl_nse == 'Dormant'" id="accinfo_eq_isactive" class="commonbtn">Re-KYC</button>                 
+                    <button v-if="getSegments.fsl_nse == 'Inactive'" id="accinfo_eq_isactive" class="commonbtn">Activate Segment</button>  
+                    <button v-if="getSegments.fsl_nse == 'Dormant'" id="accinfo_eq_isactive" class="commonbtn">Start-KYC</button>                 
             </div>
             </div>
             <div class="rounded-lg p-3 border-[0.02rem] dark:border-[#232325]">
@@ -21,11 +21,11 @@
                     <button id="accinfo_label_nfo" class="graybtn mr-2">NFO</button>
                     <button id="accinfo_label_nse_cur" class="graybtn">NSE CUR</button>
                 </div>
-                <p class="secondary-color dark:text-[#94A3B8] mb-4 text-sm">Equity derivatives, as well as contract-based assets,such as bonds, commodities and currencies, on NSE.</p>
+                <p class="secondary-color dark:text-[#94A3B8] mb-4 text-sm">Equity derivatives, as well as contract-based assets, such as bonds, commodities & currencies, on NSE</p>
                 <!-- <button id="accinfo_derivatives_isactive" class="commonbtn" >Enable Segment</button> -->
                     <button v-if="getSegments.fsl_nfo == 'Active'" id="accinfo_eq_isactive" class="commonbtn green" disabled>Active</button>   
-                    <button v-if="getSegments.fsl_nfo == 'Inactive'" id="accinfo_eq_isactive" class="commonbtn">Enable Segment</button>  
-                    <button v-if="getSegments.fsl_nfo == 'Dormant'" id="accinfo_eq_isactive" class="commonbtn">Re-KYC</button>
+                    <button v-if="getSegments.fsl_nfo == 'Inactive'" id="accinfo_eq_isactive" class="commonbtn">Activate Segment</button>  
+                    <button v-if="getSegments.fsl_nfo == 'Dormant'" id="accinfo_eq_isactive" class="commonbtn">Start-KYC</button>
                 </div>
             </div>
             <div class="rounded-lg p-3 border-[0.02rem] dark:border-[#232325]">
@@ -34,11 +34,11 @@
                 <div class="my-3 text-xs">
                     <button id="accinfo_label_mcx" class="redbtn mr-2">MCX</button>
                 </div>
-                <p class="secondary-color dark:text-[#94A3B8] mb-4 text-sm">Equity derivatives, as well as contract-based assets,such as bonds, commodities and currencies, on NSE.</p>
+                <p class="secondary-color dark:text-[#94A3B8] mb-4 text-sm">Trade physical substances such as gold, crude oil, cotton, lead etc. on MCX.</p>
                 <!-- <button id="accinfo_com_isactive" class="commonbtn">Perform KYC</button> -->
                     <button v-if="getSegments.fsl_mcx == 'Active'" id="accinfo_eq_isactive" class="commonbtn green" disabled>Active</button>   
-                    <button v-if="getSegments.fsl_mcx == 'Inactive'" id="accinfo_eq_isactive" class="commonbtn">Enable Segment</button>  
-                    <button v-if="getSegments.fsl_mcx == 'Dormant'" id="accinfo_eq_isactive" class="commonbtn">Re-KYC</button>
+                    <button v-if="getSegments.fsl_mcx == 'Inactive'" id="accinfo_eq_isactive" class="commonbtn">Activate Segment</button>  
+                    <button v-if="getSegments.fsl_mcx == 'Dormant'" id="accinfo_eq_isactive" class="commonbtn">Start-KYC</button>
                 </div>
             </div>
         </div>
@@ -54,10 +54,11 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('segment', ['getSegments'])
+        ...mapGetters('profile', ['getSegments']), 
+        ...mapGetters(['getLoader'])
+
+
     },
-    created() {
-        this.$store.dispatch('segment/getSegmentsFromApi')
-    },
+
 }
 </script>

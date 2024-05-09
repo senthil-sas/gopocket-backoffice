@@ -57,7 +57,8 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('nominee',['getNomineeList'])
+        ...mapGetters('nominee',['getNomineeList']),
+        ...mapGetters('auth', ['getUserId'])
     },
     methods: {
         addMoreNominee() {
@@ -72,7 +73,7 @@ export default {
         }
     },
     created() {
-        this.$store.dispatch('nominee/getNomineeDetails')
+        // this.$store.dispatch('nominee/')
     },
 }
 </script>

@@ -13,14 +13,16 @@ export default {
 
 <template>
   <div class="p-5">
-    <div class="primary-color mb-6">Hi {{ userName }} ,</div>
+    <div class="primary-color mb-6">Hi  {{ getProfileData.customer_name }}
+ ,</div>
     <div class="w-full flex flex-wrap">
       <div class="w-[50%]">
         <div>
           <span class="primary-color !font-bold">Equity</span>
-          <span class="secondary-color text-xs mx-2"
-            >( Updated on <span>2023-07-06</span> )</span
-          >
+          <!-- <span class="secondary-color text-xs mx-2"
+            >
+            ( Updated on <span>2023-07-06</span> )</span
+          > -->
         </div>
 
         <div class="flex justify-between flex-wrap max-w-[300px] my-8">
@@ -51,9 +53,9 @@ export default {
 
       <div class="w-[50%]">
         <span class="primary-color !font-bold">Commodity</span>
-        <span class="secondary-color text-xs mx-2"
+        <!-- <span class="secondary-color text-xs mx-2"
           >( Updated on <span>2023-07-06</span> )</span
-        >
+        > -->
 
         <div class="flex flex-col justify-center items-center gap-4 h-60">
           <img
@@ -107,6 +109,7 @@ export default {
 import icon from "../../components/utilComponents/icons.vue";
 import transactions_table from "./transactions-table.vue";
 import linechart from "../../components/charts/line.vue";
+import { mapGetters } from 'vuex';
 const calendorSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
   <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
 </svg>
@@ -117,13 +120,15 @@ export default {
     return {
       withdrawAmount: "",
       isShowRecentTrans: false,
-      userName: "Senthilnathan",
-      accountValue: "3.53k",
-      equityHoldings: "3000",
-      cashBalance: "8000",
+      accountValue: "0.00",
+      equityHoldings: "0000",
+      cashBalance: "0000",
       calendorSvg,
     };
   },
+  computed: {
+        ...mapGetters('profile', ['getProfileData']),
+    },
   methods: {
     viewRecentTransactions() {
       this.isShowRecentTrans = !this.isShowRecentTrans;

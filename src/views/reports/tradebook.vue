@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <!-- <div>
     <div class="flex gap-4 items-end">
       <div>
         <div class="primary-color text-xs mb-1">Segment</div>
-        <Listbox as="div" v-model="segment" class="w-[200px]">
+        <Listbox as="div" v-model="segment" class="w-[150px]">
           <div class="relative">
             <ListboxButton
               class="min-h-[28px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6"
@@ -76,12 +76,12 @@
             :masks="{ input: 'DD-MM-YYYY', modelValue: 'YYYY-MM-DD' }"
             type="date"
             mode="date"
-            class="w-[100px]"
+            class="w-[150px]"
             :dateFormat="'YYYY-MM-DD'"
           >
             <template v-slot="{ inputValue, inputEvents }">
               <div
-                class="flex items-center justify-between w-[100px] h-7 border rounded cursor-pointer p-2"
+                class="flex items-center justify-between w-[150px] h-7 border rounded cursor-pointer p-2"
               >
                 <input
                   :value="inputValue"
@@ -108,12 +108,12 @@
             :masks="{ input: 'DD-MM-YYYY', modelValue: 'YYYY-MM-DD' }"
             type="date"
             mode="date"
-            class="w-[100px]"
+            class="w-[150px]"
             :dateFormat="'YYYY-MM-DD'"
           >
             <template v-slot="{ inputValue, inputEvents }">
               <div
-                class="flex items-center justify-between w-[100px] h-7 border rounded cursor-pointer p-2"
+                class="flex items-center justify-between w-[150px] h-7 border rounded cursor-pointer p-2"
               >
                 <input
                   :value="inputValue"
@@ -157,7 +157,7 @@
         <div class="h-5"></div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div>
     <!-- chart Start -->
@@ -177,8 +177,8 @@
     </div>
     <!-- chart End  -->
     <div class="my-10">
-      <div class="h-[calc(100vh-400px)] overflow-y-auto border-t">
-        <table class="w-full relative">
+      <div class="h-[calc(100vh-400px)] overflow-y-auto ">
+        <table class="w-full relative"  v-if="getTradeBookData?.length > 0">
           <thead>
             <tr>
               <th
@@ -186,7 +186,7 @@
                 :key="id"
                 scope="col"
                 :class="head.class"
-                class="py-3.5 px-2 text-xs font-semibold z-10 whitespace-nowrap sticky top-0 bg-[#cbcbc4]"
+                class="py-3.5 px-2 text-xs font-semibold z-10 whitespace-nowrap sticky top-0 bg-[#fbfbf9]"
               >
                 {{ head.name }}
               </th>
@@ -237,25 +237,17 @@
             </tr>
           </tbody>
         </table>
+        <div v-else class="flex justify-center my-10 ">
+            No Trade Found
+        </div>
       </div>
-      <!-- <div class="flex justify-center my-10" v-else>
-        <no_data name="Tradebook"/>
-    </div> -->
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watchEffect } from "vue";
-import { mapGetters, useStore } from "vuex";
-import {
-  Listbox,
-  ListboxButton,
-  ListboxLabel,
-  ListboxOption,
-  ListboxOptions,
-} from "@headlessui/vue";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
+import { computed, onMounted, ref } from "vue";
+import { useStore } from "vuex";
 const store = useStore();
 
 // const segment = ref("");
@@ -265,6 +257,10 @@ const segments = ref([
   { name: "Futures & Options", id: 0, exch: "NFO" },
   { name: "Currency", id: 0, exch: "CDS" },
 ]);
+
+// const startDate = ref(""); // Define and initialize startDate
+// const endDate = ref(""); // Define and initialize endDate
+
 
 const popover = ref({
   visibility: "click",
@@ -405,7 +401,7 @@ const setDate = () => {
 };
 
 onMounted(() => {
-  store.dispatch("reports/getTradeBookFromApi");
+  // store.dispatch("reports/getTradeBookFromApi");
   setDate();
 });
 </script>

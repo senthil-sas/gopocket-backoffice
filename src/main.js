@@ -12,11 +12,22 @@ import 'v-calendar/style.css';
 
 
 const app = createApp(App)
+
+
+import spinner from './components/utilComponents/spinner.vue'
+app.component("spinner", spinner);
+
 app.use(router)
 app.use(store)
 app.use(Chart)
 app.mount('#viteapp')
 
+
+
+
+
+import { setupCalendar, Calendar, DatePicker } from 'v-calendar';
+import 'v-calendar/style.css';
 
 // Use plugin defaults (optional)
 app.use(setupCalendar, {})
