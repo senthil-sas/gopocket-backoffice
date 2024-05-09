@@ -36,26 +36,37 @@ const mutations = {
         state.activeReportTab = payload
     },
     setDataPoints(state, payload) {
-        console.log("payload", payload)
         let dataPoints = {}
         let dates = []
 
-        payload?.forEach(el => {
-            dates.push(new Date(el.trade_date))
-            dataPoints[getTimeStamp(el.trade_date)] = (el.qty)
+        const mergedRecords = {};
+        payload.forEach((record) => {
+            const date = record.trade_date;
+            const number = record.qty;
+            
+            if (!mergedRecords[date]) {
+                mergedRecords[date] = { date: date, qty: 0 };
+            }
+            
+            mergedRecords[date].qty += number;
+        });
+        const result = Object.values(mergedRecords); 
+        result?.forEach((el) => {
+            dates.push(new Date(el.date))
+            dataPoints[getTimeStamp(el.date)] = (el.qty)
         });
 
-        // state.startDate = new Date(Math.min.apply(null, dates));
-        // state.endDate = new Date(Math.max.apply(null, dates));
+        state.startDate = new Date(Math.min.apply(null, dates));
+        state.endDate = new Date(Math.max.apply(null, dates));
         state.dataPoints = dataPoints
-        console.log("v3", dataPoints);
+        
     },
 };
 
 const getters = {
     getTradeBookData: state => state.tradeBookData,
-    getActiveReportTab: (state) => state.activeReportTab
-
+    getActiveReportTab: (state) => state.activeReportTab,
+    getDataPoints:(state)=>state.dataPoints
 };
 
 const tradebook = {
@@ -69,9 +80,16 @@ const tradebook = {
 export default tradebook
 
 
+// function getTimeStamp(date) {
+//     const myDate = new Date(date);
+//     const unixTimestamp = myDate.getTime();
+//     return unixTimestamp;
+// }
+
 function getTimeStamp(date) {
     const myDate = new Date(date);
     const unixTimestamp = myDate.getTime();
-    return unixTimestamp;
+    return unixTimestamp / 1000;
 }
+
 
