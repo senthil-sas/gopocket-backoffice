@@ -9,5 +9,4 @@ export default {
         }
         return axios.get(`${baseUrl}boupdate/positionsDetails?ucc=${userId}`, requestOptions);
     },
-
 }

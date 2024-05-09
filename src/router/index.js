@@ -20,6 +20,7 @@ const router = createRouter({
         { path: '/dashboard', name: 'dashboard', component: () => import('../views/dashboard.vue') },
         { path: '/reports', name: 'reports', component: () => import('../views/reports/reports.vue') },
         { path: '/holdings', name: 'holdings', component: () => import('../views/portfolio.vue') },
+        { path: '/mis_report', name: 'misreport', component: () => import('../views/misReport/misReport.vue')},
         { path: '/action', name: 'action', component: () => import('../views/action.vue') },
         { path: '/profile', name: 'profile', component: () => import('../views/profile.vue') },
       ],

@@ -23,7 +23,7 @@ export default createStore({
     ssoRedirectionUrl: 'http://web.gopocket.in/',
     myAppCode: 'oJGBKnveAXcHOWG',
     version: "1.0.0",
-    months: [
+    months:[
       { month: "Jan", id: "01" },
       { month: "Feb", id: "02" },
       { month: "Mar", id: "03" },

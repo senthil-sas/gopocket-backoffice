@@ -3,7 +3,7 @@
         <div v-if="getLoader" class="flex items-center justify-center" style="height:100vh !important">
         <img height="60" width="60" :src="spinnerGif" alt="loading">
         </div>
-        
+
         <div v-else class="flex justify-center items-center h-screen">
             <div class="flex flex-col gap-4 max-w-[500px]">
                 <div>
@@ -21,7 +21,6 @@
                 </div>
             </div>
         </div>
-        
     </div>  
 </template>
 <script>

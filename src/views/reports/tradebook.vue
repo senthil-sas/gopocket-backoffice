@@ -1,5 +1,5 @@
 <template>
-<!-- <div>
+  <!-- <div>
     <div class="flex gap-4 items-end">
       <div>
         <div class="primary-color text-xs mb-1">Segment</div>
@@ -92,26 +92,18 @@
                 />
               </div>
             </template>
-          </VDatePicker>
-        </div>
-        <div class="h-5"></div>
-      </div>
+</VDatePicker>
+</div>
+<div class="h-5"></div>
+</div>
 
-      <div>
-        <div class="primary-color text-xs mb-2">To Date</div>
-        <div>
-          <VDatePicker
-            :max-date="today"
-            v-model="toDate"
-            is-required
-            :popover="popover"
-            :masks="{ input: 'DD-MM-YYYY', modelValue: 'YYYY-MM-DD' }"
-            type="date"
-            mode="date"
-            class="w-[150px]"
-            :dateFormat="'YYYY-MM-DD'"
-          >
-            <template v-slot="{ inputValue, inputEvents }">
+<div>
+  <div class="primary-color text-xs mb-2">To Date</div>
+  <div>
+    <VDatePicker :max-date="today" v-model="toDate" is-required :popover="popover"
+      :masks="{ input: 'DD-MM-YYYY', modelValue: 'YYYY-MM-DD' }" type="date" mode="date" class="w-[150px]"
+      :dateFormat="'YYYY-MM-DD'">
+      <template v-slot="{ inputValue, inputEvents }">
               <div
                 class="flex items-center justify-between w-[150px] h-7 border rounded cursor-pointer p-2"
               >
@@ -124,124 +116,87 @@
                 />
               </div>
             </template>
-          </VDatePicker>
-        </div>
-        <div class="h-5"></div>
-      </div>
+    </VDatePicker>
+  </div>
+  <div class="h-5"></div>
+</div>
 
-      <div>
-        <button class="commonbtn h-[30px] !py-0" @click="getTradeBook">
-          <span class="text-xs">Submit </span>
-        </button>
-        <div class="h-5"></div>
-      </div>
-      <div>
-        <button
-          @click="previousYear()"
-          type="button"
-          class="commonbtn text-xs h-[30px] !py-0"
-        >
-          Previous Year
-        </button>
-        <div class="h-5"></div>
-      </div>
+<div>
+  <button class="commonbtn h-[30px] !py-0" @click="getTradeBook">
+    <span class="text-xs">Submit </span>
+  </button>
+  <div class="h-5"></div>
+</div>
+<div>
+  <button @click="previousYear()" type="button" class="commonbtn text-xs h-[30px] !py-0">
+    Previous Year
+  </button>
+  <div class="h-5"></div>
+</div>
 
-      <div>
-        <button
-          type="button"
-          @click="nextYear()"
-          class="commonbtn text-xs h-[30px] !py-0"
-        >
-          Next Year
-        </button>
-        <div class="h-5"></div>
-      </div>
-    </div>
-  </div>  -->
+<div>
+  <button type="button" @click="nextYear()" class="commonbtn text-xs h-[30px] !py-0">
+    Next Year
+  </button>
+  <div class="h-5"></div>
+</div>
+</div>
+</div> -->
 
   <div>
     <!-- chart Start -->
     <div class="chart-container">
-      <v-frappe-chart
-        type="heatmap"
-        :data="{
-          '1461744959': 20,
-          '1463673055': 113,
-          '1476892421': 57,
-        }"
-        :start="startDate"
-        :end="endDate"
-        :height="180"
-        :bar-options="{ spaceRatio: 0.2 }"
-      />
+      <v-frappe-chart v-if="getTradeBookData.length" type="heatmap" :data="getDataPoints" :start="new Date('2023-04-01')" :end="new Date('2024-03-31')"
+        :height="180" :bar-options="{ spaceRatio: 0.2 }" />
     </div>
     <!-- chart End  -->
     <div class="my-10">
       <div class="h-[calc(100vh-400px)] overflow-y-auto ">
-        <table class="w-full relative"  v-if="getTradeBookData?.length > 0">
+        <table class="w-full relative" v-if="getTradeBookData?.length > 0">
           <thead>
             <tr>
-              <th
-                v-for="(head, id) in tableHeads"
-                :key="id"
-                scope="col"
-                :class="head.class"
-                class="py-3.5 px-2 text-xs font-semibold z-10 whitespace-nowrap sticky top-0 bg-[#fbfbf9]"
-              >
+              <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class"
+                class="py-3.5 px-2 text-xs font-semibold z-10 whitespace-nowrap sticky top-0 bg-[#fbfbf9]">
                 {{ head.name }}
               </th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(i, id) in getTradeBookData" :key="id" class="border-b">
-              <td
-                class="px-2 py-4 whitespace-nowrap text-sm primary-color dark:text-[#94A3B8] relative text-left"
-              >
+              <td class="px-2 py-4 whitespace-nowrap text-sm primary-color dark:text-[#94A3B8] relative text-left">
                 {{ i.trade_date }}
               </td>
-              <td
-                class="px-2 py-4 whitespace-nowrap text-sm primary-color dark:text-[#94A3B8] relative text-left"
-              >
+              <td class="px-2 py-4 whitespace-nowrap text-sm primary-color dark:text-[#94A3B8] relative text-left">
                 {{ i.symbol }}
                 <span class="pl-1 text-[10px] secondary-color">{{
                   i.segment
                 }}</span>
               </td>
               <td
-                class="px-2 py-4 text-sm leading-6 primary-color dark:text-[#94A3B8] relative max-w-[250px] text-center"
-              >
+                class="px-2 py-4 text-sm leading-6 primary-color dark:text-[#94A3B8] relative max-w-[250px] text-center">
                 {{ i.type ? i.type : "Null" }}
               </td>
-              <td
-                class="px-2 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center"
-              >
+              <td class="px-2 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
                 {{ i.ucc }}
               </td>
-              <td
-                class="px-2 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right"
-              >
+              <td class="px-2 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">
                 {{ i.qty }}
               </td>
-              <td
-                class="px-2 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right"
-              >
+              <td class="px-2 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">
                 {{ i.price }}
                 <!-- {{ toFixed(i.price / 100) }} -->
               </td>
-              <td
-                class="px-2 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right"
-              >
+              <td class="px-2 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">
                 {{ i.value }}
                 <!-- {{ toFixed(i.value) }} -->
               </td>
             </tr>
           </tbody>
-       
+
         </table>
         <div v-else class="flex justify-center my-10 ">
-            No Trade Found
+          No Trade Found
         </div>
-      
       </div>
     </div>
   </div>
@@ -250,22 +205,22 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
-
+// import { VFrappeChart } from "vue-frappe-chart"
 import {
-    Listbox,
-    ListboxButton,
-    ListboxOption,
-    ListboxOptions,
-  } from "@headlessui/vue";
-  import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from "@headlessui/vue";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
+import { useCommonHook } from "../../Composible/commonHook";
 const store = useStore();
+const { getFinancialYearDates, getPreviousFinancialYearDates, getNextFinancialYearDates } = useCommonHook();
 
 // const segment = ref("");
 
-// const startDate = ref(new Date()); // Define and initialize startDate
-// const endDate = ref(new Date()); // Define and initialize endDate
-
-
+const startDate = ref(new Date()); // Define and initialize startDate
+const endDate = ref(new Date()); // Define and initialize endDate
 
 const tableHeads = ref([
   { name: "Trade Date", class: "text-left" },
@@ -281,6 +236,10 @@ const tableHeads = ref([
 const getTradeBookData = computed(
   () => store.getters["tradebook/getTradeBookData"]
 );
+const getDataPoints = computed(() => {
+  console.log(store.getters["tradebook/getDataPoints"], "check-data");
+  return store.getters["tradebook/getDataPoints"];
+});
 
 // const getPreviousDay = () => {
 //   const today = new Date();
@@ -361,8 +320,9 @@ const getTradeBookData = computed(
 // };
 
 onMounted(() => {
+  console.log(getDataPoints.value, "getTradeBookData");
+
   // store.dispatch("reports/getTradeBookFromApi");
   // setDate();
 });
 </script>
-
