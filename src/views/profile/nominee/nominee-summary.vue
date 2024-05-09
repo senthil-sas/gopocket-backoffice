@@ -5,7 +5,7 @@
         </div>
         
         <div class="flex gap-3 flex-wrap">
-            <div v-for="(i, id) in getNomineeList" :key="id" class="p-3 border-[0.02rem] rounded-lg max-w-[400px]">
+            <div v-for="(i, id) in mergedNomineeList" :key="id" class="p-3 border-[0.02rem] rounded-lg max-w-[400px]">
                 <div class="flex justify-between">
                     <span class="primary-color !font-semibold text-sm">Nominee {{ id + 1 }}</span>
                     <span class="primary-color text-sm cursor-pointer" @click="deleteNominee(id)">
@@ -16,7 +16,7 @@
                 <div class="my-3">
                     <div class="flex gap-10 pt-4">
                         <span class="secondary-color text-sm min-w-[150px]">Full name</span>
-                        <span class="primary-color text-sm">{{ i.nominee_name ? i.nominee_name : 'NA' }}</span>
+                        <span class="primary-color text-sm">{{i.firstname || i.nominee_name  }}</span>
                     </div>
                     <div class="flex gap-10 pt-4">
                         <span class="secondary-color text-sm min-w-[150px]">Relationship</span>
@@ -57,7 +57,13 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('nominee',['getNomineeList'])
+        ...mapGetters('nominee',['getNomineeList']),
+        ...mapGetters('nominee',['getNomineeDetails']),
+        mergedNomineeList() {
+            // Merging getNomineeList and getNomineeDetails
+            const merged = [...this.getNomineeList, ...this.getNomineeDetails]; 
+            return merged;
+        }
     },
     methods: {
         addMoreNominee() {
@@ -71,8 +77,9 @@ export default {
             this.$store.commit('nominee/deleteNominee', id)
         }
     },
-    created() {
-        // this.$store.dispatch('nominee/')
-    },
+    mounted() {
+        this.$store.dispatch('nominee/NomineeDetails');
+
+    }
 }
 </script>

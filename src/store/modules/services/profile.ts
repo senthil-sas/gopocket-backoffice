@@ -17,7 +17,7 @@ export default {
 
     },
 
-    async getNomineeDetails(userId: any) {
+    async getupdateNomineeDetails(userId: any) {
         const requestOptions = {
             headers: authHeader(),
         };

@@ -144,15 +144,14 @@ export default {
     // }
     confirmationAccept(){
         let json = {
-                        "uccCode": this.getUserId,
-                        "documentType": "REEKYC_INCOME_PROOF",
-                        "typeOfProof":this.getIFSCDetails?.ADDRESS,
-                        "password": this.getIFSCDetails?.BRANCH,
-                        "annualIncome": this.income?.name,
-                        "file": this.accountNumber, 
-            
-        }  
-     this.$store.dispatch('bankDetails/saveBankDetails', json)
+        "uccCode": this.getUserId, // Assuming getUserId returns user's ID
+        "documentType": "Income Proof", // Assuming this is the document type
+        "typeOfProof": this.incomeProofType.name, // Selected income proof type
+        "password": "user_password", // User's password, replace it with actual value
+        "annualIncome": this.income.name, // Selected annual income
+        "file": "path_to_uploaded_file" // Path to the uploaded file, replace it with actual value
+    };  
+    //  this.$store.dispatch('bankDetails/saveBankDetails', json)
   }
   },
     

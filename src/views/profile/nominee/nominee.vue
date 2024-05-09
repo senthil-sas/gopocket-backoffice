@@ -55,7 +55,7 @@ export default {
         if(nomineeList && nomineeList?.length > 0) {
             this.$store.commit('nominee/setNomineeDetails', nomineeList)
         }
-        this.$store.dispatch('nominee/getNomineeDetails')
+        this.$store.dispatch('nominee/getupdateNomineeDetails')
         this.$store.dispatch('nominee/addNomineeDetails')
 
         

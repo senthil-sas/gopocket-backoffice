@@ -14,11 +14,11 @@ export default {
         };
         return axios.get(`${kycURI}ReEkycnominee/deleteNom/?uccCode=AB0009&id=2`, requestOptions).then();
     },
-    async getNomineeDetails() {
+    async NomineeDetails(userId) {
         const requestOptions = {
             headers: authHeader(),
         };
-        return axios.get(`${kycURI}ReEkycnominee/getNominee/?uccCode=AB0009`, requestOptions).then();
+        return axios.get(`${kycURI}ReEkycnominee/getNominee/?uccCode=${userId}`, requestOptions).then();
     }
 
 

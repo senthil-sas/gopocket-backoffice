@@ -1,5 +1,6 @@
 <template>
     <form @submit.prevent="addGurdian()">
+        <div>
         <div class="mb-4 primary-color !font-bold text-sm">
             Enter your Guardian Details
         </div>
@@ -179,6 +180,7 @@
             <button type="button" class="cancelbtn" @click="backToNomineeDetails()">Cancel</button>
             <button type="submit" class="commonbtn">Submit</button>
         </div>
+    </div>
     </form>
 </template>
 

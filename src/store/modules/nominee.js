@@ -7,36 +7,20 @@ const state = {
     nomineeStage: 'initialList',
     nomineeList: [],
     isMinor: false,
+    NomineeDetails: [],
 
 }
-
 const actions = {
-    // async getNomineeDetails({ commit }, userId) {
-    //     try {
-    //         service.getNomineeDetails(userId).then(resp => {
-    //             if (resp.data?.message?.data?.fsl_nominee_details) {
-    //                 commit('setNomineeList', resp.data.message.data?.fsl_nominee_details)
-    //                 if (resp.data.message.data?.fsl_nominee_details.length) {
-    //                     commit('setNomineeStage', 'nomineeSummary')
-    //                 } else {
-    //                     commit('setNomineeStage', 'initialList')
-    //                 }
-    //             } else {
-    //                 commit('setNomineeList', [])
-    //             }
-    //         })
-    //     } catch (error) {
 
-    //     }
-    // },
 
-    async getNomineeDetails({ commit, rootGetters }, payload) {
+    async getupdateNomineeDetails({ commit, rootGetters }) {
         commit('setNomineeList', []);
         commit('setLoader', true, { root: true });
         let userId = rootGetters['auth/getUserId']
 
-        service.getNomineeDetails(userId)
+        service.getupdateNomineeDetails(userId)
             .then(resp => {
+                console.log(resp)
                 if (resp.data?.message?.data?.fsl_nominee_details) {
                     commit('setNomineeList', resp.data.message.data?.fsl_nominee_details);
                     if (resp.data.message.data?.fsl_nominee_details.length) {
@@ -73,7 +57,7 @@ const actions = {
         { state, commit, dispatch, rootState },
         payload
     ) {
-        commit('setLoader', true, { root: true });
+        commit('reekyc/setloginloader', true, { root: true });
         // commit('setIsPasswordPDF', false)
         // commit('setIsNomineepass', f/alse)
         // commit('setIsGuardianPass', false)
@@ -87,8 +71,8 @@ const actions = {
             fd.append("gurpassword", state.guardianPassord)
             let response = await Nomineeservice.saveNomineeDetails(fd);
             if (response.status == 200 && response.data.message == "Success") {
-                await dispatch("getNomineeDetails")
-                commit("nominee/setAddNominee", "Nominee1", { root: true });
+                await dispatch("NomineeDetails")
+                commit('setNomineeStage', 'nomineeSummary');
             } else if (response.data && response.data.reason && (response.data.reason == 'Cannot decrypt PDF of Nominee, the password is incorrect' || response.data.reason == 'Cannot decrypt PDF of Guardian, the password is incorrect')) {
                 if (response.data.reason == 'Cannot decrypt PDF of Nominee, the password is incorrect') {
                     commit('setIsNomineepass', true)
@@ -107,9 +91,30 @@ const actions = {
                 }
             }
         } catch (error) {
-            errorHandle.handleError(err)
+            errorHandle.handleError(error)
         }
-        commit('setLoader', false, { root: true });
+        finally {
+            commit('reekyc/setloginloader', false, { root: true });
+        }
+    },
+
+    async NomineeDetails({ rootState, commit },) {
+        commit('setNomineeDetails', []);
+
+        await Nomineeservice.NomineeDetails(rootState.auth.userId,)
+            .then(resp => {
+                if (resp.status == 200 && resp?.data?.stat === 1) {
+                    commit('setNomineeDetails', resp.data.result);
+
+                } else {
+
+                }
+            },
+                (err) => {
+                    errorHandle.handleError(err)
+                })
+            .finally(() => {
+            });
     },
 };
 
@@ -119,20 +124,20 @@ const mutations = {
     },
 
     setNomineeList(state, payload) {
-        // state.nomineeList.push(payload)
-        // if(state.nomineeList.length == 1) {
-        //    state.nomineeList[0].nomineeShare = 100
-        // }
-        // if(state.nomineeList.length == 2) {
-        //    state.nomineeList[0].nomineeShare = 50
-        //    state.nomineeList[1].nomineeShare = 50
-        // }
-        // if(state.nomineeList.length == 3) {
-        //    state.nomineeList[0].nomineeShare = 50
-        //    state.nomineeList[1].nomineeShare = 25
-        //    state.nomineeList[2].nomineeShare = 25
-        // }
-        // this.commit('nominee/setNomineeDetails', state.nomineeList)
+        state.nomineeList.push(payload)
+        if (state.nomineeList.length == 1) {
+            state.nomineeList[0].nomineeShare = 100
+        }
+        if (state.nomineeList.length == 2) {
+            state.nomineeList[0].nomineeShare = 50
+            state.nomineeList[1].nomineeShare = 50
+        }
+        if (state.nomineeList.length == 3) {
+            state.nomineeList[0].nomineeShare = 50
+            state.nomineeList[1].nomineeShare = 25
+            state.nomineeList[2].nomineeShare = 25
+        }
+        this.commit('nominee/setNomineeDetails', state.nomineeList)
         state.nomineeList = payload
     },
 
@@ -155,6 +160,9 @@ const mutations = {
     setIsMinor(state, payload) {
         state.isMinor = payload
     },
+    setNomineeDetails(state, payload) {
+        state.NomineeDetails = payload
+    },
 
     // setLoader(state, payload) {
     //     state.loader = payload
@@ -164,7 +172,9 @@ const mutations = {
 const getters = {
     getNomineeStage: state => state.nomineeStage,
     getNomineeList: state => state.nomineeList,
-    getIsMinor: state => state.isMinor
+    getIsMinor: state => state.isMinor,
+    getNomineeDetails: state => state.NomineeDetails
+
 
 };
 
