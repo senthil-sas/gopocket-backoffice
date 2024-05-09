@@ -8,6 +8,14 @@ const state = {
     nomineeList: [],
     isMinor: false,
     NomineeDetails: [],
+    guardianDateErrMsg: '',
+    // password PDF
+    isPasswordPDF: false,
+    nomineePassword: '',
+    guardianPassord: '',
+    isNomineepass: false,
+    isGuardianPass: false,
+
 
 }
 const actions = {
@@ -58,9 +66,9 @@ const actions = {
         payload
     ) {
         commit('reekyc/setloginloader', true, { root: true });
-        // commit('setIsPasswordPDF', false)
+        commit('setIsPasswordPDF', false)
         // commit('setIsNomineepass', f/alse)
-        // commit('setIsGuardianPass', false)
+        commit('setIsGuardianPass', false)
         try {
             let fd = new FormData();
             fd.append("uccCode", rootState.auth.userId);
@@ -77,7 +85,7 @@ const actions = {
                 if (response.data.reason == 'Cannot decrypt PDF of Nominee, the password is incorrect') {
                     commit('setIsNomineepass', true)
                     // commit('Notification/setNotificationMsg', { show: true, header: '', subHeader: 'Please Enter Valid Password', status: 'info' }, { root: true })
-                } else if (response.data.reason == 'Cannot decrypt PDF of Guardian, the password is incorrect') {
+                } else if (response.data.reason == 'Cannot decrydpt PDF of Guardian, the password is incorrect') {
                     commit('setIsGuardianPass', true)
                     // commit('Notification/setNotificationMsg', { show: true, header: '', subHeader: 'Please Enter Valid Password', status: 'info' }, { root: true })
                 }
@@ -163,7 +171,24 @@ const mutations = {
     setNomineeDetails(state, payload) {
         state.NomineeDetails = payload
     },
-
+    setGuardianDateErrMsg(state, payload) {
+        state.guardianDateErrMsg = payload
+    },
+    setIsPasswordPDF(state, payload) {
+        state.isPasswordPDF = payload
+    },
+    setNomineepassword(state, payload) {
+        state.nomineePassword = payload
+    },
+    setGuardianpassword(state, payload) {
+        state.guardianPassord = payload
+    },
+    setIsNomineepass(state, payload) {
+        state.isNomineepass = payload
+    },
+    setIsGuardianPass(state, payload) {
+        state.isGuardianPass = payload
+    }
     // setLoader(state, payload) {
     //     state.loader = payload
     // }
@@ -173,7 +198,13 @@ const getters = {
     getNomineeStage: state => state.nomineeStage,
     getNomineeList: state => state.nomineeList,
     getIsMinor: state => state.isMinor,
-    getNomineeDetails: state => state.NomineeDetails
+    getNomineeDetails: state => state.NomineeDetails,
+    getGuardianDateErrMsg: (state) => state.guardianDateErrMsg,
+
+
+    getIsPasswordPDF: (state) => state.isPasswordPDF,
+    getNomineePassword: (state) => state.nomineePassword,
+    getGuardianpassword: (state) => state.guardianPassord
 
 
 };

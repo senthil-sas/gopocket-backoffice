@@ -105,7 +105,6 @@
   
   <script>
   import { mapGetters, mapState } from "vuex";
-  import errorMessage from "@/components/errorMessage.vue"
   import {
     TransitionRoot,
     TransitionChild,
@@ -159,7 +158,7 @@
       TransitionChild,
       Dialog,
       DialogPanel,
-      DialogTitle,errorMessage
+      DialogTitle
     },
   }
   
