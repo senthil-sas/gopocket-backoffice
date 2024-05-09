@@ -13,7 +13,9 @@ import positions from './modules/positions'
 import reports from './modules/reports'
 import funds from './modules/funds'
 import popup from './modules/popup'
-import misreport from "./modules/misReport";
+import ledger from './modules/ledger'
+import reekyc from './modules/Re-ekyc'
+import Documents from "./modules/Documents";
 export default createStore({
   state: {
     brokerName: "GoPocket",
@@ -37,8 +39,8 @@ export default createStore({
     ],
     windowWidth: 0,
     windowHeigth: 0,
-    loader: false
-
+    loader: false,
+    currenttab: "0",
   },
 
   mutations: {
@@ -48,6 +50,10 @@ export default createStore({
     },
     setLoader(state, payload) {
       state.loader = payload
+    },
+    setcurrenttab(state, payload) {
+      state.currenttab = payload
+
     }
   },
 
@@ -56,9 +62,10 @@ export default createStore({
   getters: {
     getMonths: state => state.months,
     getWindowWidth: state => state.windowWidth,
-    getLoader: state => state.loader
+    getLoader: state => state.loader,
+    getcurrenttab: state => state.currenttab
 
   },
 
-  modules: { tabs, bankDetails, nominee, subAcc, giftStocks, auth, profile, segment, ledger, tradebook, holdings, positions, reports, funds, popup },
+  modules: { tabs, bankDetails, nominee, reekyc, Documents, subAcc, giftStocks, auth, profile, segment, ledger, tradebook, holdings, positions, reports, funds, popup },
 });

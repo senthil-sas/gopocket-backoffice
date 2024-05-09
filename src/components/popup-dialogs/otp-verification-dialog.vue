@@ -10,20 +10,21 @@
                 <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-md sm:p-6">
                 <form @submit.prevent="verify()">
                     <div class="mb-6">
-                        <img :src="brokerImg" alt="image" class="max-w-[30%]">
+                        <img :src="brokerImg" alt="image" class="h-6 pr-4 max-w-[104px]">
                     </div>
 
-                    <div class="primary-color border-b pb-2 text-lg font-bold">
+                    <div class="primary-color border-b pb-2  text-[14px]">
                         {{ getVerificationType }} verification
                     </div>
 
                     <div class="text-sm primary-color my-4 flex gap-3">
-                       <input type="text" maxlength="6" v-model="otp" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Enter the OTP">
-                       <button class="commonbtn">Verify</button>
+                       <input type="text" maxlength="6" v-model="otp"  class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Enter the OTP">
+                       <button class="commonbtn" > <spinner v-if="getLoader"/> <span v-else>Verify</span></button>
                     </div>
+                    <div class="text-red-500 text-xs h-3" >{{ errorMessage }}</div>
 
                     <div class="mt-4 mb-10 text-xs border-t pt-2">
-                        Didn't receive the OTP? <span class="text-blue-400 underline">Resend</span>
+                        Didn't receive the OTP? <span class="text-blue-400 underline cursor-pointer" @click="resendOTP">Resend</span>
                     </div>
                 </form>
               </DialogPanel>
@@ -44,23 +45,48 @@ export default {
     data() {
         return {
             otp: '',
+            errorMessage: '', // Error message variable
             brokerImg,
         }
     },
     computed: {
-        ...mapGetters('popup', ['getIsOtpVerify', 'getVerificationType'])
+
+        ...mapGetters('popup', ['getIsOtpVerify', 'getUpdateType']),
+        ...mapGetters('popup', ['getIsEmailOrMobileUpdate', 'getVerificationType' ,]),
+        ...mapGetters(['getLoader'])
+
+
     },
     methods: {
         closeDialog() {
             this.$store.commit('popup/setIsOtpVerify', false)
         },
-        verify() {
-          if(this.getVerificationType == 'Email') {
+        
+        async verify() {
+            if (this.otp.trim() === '') {
+                this.errorMessage = 'Please enter the OTP.';
+                return;
+            } else if (!/^\d{6}$/.test(this.otp.trim())) {
+                this.errorMessage = 'Please enter a valid 6-digit OTP.';
+                return;
+            } else {
+              this.errorMessage = ''; 
+              this.$store.dispatch('reekyc/verifyOTP', this.otp );
+            }
+        },
+        resendOTP() {
+            // this.closeDialog();
+            let option = this.getVerificationType?.toLowerCase() == 'email' ? 1 : 0;
+            this.loginEmailAndMobile(option);
+            // let type = this.getVerificationType?.toLowercase() == 'email' ? 'Email' : 'SMS'; 
+            // this.$store.commit('popup/setIsOtpVerify', true)
+            // this.$store.commit('popup/setVerificationType', type)
 
-          } else {
-
-          }
-        }
+        },
+        loginEmailAndMobile(option) {
+            this.$store.dispatch('reekyc/loginEmailAndMobile',  option); 
+    },
+   
     },
 }
 </script>

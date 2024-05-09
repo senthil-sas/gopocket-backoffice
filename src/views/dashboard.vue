@@ -4,7 +4,7 @@
         <div class="h-[calc(100vh-96px)] overflow-y-auto">
             <accounts_graph v-if="currentTab == 0"/>
             <funds v-if="currentTab == 1" />
-            <positions v-if="currentTab == 2" />
+            <!-- <positions v-if="currentTab == 2" /> -->
         </div>
     </div>
 </template>

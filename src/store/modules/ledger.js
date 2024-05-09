@@ -5,44 +5,43 @@ const apiservice = apiledgerservice();
 
 const state = {
     ledgerData: [],
-    dataPoints: {}
+    dataPoints: {},
+    loader: false,
+
 }
 
 const actions = {
-    async getledgerApi({ commit }, payload) { 
-        // console.log(payload,"vvv");
+    async getledgerApi({ commit }, payload) {
+        commit('setLoader', true, { root: true });
+
         try {
-            apiservice.getLedgerData(payload).then(resp => {
-             
-                console.log(resp.data.message.customer_ledger, "resp");
+            const resp = await apiservice.getLedgerData(payload);
 
-                if (resp?.data?.message?.customer_ledger) {
+            if (resp?.data?.message?.customer_ledger) {
+                commit('setledgerData', resp.data.message.customer_ledger);
+            } else {
+                commit('setTradeBookData', []);
+            }
 
-                    commit('setledgerData', resp.data.message.customer_ledger);
-
-                } else {
-                 
-                    commit('setTradeBookData', [])
-                   
-                }
-            })
         } catch (error) {
-
         }
+        commit('setLoader', false, { root: true });
+
     }
+
 };
 
 const mutations = {
 
     setledgerData(state, payload) {
 
-        state.ledgerData = payload; 
+        state.ledgerData = payload;
         // console.log("vvv",state.ledgerData);
-    },  
+    },
 
     setDataPoints(state, payload) {
 
-        console.log("payload",payload)
+        console.log("payload", payload)
         let dataPoints = {}
         let dates = []
 
@@ -54,7 +53,7 @@ const mutations = {
         // state.startDate = new Date(Math.min.apply(null, dates));
         // state.endDate = new Date(Math.max.apply(null, dates));
         state.dataPoints = dataPoints
-        console.log("v3",dataPoints);
+        console.log("v3", dataPoints);
     },
 };
 

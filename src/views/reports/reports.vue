@@ -27,6 +27,7 @@ export default {
     methods: {
         changeTab(id) {
             this.currentTab = id
+            this.$store.commit('reports/setActiveReportTab', id)
             sessionStorage.setItem('reportsTab', JSON.stringify(id))
             this.$store.dispatch('tabs/setActiveTab', { path: this.$route.path, id : id })
         }

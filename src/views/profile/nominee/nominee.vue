@@ -13,7 +13,7 @@
                 </p>
             </div>
             <div class="my-6 flex justify-center gap-4">
-                <button class="cancelbtn" @click="skip()">Opt Out</button>
+                <!-- <button class="cancelbtn" @click="skip()">Opt Out</button> -->
                 <button class="commonbtn" @click="addNominee()">Add Nominee</button>
             </div>
         </div>
@@ -40,8 +40,6 @@ export default {
         ...mapGetters('nominee', ['getNomineeStage']),
         ...mapGetters('auth', ['getUserId']),
         ...mapGetters(['getLoader'])
-
-
     },
     methods: {
         addNominee() {
@@ -57,7 +55,13 @@ export default {
         if(nomineeList && nomineeList?.length > 0) {
             this.$store.commit('nominee/setNomineeDetails', nomineeList)
         }
-        this.$store.dispatch('nominee/getNomineeDetails')
+        this.$store.dispatch('nominee/getupdateNomineeDetails')
+        this.$store.dispatch('nominee/addNomineeDetails')
+
+        
+
+
+
     }
 }
 </script>

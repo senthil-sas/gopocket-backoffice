@@ -5,27 +5,28 @@ const state = {
     loader: true,
     startDate: '',
     endDate: '',
+    activeReportTab: 0,
 }
 
 const actions = {
-    async getTradeBookFromApi({state,commit }) {
-        state.loader = true
-        try {
-            service.getTradeBook().then(resp => {
-                if (resp?.data?.data) {
-                    commit('setTradeBookData', resp?.data?.data)
-                    commit('setDataPoints', resp?.data?.data)
-                } else {
-                    commit('setTradeBookData', [])
-                    commit('setDataPoints', {})
-                }
-            }).finally(()=>{
-                state.loader = false
-            })
-        } catch (error) {
-            state.loader = false
-        }
-    }
+    // async getTradeBookFromApi({ state, commit }) {
+    //     state.loader = true
+    //     try {
+    //         service.getTradeBook().then(resp => {
+    //             if (resp?.data?.data) {
+    //                 commit('setTradeBookData', resp?.data?.data)
+    //                 commit('setDataPoints', resp?.data?.data)
+    //             } else {
+    //                 commit('setTradeBookData', [])
+    //                 commit('setDataPoints', {})
+    //             }
+    //         }).finally(() => {
+    //             state.loader = false
+    //         })
+    //     } catch (error) {
+    //         state.loader = false
+    //     }
+    // }
 };
 
 const mutations = {
@@ -35,7 +36,7 @@ const mutations = {
     setDataPoints(state, payload) {
         let dataPoints = {}
         let dates = []
-        
+
         payload.forEach(el => {
             dates.push(new Date(el.trade_date))
             dataPoints[getTimeStamp(el.trade_date)] = el.qty
@@ -46,6 +47,9 @@ const mutations = {
 
         state.dataPoints = dataPoints
     },
+    setActiveReportTab(state, payload) {
+        state.activeReportTab = payload
+    }
 };
 
 const getters = {
@@ -54,6 +58,7 @@ const getters = {
     getLoader: state => state.loader,
     getStartDate: state => state.startDate,
     getEndDate: state => state.endDate,
+    getActiveReportTab: (state) => state.activeReportTab
 };
 
 const reports = {

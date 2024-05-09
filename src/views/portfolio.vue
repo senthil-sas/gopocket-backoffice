@@ -2,18 +2,22 @@
     <tabs :isBgBlue="true" page="holdings" @activeTab="changeTab"/>
     <!-- <div class="h-[calc(100vh-96px)] overflow-y-auto"> -->
         <my_holdings v-if="currentTab == 0" />
-        <familyComp v-if="currentTab == 1" />
-        <gift_stocks v-if="currentTab == 2" />
+        <positions v-if="currentTab == 1" />
+
+        <familyComp v-if="currentTab == 2" />
+        <gift_stocks v-if="currentTab == 3" />
     <!-- </div> -->
 </template>
 
 <script>
 import tabs from '../components/utilComponents/tabs.vue'
+import positions from './dashboard/positions.vue'
+
 import familyComp from './Holdings/family.vue'
 import my_holdings from './Holdings/my-holdings.vue'
 import gift_stocks from './Holdings/gift-stocks.vue'
 export default {
-    components: { tabs, familyComp, my_holdings, gift_stocks },
+    components: { tabs, familyComp, my_holdings, gift_stocks ,positions},
     data() {
         return {
             currentTab : 1

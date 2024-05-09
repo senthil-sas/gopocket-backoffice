@@ -70,6 +70,11 @@
 
         <!-- vue file agent -->
         <div class="w-[350px] h-[180px] bg-violet-50 text-violet-600 flex justify-center items-center rounded my-4 cursor-pointer font-extrabold border border-gray-300">
+            <!-- <input
+        type="file"
+        class="opacity-0 w-full h-full absolute top-0 left-0 cursor-pointer" capture id="formFile" accept=".pdf, .png, .jpg, .jpeg"
+        @change="handleFileUpload"
+      /> -->
             <span class="text-xl mx-1">+</span> <span class="text-sm">Income Proof</span>
         </div>
 
@@ -93,7 +98,7 @@
         </div>
 
         <div class="py-8">
-            <button class="commonbtn" :disabled="confirmationAccept == ''">Update financial information</button>
+            <button class="commonbtn" @click="confirmationAccept()" :disabled="confirmationAccept == ''">Update financial information</button>
         </div>
         
     </div>
@@ -102,6 +107,7 @@
 <script>
 import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
+import { mapGetters } from 'vuex'
 export default {
     components: { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions, CheckIcon, ChevronUpDownIcon },
     data() {
@@ -123,9 +129,32 @@ export default {
             confirmations : [
                 { id: 'I accept above declaration', title: 'I accept above declaration' },
             ],
-            confirmationAccept: ''
+            confirmationAccept: 'true'
         }
     },
+    computed: {
+        ...mapGetters("auth", ["getUserId"]),
+
+
+    },
+    methods: {
+    // handleFileUpload(event) {
+    //   const file = event.target.files[0];
+    //   console.log("Uploaded file:", file);
+    // }
+    confirmationAccept(){
+        let json = {
+        "uccCode": this.getUserId, // Assuming getUserId returns user's ID
+        "documentType": "Income Proof", // Assuming this is the document type
+        "typeOfProof": this.incomeProofType.name, // Selected income proof type
+        "password": "user_password", // User's password, replace it with actual value
+        "annualIncome": this.income.name, // Selected annual income
+        "file": "path_to_uploaded_file" // Path to the uploaded file, replace it with actual value
+    };  
+    //  this.$store.dispatch('bankDetails/saveBankDetails', json)
+  }
+  },
+    
     watch: {
         income(val) {
             console.log(val,'val');

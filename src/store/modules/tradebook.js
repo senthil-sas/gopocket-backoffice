@@ -1,35 +1,40 @@
-import service from "../httpService";
 import { apigettradebook } from "../services/tradebookApi";
 
 const apiservice = apigettradebook()
 const state = {
     tradeBookData: [],
-    dataPoints: {}
+    dataPoints: {},
+    activeReportTab: 0,
+    loader: false,
+
 }
 
 const actions = {
     async getTradeBookFromApi({ commit }, payload) {
+        commit('setLoader', true, { root: true });
         try {
-            apiservice.getTradebookData(payload).then(resp => {
-                console.log(resp.data.message.tradebook_summary, "resp");
-                if (resp?.data?.message?.tradebook_summary) {
-                    commit('setTradeBookData', resp?.data?.message?.tradebook_summary)
-                    commit('setDataPoints', resp?.data?.message?.tradebook_summary)
-                } else {
-                    commit('setTradeBookData', [])
-                }
-            })
+            let response = await apiservice.getTradebookData(payload);
+            if (response?.data?.message?.tradebook_summary) {
+                commit('setTradeBookData', response.data.message.tradebook_summary);
+                commit('setDataPoints', response.data.message.tradebook_summary);
+            } else {
+                commit('setTradeBookData', []);
+            }
         } catch (error) {
-
+            // Handle error if needed
         }
+        commit('setLoader', false, { root: true });
     }
+
 };
 
 const mutations = {
     setTradeBookData(state, payload) {
         state.tradeBookData = payload
     },
-
+    setActiveReportTab(state, payload) {
+        state.activeReportTab = payload
+    },
     setDataPoints(state, payload) {
         console.log("payload", payload)
         let dataPoints = {}
@@ -49,6 +54,8 @@ const mutations = {
 
 const getters = {
     getTradeBookData: state => state.tradeBookData,
+    getActiveReportTab: (state) => state.activeReportTab
+
 };
 
 const tradebook = {

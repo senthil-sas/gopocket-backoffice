@@ -1,5 +1,5 @@
 <template>
-  <!-- <div>
+<!-- <div>
     <div class="flex gap-4 items-end">
       <div>
         <div class="primary-color text-xs mb-1">Segment</div>
@@ -157,7 +157,7 @@
         <div class="h-5"></div>
       </div>
     </div>
-  </div> -->
+  </div>  -->
 
   <div>
     <!-- chart Start -->
@@ -236,10 +236,12 @@
               </td>
             </tr>
           </tbody>
+       
         </table>
         <div v-else class="flex justify-center my-10 ">
             No Trade Found
         </div>
+      
       </div>
     </div>
   </div>
@@ -248,24 +250,22 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
+
+import {
+    Listbox,
+    ListboxButton,
+    ListboxOption,
+    ListboxOptions,
+  } from "@headlessui/vue";
+  import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
 const store = useStore();
 
 // const segment = ref("");
-const segment = ref({ name: "Equity", id: 0, exch: "NSE" });
-const segments = ref([
-  { name: "Equity", id: 0, exch: "NSE" },
-  { name: "Futures & Options", id: 0, exch: "NFO" },
-  { name: "Currency", id: 0, exch: "CDS" },
-]);
 
-// const startDate = ref(""); // Define and initialize startDate
-// const endDate = ref(""); // Define and initialize endDate
+// const startDate = ref(new Date()); // Define and initialize startDate
+// const endDate = ref(new Date()); // Define and initialize endDate
 
 
-const popover = ref({
-  visibility: "click",
-  placement: "bottom-start",
-});
 
 const tableHeads = ref([
   { name: "Trade Date", class: "text-left" },
@@ -277,132 +277,92 @@ const tableHeads = ref([
   { name: "Value", class: "text-right" },
 ]);
 
-const fromDate = ref("");
-const toDate = ref("");
-const today = ref(new Date());
-const curMonth = ref("");
-const curYear = ref(0);
 
-const getLoader = computed(() => store.getters["reports/getLoader"]);
-const getUserId = computed(() => store.getters["auth/getUserId"]);
 const getTradeBookData = computed(
   () => store.getters["tradebook/getTradeBookData"]
 );
 
-const getFirstDayOfMonth = () => {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-based
-  const day = "01";
-  return `${year}-${month}-${day}`;
-};
-const getPreviousDay = () => {
-  const today = new Date();
-  const yesterday = new Date(today);
-  yesterday.setDate(today.getDate() - 1);
-  const year = yesterday.getFullYear();
-  const month = String(yesterday.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-based
-  const day = String(yesterday.getDate()).padStart(2, "0");
+// const getPreviousDay = () => {
+//   const today = new Date();
+//   const yesterday = new Date(today);
+//   yesterday.setDate(today.getDate() - 1);
+//   const year = yesterday.getFullYear();
+//   const month = String(yesterday.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-based
+//   const day = String(yesterday.getDate()).padStart(2, "0");
 
-  return `${year}-${month}-${day}`;
-};
+//   return `${year}-${month}-${day}`;
+// };
 
-const getTradeBook = () => {
-  let payload = {
-    ucc: getUserId.value,
-    segment: segment.value.exch,
-    fromDate: formateDate(fromDate.value),
-    toDate: formateDate(toDate.value),
-  };
-  store.dispatch("tradebook/getTradeBookFromApi", payload);
-};
+// const getTradeBook = () => {
+//   let payload = {
+//     ucc: getUserId.value,
+//     segment: segment.value.exch,
+//     fromDate: formateDate(fromDate.value),
+//     toDate: formateDate(toDate.value),
+//   };
+//   store.dispatch("tradebook/getTradeBookFromApi", payload);
+// };
 
-const formateDate = (data) => {
-  const originalDate = new Date(data); // Assuming your original date is in YYYY-MM-DD format
-  const formattedDate = originalDate.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
 
-  return formattedDate;
-};
 
-const daysinMonth = (year, month) => {
-  return new Date(year, month, 0).getDate();
-};
 
-const formatDate = (paloadDate) => {
-  const dateObject = new Date(paloadDate);
+// const previousYear = () => {
+//   const [toyeardate] = formatDate(toDate.value).split("-");
+//   if (Number(toyeardate) <= curYear.value) {
+//     const [fyear, fmon, fday] = formatDate(fromDate.value).split("-");
+//     fromDate.value = (Number(fyear) - 1).toString() + "-" + fmon + "-" + fday;
+//     const [tyear, tmon, tday] = formatDate(toDate.value).split("-");
+//     toDate.value =
+//       (Number(tyear) - 1).toString() +
+//       "-" +
+//       "03" +
+//       "-" +
+//       Number(daysinMonth(Number(tyear) - 1, 3).toString());
+//   }
+// };
 
-  // Get year, month, and day from the Date object
-  const year = dateObject.getFullYear();
-  const month = ("0" + (dateObject.getMonth() + 1)).slice(-2); // Adding 1 because getMonth() returns zero-based month index
-  const day = ("0" + dateObject.getDate()).slice(-2);
+// const nextYear = () => {
+//   const [toyeardate] = formatDate(toDate.value).split("-");
 
-  // New date string in yyyy-mm-dd format
-  const newDateFormat = year + "-" + month + "-" + day;
+//   if (Number(toyeardate) !== curYear.value) {
+//     console.log("toyeardate", toyeardate);
+//     console.log("curyear", curYear.value);
+//     const [fyear, fmon, fday] = formatDate(fromDate.value).split("-");
+//     fromDate.value = new Date(
+//       (Number(fyear) + 1).toString() + "-" + fmon + "-" + fday
+//     );
+//     const [tyear, tmon, tday] = formatDate(toDate.value).split("-");
+//     toDate.value = new Date(
+//       (Number(tyear) + 1).toString() + "-" + tmon + "-" + tday
+//     );
+//   }
+// };
+// const getPreviousDays = (dateString) => {
+//   const date = new Date(dateString);
+//   date.setDate(date.getDate() - 1);
+//   const finalDate = date.toLocaleDateString().split("/");
+//   const [mm, days, yyyy] = finalDate;
+//   const dd = days.length == 1 ? `0${days}` : days;
+//   const month = mm.length == 1 ? `0${mm}` : mm;
+//   return `${yyyy}-${month}-${dd}`;
+// };
 
-  return newDateFormat;
-};
-
-const previousYear = () => {
-  const [toyeardate] = formatDate(toDate.value).split("-");
-  if (Number(toyeardate) <= curYear.value) {
-    const [fyear, fmon, fday] = formatDate(fromDate.value).split("-");
-    fromDate.value = (Number(fyear) - 1).toString() + "-" + fmon + "-" + fday;
-    const [tyear, tmon, tday] = formatDate(toDate.value).split("-");
-    toDate.value =
-      (Number(tyear) - 1).toString() +
-      "-" +
-      "03" +
-      "-" +
-      Number(daysinMonth(Number(tyear) - 1, 3).toString());
-  }
-};
-
-const nextYear = () => {
-  const [toyeardate] = formatDate(toDate.value).split("-");
-
-  if (Number(toyeardate) !== curYear.value) {
-    console.log("toyeardate", toyeardate);
-    console.log("curyear", curYear.value);
-    const [fyear, fmon, fday] = formatDate(fromDate.value).split("-");
-    fromDate.value = new Date(
-      (Number(fyear) + 1).toString() + "-" + fmon + "-" + fday
-    );
-    const [tyear, tmon, tday] = formatDate(toDate.value).split("-");
-    toDate.value = new Date(
-      (Number(tyear) + 1).toString() + "-" + tmon + "-" + tday
-    );
-  }
-};
-const getPreviousDays = (dateString) => {
-  const date = new Date(dateString);
-  date.setDate(date.getDate() - 1);
-  const finalDate = date.toLocaleDateString().split("/");
-  const [mm, days, yyyy] = finalDate;
-  const dd = days.length == 1 ? `0${days}` : days;
-  const month = mm.length == 1 ? `0${mm}` : mm;
-  return `${yyyy}-${month}-${dd}`;
-};
-
-const setDate = () => {
-  console.log("check");
-  const curfullYear = new Date();
-  const currentYear = curfullYear.getFullYear();
-  const currentMonth = curfullYear.getMonth();
-  const currentDay = curfullYear.getDate();
-  curYear.value = Number(currentYear);
-  fromDate.value = new Date(`${currentYear - 1}-0${4}-01`);
-  toDate.value = new Date(
-    getPreviousDays(`${currentYear}-${currentMonth + 1}-${currentDay}`)
-  );
-};
+// const setDate = () => {
+//   console.log("check");
+//   const curfullYear = new Date();
+//   const currentYear = curfullYear.getFullYear();
+//   const currentMonth = curfullYear.getMonth();
+//   const currentDay = curfullYear.getDate();
+//   curYear.value = Number(currentYear);
+//   fromDate.value = new Date(`${currentYear - 1}-0${4}-01`);
+//   toDate.value = new Date(
+//     getPreviousDays(`${currentYear}-${currentMonth + 1}-${currentDay}`)
+//   );
+// };
 
 onMounted(() => {
   // store.dispatch("reports/getTradeBookFromApi");
-  setDate();
+  // setDate();
 });
 </script>
 

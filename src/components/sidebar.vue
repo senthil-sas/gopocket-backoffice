@@ -17,7 +17,7 @@
             <div class="flex">
               <icon name="date" height="18" width="18" class="mr-4"/>
               <p class="primaryColor text-[14px]">
-                 {{ formatDate(getProfileData.fsl_dob) }} 
+                 {{ formatDate(getProfileData.fsl_dob) }}
               </p>
             </div>
              <div class="flex pl-5">
@@ -51,12 +51,15 @@
               <div class="primaryColor text-[14px] leading-[1.3rem]">
                 <!-- {{ getProfileData.address ? getProfileData.address.join(', ') : 'NA' }} -->
                 {{ getProfileData.primary_address  }}
-  
+
               </div>
+
             </div>
+            <span class="ml-auto cursor-pointer"  @click="getDigioLink(val)" ><icon name="edit" height="16" width="16" /></span>
+
           </div>
         </box>
-        <box class="w-full py-[40px] px-[24px] " >
+        <!-- <box class="w-full py-[40px] px-[24px] " >
             <p class="primaryColor text-[14px]">Your PAN</p>
             <p class="pb-3 text-[20px] violet-color">
               {{ getProfileData.fsl_pan_card }}
@@ -75,7 +78,7 @@
                   <span class="text-[#070A26] ml-2 text-xs cursor-pointer" v-if="supportText != '....'" @click="resetSupportCode()">Reset</span>
               </span>
             </p>
-        </box>
+        </box> -->
       </div>
 
       <div v-if="isBox && $route.path == '/reports'">
@@ -138,7 +141,7 @@
           </div>
   
           <!--  -->
-          <div class="my-8">
+          <!-- <div class="my-8">
             <p class="primaryColor text-[14px]">Your PAN</p>
             <p class="pb-3 text-[20px] violet-color">
               {{ getProfileData.fsl_pan_card }}
@@ -157,7 +160,7 @@
                   <span class="text-[#070A26] ml-2 text-xs cursor-pointer" v-if="supportText != '....'" @click="resetSupportCode()">Reset</span>
               </span>
             </p>
-          </div>
+          </div> -->
     </div>
   </div>
   </template>
@@ -203,6 +206,7 @@ import tradebookfliter from '../views/reports/tradebookfliter.vue';
       store.commit('popup/setUpdateType', type);
       store.commit('popup/setIsEmailOrMobileUpdate', true);
   };
+  
   const resetSupportCode = async () => {
       store.commit('popup/setIsResetSupportCode', true);
   };
@@ -215,8 +219,9 @@ import tradebookfliter from '../views/reports/tradebookfliter.vue';
   }
   
   
-  ;
-  
+  const getDigioLink = (val) => {
+    store.dispatch('reekyc/getDigilocker',val)
+        };
   const props = defineProps({
     isBox: { type: Boolean, default: true }
   });

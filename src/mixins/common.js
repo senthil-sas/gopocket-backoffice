@@ -6,7 +6,7 @@ export default {
             const day = String(date.getDate()).padStart(2, '0');
             const month = String(date.getMonth() + 1).padStart(2, '0');
             const year = date.getFullYear();
-            if(isNaN(day)) return ''
+            if (isNaN(day)) return ''
             return `${day} - ${month} - ${year}`;
         },
 
@@ -26,7 +26,7 @@ export default {
 
         netChgCalc(data) {
             let netChg = 0;
-            if(parseFloat(data["buyPrice"]) != 0) {
+            if (parseFloat(data["buyPrice"]) != 0) {
                 netChg = ((parseFloat(data.symbol[0]['ltp']) - parseFloat(data["buyPrice"])) / parseFloat(data["buyPrice"])) * 100
                 netChg = parseFloat(netChg).toFixed(2)
                 data['netChg'] = netChg
@@ -81,5 +81,27 @@ export default {
             let v = value?.toString().replace(/,/g, ",")
             return parseFloat(v);
         },
+        // document title
+        getDocumentTitle(val) {
+            let title = ''
+            let path = val && val.path ? val.path : ''
+            if (val && path) {
+                if (path == '/dashboard') {
+                    title = 'Dashboard'
+                }
+                if (path == '/reports') {
+                    let tab = JSON.parse(sessionStorage.getItem('reportsTab'))
+                    tab == 0 ? title = 'Tradebook' : tab == 1 ? title = 'P&L' : tab == 2 ? title = 'Ledger' : title = 'Reports'
+
+                } else if (path == '/holdings') {
+                    let tab = JSON.parse(sessionStorage.getItem('portfolioTab'))
+                    tab == 0 ? title = 'Holdings' : tab == 1 ? title = 'Positions' : tab == 2 ? title = 'Family' : tab == 3 ? title = 'Gift Stocks' : title = 'Portfolio'
+                } else if (path == '/profile') {
+                    let tab = JSON.parse(sessionStorage.getItem('profileTab'))
+                    tab == 0 ? title = 'Account Details' : tab == 1 ? title = 'Bank Details' : tab == 2 ? title = 'Nominee' : tab == 3 ? title = 'Segments' : tab == 4 ? title = 'Documents' : tab == 5 ? title = 'Income Proof' : tab == 6 ? title = 'Close Account' : title = 'Portfolio'
+                }
+            }
+            return document.title = val.path != '/' && title ? `${title} / Cosmos` : 'Cosmos'
+        }
     },
-  }
+}

@@ -1,3 +1,8 @@
+import common from '../../mixins/common.js'
+import router from '@/router';
+
+
+
 const state = {
     reportTabs: [
         { name: 'Tradebook', id: 0, active: true, count: '0' },
@@ -8,8 +13,9 @@ const state = {
     ],
     holdingsTabs: [
         { name: 'My Holdings', id: 0, active: true, count: '0' },
-        { name: 'Family', id: 1, active: false, count: '0' },
-        { name: 'Gift Stocks', id: 2, active: false, count: '0' },
+        { name: 'Positions', id: 1, active: false, count: '0' },
+        { name: 'Family', id: 2, active: false, count: '0' },
+        { name: 'Gift Stocks', id: 3, active: false, count: '0' },
     ],
     actionTabs: [
         { name: 'Corporate Action', id: 0, active: true, count: '0' },
@@ -17,21 +23,21 @@ const state = {
         { name: 'Edis Authorization', id: 2, active: false, count: '0' },
     ],
     profileTabs: [
-        { name: 'Bank Details', id: 0, active: true, count: '0' },
-        { name: 'Nominee', id: 1, active: false, count: '0' },
-        { name: 'Segments', id: 2, active: false, count: '0' },
-        { name: 'Documents', id: 3, active: false, count: '0' },
-        { name: 'Income Proof', id: 4, active: false, count: '0' },
-        { name: ' Account Details', id: 5, active: false, count: '0' },
+        { name: ' Account Details', id: 0, active: false, count: '0' },
+        { name: 'Bank Details', id: 1, active: true, count: '0' },
+        { name: 'Nominee', id: 2, active: false, count: '0' },
+        { name: 'Segments', id: 3, active: false, count: '0' },
+        { name: 'Documents', id: 4, active: false, count: '0' },
+        { name: 'Income Proof', id: 5, active: false, count: '0' },
         { name: 'Close Account', id: 6, active: false, count: '0' },
 
 
 
     ],
     dashboardTabs: [
-        { name: 'Accounts', id: 0, active: true, count: '0' },
+        { name: 'Equity', id: 0, active: true, count: '0' },
         // { name: 'Funds', id: 1, active: false, count: '0' },
-        { name: 'Positions', id: 2, active: false, count: '0' },
+        { name: 'Commodity', id: 2, active: false, count: '0' },
         // { name: 'Ledger', id: 3, active: false, count: '0' }
     ],
     profileCurrentTab: 0
@@ -73,6 +79,7 @@ const actions = {
         } else if (payload.path == '/dashboard') {
             state.dashboardTabs = data
         }
+        common.methods.getDocumentTitle(router.currentRoute._value)
     },
 };
 

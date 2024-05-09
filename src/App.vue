@@ -1,4 +1,5 @@
-<template> <RouterView /></template>
+<template> <notifications id="toaster_text" group="auth" position="top right" :classes="'my-notification'" :duration="4000"
+  :speed="500" :ignoreDuplicates="false" :reverse="true" :closeOnClick="true" /><RouterView /></template>
 <script>
 export default {
     methods: {
@@ -43,6 +44,10 @@ body {
   font-family: "Open Sans", sans-serif !important;
 }
 
+.tcText{
+  @apply text-[#717182] pl-2 text-sm text-justify
+}
+
 .red-btn-c {
   background-color: #fceeed !important;
   color: #df514c !important;
@@ -84,7 +89,9 @@ body {
   color: #ff00a8 !important;
   @apply dark:text-[#c53794] dark:bg-[#33242d] !font-semibold;
 }
-
+.error-msg {
+  @apply text-red-400 text-xs  
+}
 ::-webkit-scrollbar {
   width: 0.4rem;
   height: 0.4rem;
@@ -150,7 +157,7 @@ body {
 
 /* new css */
 .commonbtn {
-  @apply !px-4 !py-2 !text-sm !bg-[#753ED7] !text-white !rounded-md
+  @apply !px-4 !py-2 !text-sm !bg-[#753ED7] !text-white !rounded-md min-w-[90px]
 }
 .commonbtn:disabled, .cancelbtn:disabled {
   @apply !opacity-60 !bg-gray-400 cursor-not-allowed
@@ -193,6 +200,86 @@ input[type="text"] {
 }
 
 
+</style>
+<style>
+.my-notification {
+  margin: 12px 12px 8px 0px;
+  padding: 8px;
+  color: #44a4fc;
+  height: 40px;
+  background-color: #44a4fc;
+  border-left: 5px solid #187fe7;
+  border-radius: 2px;
+}
+
+.notification-content {
+  @apply leading-5;
+}
+
+.notification-title {
+  @apply mb-1 !text-sm;
+}
+
+.my-notification.success {
+  color: #4caf50 !important;
+  background-color: #f5fff5 !important;
+  border-left: 5px solid #4caf50 !important;
+  @apply font-semibold !text-xs;
+}
+
+.my-notification.error {
+  background-color: #fff7f7;
+  color: #e34242;
+  border-left: 5px solid #e34242;
+  @apply font-semibold !text-xs;
+}
+
+.my-notification.warn {
+  background-color: #fffbf3;
+  border-left: 5px solid #ff9900;
+  color: #ff9900;
+  @apply font-semibold !text-xs;
+}
+
+/*  */
+
+.highlightHover:hover .changeColorHover {
+  fill: #ffffff !important;
+  transition: all ease 0.3s;
+}
+
+.changeColorHover {
+  fill: #753ed7;
+  transition: all ease 0.3s;
+}
+
+/* close option in taoster */
+.my-notification .close-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  /* Add your custom close icon */
+  /* Example: using Font Awesome close icon */
+  /* Make sure to include the corresponding CSS for the icon library */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f00d";
+  /* Close icon unicode */
+  font-size: 14px;
+}
+
+.my-notification .close-button:hover {
+  color: red;
+  /* Change the color on hover if desired */
+}
+
+.z-index-full {
+  z-index: 99 !important;
+}
+.active-filter {
+  filter: invert(40%) sepia(38%) saturate(7169%) hue-rotate(176deg) brightness(89%) contrast(101%);
+}
 </style>
 
 

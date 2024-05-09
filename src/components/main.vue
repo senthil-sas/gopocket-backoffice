@@ -11,6 +11,7 @@
         <reset_supportcode_dialog v-if="getIsResetSupportCode"/>
         <otp_verification_dialog v-if="getIsOtpVerify"/>
         <email_or_mobile_otp_dialog v-if="getIsEmailOrMobileUpdate" />
+        <newEmailOrMobileDialog  v-if="getisNewEmailOrNewMobileUpdate" />
     </div>
 </template>
 
@@ -22,10 +23,11 @@ import box from './utilComponents/box.vue'
 import reset_supportcode_dialog from './popup-dialogs/reset-supportcode-dialog.vue'
 import otp_verification_dialog from './popup-dialogs/otp-verification-dialog.vue'
 import email_or_mobile_otp_dialog from './popup-dialogs/email-or-mobile-update-dialog.vue'
+import newEmailOrMobileDialog  from './popup-dialogs/new-email-or-mobile-dialog.vue'
 export default {
-    components:{ headerComp, sidebar, box, reset_supportcode_dialog, otp_verification_dialog, email_or_mobile_otp_dialog },
+    components:{ headerComp, sidebar, box,newEmailOrMobileDialog , reset_supportcode_dialog, otp_verification_dialog, email_or_mobile_otp_dialog },
     computed: {
-        ...mapGetters('popup', ['getIsResetSupportCode', 'getIsEmailVerify','getIsOtpVerify','getIsEmailOrMobileUpdate']),
+        ...mapGetters('popup', ['getIsResetSupportCode', 'getIsEmailVerify','getIsOtpVerify','getIsEmailOrMobileUpdate','getisNewEmailOrNewMobileUpdate']),
         ...mapGetters('auth', ['getUserId'])
     },
 

@@ -1,12 +1,12 @@
 <template>
     <tabs :isBgBlue="true" page="profile" @activeTab="changeTab"/>
     <div class="h-[calc(100vh-96px)] overflow-y-auto">
-        <bank_details v-if="getProfileCurrentTab == 0" />
-        <nominee v-if="getProfileCurrentTab == 1" />
-        <segments v-if="getProfileCurrentTab == 2" />
-        <documents v-if="getProfileCurrentTab == 3" />
-        <income_proof v-if="getProfileCurrentTab == 4"/>
-        <account_details  v-if="getProfileCurrentTab == 5"/>
+        <account_details  v-if="getProfileCurrentTab == 0"/>
+        <bank_details v-if="getProfileCurrentTab == 1" />
+        <nominee v-if="getProfileCurrentTab == 2" />
+        <segments v-if="getProfileCurrentTab == 3" />
+        <documents v-if="getProfileCurrentTab == 4" />
+        <income_proof v-if="getProfileCurrentTab == 5"/>
         <closeaccount v-if="getProfileCurrentTab == 6"  />
         
     </div>

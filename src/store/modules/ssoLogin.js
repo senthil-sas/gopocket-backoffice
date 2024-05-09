@@ -4,26 +4,26 @@ const auth = {
     namespaced: true,
     state: {
         error_message: null,
-        loader:false,
+        loader: false,
         userId: '',
-        setSessionId:''
+        setSessionId: ''
     },
     mutations: {
-        setErrorMessage(state, payload){
+        setErrorMessage(state, payload) {
             state.error_message = payload
         },
-        setLoader(state, payload){
+        setLoader(state, payload) {
             state.loader = payload
         },
-        setUserId (state, payload) {
+        setUserId(state, payload) {
             state.userId = payload
         },
-        setSessionId (state, payload) {
-          state.sessionId = payload
+        setSessionId(state, payload) {
+            state.sessionId = payload
         }
     },
     actions: {
-        async getData({ commit, rootState}, payload) {
+        async getData({ commit, rootState }, payload) {
             commit('setLoader', true)
             commit('setErrorMessage', null)
             try {
@@ -38,7 +38,7 @@ const auth = {
                     commit("setUserId", response.data.clientId);
                     commit("setSessionId", response.data.userSession);
                     router.push({ name: 'dashboard' }).catch(() => { })
-                } else if(response.data.message) {
+                } else if (response.data.message) {
                     commit('setErrorMessage', response.data.message)
                 }
                 commit('setLoader', false)
@@ -52,10 +52,10 @@ const auth = {
             service.logout("").then((response) => {
                 if (response.status == 200) {
                     localStorage.clear();
-                    router.push({path: "/", query: {logout: "true"}}).catch(() => {});
+                    router.push({ path: "/", query: { logout: "true" } }).catch(() => { });
                 }
             },
-            (err) => {}).finally(() => { state.logoutLoader = false; })
+                (err) => { }).finally(() => { state.logoutLoader = false; })
         }
     },
     getters: {
