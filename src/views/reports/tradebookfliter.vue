@@ -89,16 +89,16 @@
 
       <div class="flex space-x-2 justify-end">
 
-        <button class="bg-[#753ED7] text-white  px-2 py-2 rounded-md" @click="setPreviousYear">
-          <!-- <spinner v-if="loader" /> -->
+        <!-- <button class="bg-[#753ED7] text-white  px-2 py-2 rounded-md" @click="setPreviousYear">
+          <spinner v-if="loader" /> 
           <span class="text-[12px]  whitespace-nowrap text-center">Previous Year</span>
         </button>
         <button class="bg-[#753ED7] text-white  px-2 py-2 rounded-md " @click="setNextYear">
-          <!-- <spinner v-if="loader" /> -->
+           <spinner v-if="loader" /> 
           <span class="text-[12px] whitespace-nowrap	text-center">Next Year</span>
-        </button>
+        </button> -->
         <button class="bg-[#753ED7] text-white  px-2 py-2 rounded-md" @click="getTradeBook">
-          <!-- <spinner v-if="loader" /> -->
+           <spinner v-if="loader" /> 
           <span class="text-[12px] whitespace-nowrap text-center">Get Reports</span>
         </button>
       </div>
