@@ -99,7 +99,7 @@
         </button> -->
         <button class="bg-[#753ED7] text-white  px-2 py-2 rounded-md" @click="getTradeBook">
            <spinner v-if="loader" /> 
-          <span class="text-[12px] whitespace-nowrap text-center">Get Reports</span>
+          <span v-if="!loader"  class="text-[12px] whitespace-nowrap text-center">Get Reports</span>
         </button>
       </div>
     </div>
