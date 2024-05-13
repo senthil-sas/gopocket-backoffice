@@ -80,8 +80,8 @@
                       <input type="checkbox" class="checboxColor w-4 h-4" v-model="commodity">
                       <p class="textColor">MCX, NSE, BSE</p>
                     </div>
-                    <!-- <p class="segmentColor" v-if="commodity">Select Category</p> -->
-                    <!-- <div class="flex items-center" v-if="commodity">
+                    <p class="segmentColor" v-if="commodity">Select Category</p>
+                    <div class="flex items-center" v-if="commodity">
                       <div
                           class="mr-4 flex radius4rem w-full"
                         >
@@ -112,7 +112,7 @@
                                 >
                                   <MenuItem
                                     v-slot="{ active }"
-                                    @click="updateMcx(dropdown)"
+                                    @click=""
                                   >
                                     <a
                                       :class="[
@@ -128,7 +128,7 @@
                             </transition>
                           </Menu>
                     </div>
-                    </div> -->
+                    </div>
                   </div>
                   <!-- <div class="fullSegment  h-16">
                     <p class="flex primaryColor whitespace-wrap">Account Opening Charges</p> -->
@@ -162,7 +162,7 @@
                     :class="(this.equity || this.mFunds || this.eDerivatives || this.cDerivatives || this.commodity) && acceptTC   ? 'primaryBtnColor text-white': 'bg-[#e0e0e0] secondaryColor cursor-not-allowed'"
                   >
                     <commonIcon name="loader" stroke="#ffffff" fill="none" v-if="getLoader"/>
-                    <p v-if="!getLoader">
+                    <p >
                       Continue
                     </p>
                     </button>
@@ -176,12 +176,31 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+import { ChevronDownIcon} from '@heroicons/vue/20/solid'
+
+
 export default {
+  components:{
+    Menu, MenuButton, MenuItem, MenuItems,ChevronDownIcon
+  },
     data() {
         return {
             McxForm:[ {name:"Others"},{name:"Proprietary Traders"}, {name:"FPOs/Farmers"}, {name:"VCPs/Hedgers"}, {name:"Domestic Financial Institutional"}, {name:"Foreign Participants"},],
             commodity:true,
-
+            checked: true,
+      formConsent: true,
+      selectedMailingLists: "",
+      segmentActive: "",
+      commodity:true,
+      cDerivatives:true,
+      eDerivatives:true,
+      mFunds:true,
+      equity:true,
+      acceptTC:true,
+      selectedMCX:'Others',
+      acceptTCEq:true,
+      accOpenCharge: 0
         }
     },
     computed: {

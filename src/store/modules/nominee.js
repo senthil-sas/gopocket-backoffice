@@ -2,10 +2,13 @@ import service from "../modules/services/profile.ts";
 import Nomineeservice from "../modules/services/Nominee.ts";
 
 import errorHandle from '../../handleError/errorHandling'
+import { useNotification } from "@kyvg/vue3-notification";
+const { notify } = useNotification();
 
 const state = {
     nomineeStage: 'initialList',
     nomineeList: [],
+    showNomineeDetails: [],
     isMinor: false,
     NomineeDetails: [],
     guardianDateErrMsg: '',
@@ -15,6 +18,8 @@ const state = {
     guardianPassord: '',
     isNomineepass: false,
     isGuardianPass: false,
+    deletenomineeId: '',
+    nomineedialog: false,
 
 
 }
@@ -67,7 +72,7 @@ const actions = {
     ) {
         commit('reekyc/setloginloader', true, { root: true });
         commit('setIsPasswordPDF', false)
-        // commit('setIsNomineepass', f/alse)
+        commit('setIsNomineepass', false)
         commit('setIsGuardianPass', false)
         try {
             let fd = new FormData();
@@ -84,20 +89,33 @@ const actions = {
             } else if (response.data && response.data.reason && (response.data.reason == 'Cannot decrypt PDF of Nominee, the password is incorrect' || response.data.reason == 'Cannot decrypt PDF of Guardian, the password is incorrect')) {
                 if (response.data.reason == 'Cannot decrypt PDF of Nominee, the password is incorrect') {
                     commit('setIsNomineepass', true)
+                    notify({
+                        group: "auth",
+                        type: "success",
+                        title: "Please Enter Valid Password",
+                    })
                     // commit('Notification/setNotificationMsg', { show: true, header: '', subHeader: 'Please Enter Valid Password', status: 'info' }, { root: true })
-                } else if (response.data.reason == 'Cannot decrydpt PDF of Guardian, the password is incorrect') {
+                } else if (
+
+                    response.data.reason == 'Cannot decrypt PDF of Guardian, the password is incorrect') {
                     commit('setIsGuardianPass', true)
+                    notify({
+                        group: "auth",
+                        type: "success",
+                        title: "Please Enter Valid Password",
+                    });
                     // commit('Notification/setNotificationMsg', { show: true, header: '', subHeader: 'Please Enter Valid Password', status: 'info' }, { root: true })
                 }
                 commit('setIsPasswordPDF', true)
             } else {
-                if (response.data?.reason == 'You are not verified Customer please reverified') {
-                    // commit('Notification/setNotificationMsg', { show: true, header: 'Error', subHeader: ' You are not verified Customer please reverified - You have logged in via same credentials with another device.', status: 'failed' }, { root: true })
-                    router.push('/')
-                } else {
-                    // commit('Notification/setNotificationMsg', { show: true, header: 'Error', subHeader: response.data.reason, status: 'failed' }, { root: true })
-                }
+                // commit('Notification/setNotificationMsg', { show: true, header: 'Error', subHeader: response.data.reason, status: 'failed' }, { root: true })
+                notify({
+                    group: "auth",
+                    type: "success",
+                    title: response.data.reason,
+                })
             }
+
         } catch (error) {
             errorHandle.handleError(error)
         }
@@ -113,8 +131,12 @@ const actions = {
             .then(resp => {
                 if (resp.status == 200 && resp?.data?.stat === 1) {
                     commit('setNomineeDetails', resp.data.result);
+                    state.showNomineeDetails = resp?.data?.result;
 
                 } else {
+                    state.showNomineeDetails = []
+                    state.nomineeList = []
+                    commit("setNomineeStage", "Nominee")
 
                 }
             },
@@ -124,6 +146,52 @@ const actions = {
             .finally(() => {
             });
     },
+
+    async deleteNominee({ state, commit, dispatch, rootState, rootGetters }, payload) {
+        // commit("setDeleteLoader", true);
+        try {
+            let json = {
+                id: state.deletenomineeId,
+                uccCode: rootGetters['auth/getUserId']
+            }
+            let response = await Nomineeservice.deleteNominee(json);
+
+            if (response.status == 200 && response.data.message == "Success") {
+
+                await dispatch("getupdateNomineeDetails")
+                dispatch("NomineeDetails")
+
+            }
+        } catch (error) {
+            errorHandle.handleError(error)
+            // commit("setDeleteLoader", false);
+        }
+        // commit("setDeleteLoader", false);
+    },
+    async saveSharePercent({ state, commit, dispatch, rootState, rootGetters }, payload) {
+        commit("setLoader", true, { root: true });
+        try {
+            let json = {
+                "uccCode": rootGetters['auth/getUserId'],
+                "nomOneAllocation": payload.nominee1,
+                "nomTwoAllocation": payload.nominee2,
+                "nomThreeAllocation": payload.nominee3,
+            }
+            let response = await Nomineeservice.saveSharePercent(json);
+            if (response.status == 200 && response?.data?.stat === 1) {
+            } else {
+                notify({
+                    group: "auth",
+                    type: "success",
+                    title: response.data.reason,
+                })
+                // commit('Notification/setNotificationMsg', { show: true, header: 'Error', subHeader: response?.data?.reason, status: 'failed' }, { root: true })
+            }
+        } catch (error) {
+            errorHandle.handleError(error)
+        }
+        commit("setLoader", false, { root: true });
+    },
 };
 
 const mutations = {
@@ -132,21 +200,8 @@ const mutations = {
     },
 
     setNomineeList(state, payload) {
-        state.nomineeList.push(payload)
-        if (state.nomineeList.length == 1) {
-            state.nomineeList[0].nomineeShare = 100
-        }
-        if (state.nomineeList.length == 2) {
-            state.nomineeList[0].nomineeShare = 50
-            state.nomineeList[1].nomineeShare = 50
-        }
-        if (state.nomineeList.length == 3) {
-            state.nomineeList[0].nomineeShare = 50
-            state.nomineeList[1].nomineeShare = 25
-            state.nomineeList[2].nomineeShare = 25
-        }
+        state.nomineeList = payload;
         this.commit('nominee/setNomineeDetails', state.nomineeList)
-        state.nomineeList = payload
     },
 
     setNomineeDetails(state, payload) {
@@ -158,11 +213,12 @@ const mutations = {
     },
 
     deleteNominee(state, id) {
-        state.nomineeList.splice(id, 1);
-        if (state.nomineeList?.length == 0) {
-            this.commit('nominee/setNomineeStage', 'initialList')
-        }
-        this.commit('nominee/setNomineeDetails', state.nomineeList)
+        // state.nomineeList.splice(id, 1);
+        // if (state.nomineeList?.length == 0) {
+        //     this.commit('nominee/setNomineeStage', 'initialList')
+        // }
+        state.deletenomineeId = id
+        // this.commit('nominee/setNomineeDetails', state.nomineeList)
     },
 
     setIsMinor(state, payload) {
@@ -188,7 +244,11 @@ const mutations = {
     },
     setIsGuardianPass(state, payload) {
         state.isGuardianPass = payload
-    }
+    },
+
+    setnomineedialog(state, payload) {
+        state.nomineedialog = payload
+    },
     // setLoader(state, payload) {
     //     state.loader = payload
     // }
@@ -204,8 +264,9 @@ const getters = {
 
     getIsPasswordPDF: (state) => state.isPasswordPDF,
     getNomineePassword: (state) => state.nomineePassword,
-    getGuardianpassword: (state) => state.guardianPassord
-
+    getGuardianpassword: (state) => state.guardianPassord,
+    getnomineedialog: (state) => state.nomineedialog,
+    getshowNomineeDetails: (state) => state.showNomineeDetails,
 
 };
 

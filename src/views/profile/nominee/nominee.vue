@@ -19,18 +19,18 @@
         </div>
         <add_nominee v-if="getNomineeStage == 'addNominee'" />
         <nominee_summary v-if="getNomineeStage == 'nomineeSummary' || getNomineeStage == 'nomineeList'" />
-        <add_guardian v-if="getNomineeStage == 'addGuardian'" />
+        <!-- <add_guardian v-if="getNomineeStage == 'addGuardian'" /> -->
     </div>
 </template>
 
 <script>
 import add_nominee from './add-nominee.vue'
-import add_guardian from './add-guardian.vue'
+// import add_guardian from './add-guardian.vue'
 import nominee_summary from './nominee-summary.vue'
 import nomineesvg from '../../../assets/images/nominee.svg'
 import { mapGetters } from 'vuex'
 export default {
-    components: { add_nominee, add_guardian, nominee_summary },
+    components: { add_nominee, nominee_summary },
     data() {
         return {
             nomineesvg: nomineesvg

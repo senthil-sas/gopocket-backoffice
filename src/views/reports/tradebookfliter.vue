@@ -88,15 +88,13 @@
       </div>
 
       <div class="flex space-x-2 justify-end">
-
+<!-- 
         <button class="bg-[#753ED7] text-white  px-2 py-2 rounded-md" @click="setPreviousYear">
-          <!-- <spinner v-if="loader" /> -->
           <span class="text-[12px]  whitespace-nowrap text-center">Previous Year</span>
         </button>
         <button class="bg-[#753ED7] text-white  px-2 py-2 rounded-md " @click="setNextYear">
-          <!-- <spinner v-if="loader" /> -->
           <span class="text-[12px] whitespace-nowrap	text-center">Next Year</span>
-        </button>
+        </button> -->
         <button class="bg-[#753ED7] text-white  px-2 py-2 rounded-md" @click="getTradeBook">
           <!-- <spinner v-if="loader" /> -->
           <span class="text-[12px] whitespace-nowrap text-center">Get Reports</span>
@@ -146,17 +144,17 @@ const loader = computed(() => store.getters["getLoader"]);
 const getUserId = computed(() => store.getters["auth/getUserId"]);
 
 
-const setPreviousYear = async() => {
-  let dates = await getPreviousFinancialYearDates(toDate.value)
-  fromDate.value = dates.startDate
-  toDate.value = dates.endDate
-}
+// const setPreviousYear = async() => {
+//   let dates = await getPreviousFinancialYearDates(toDate.value)
+//   fromDate.value = dates.startDate
+//   toDate.value = dates.endDate
+// }
 
-const setNextYear = async() => {
-  let dates =  await getNextFinancialYearDates(fromDate.value, toDate.value)
-  fromDate.value = dates.startDate
-  toDate.value = dates.endDate
-}
+// const setNextYear = async() => {
+//   let dates =  await getNextFinancialYearDates(fromDate.value, toDate.value)
+//   fromDate.value = dates.startDate
+//   toDate.value = dates.endDate
+// }
 
 const getTradeBook = () => {
   // console.log(fromDate);
