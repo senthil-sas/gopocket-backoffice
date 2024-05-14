@@ -20,31 +20,52 @@ const state = {
     isGuardianPass: false,
     deletenomineeId: '',
     nomineedialog: false,
+    //
+    setNomineeID: [],
+    getOldDeleteNominee: '',
 
 
 }
 const actions = {
 
 
-    async getupdateNomineeDetails({ commit, rootGetters }) {
+    async getupdateNomineeDetails({ commit, rootGetters, dispatch }) {
         commit('setNomineeList', []);
+        commit('setNomineeID', []);
+
         commit('setLoader', true, { root: true });
         let userId = rootGetters['auth/getUserId']
 
         service.getupdateNomineeDetails(userId)
-            .then(resp => {
-                console.log(resp)
+            .then(async resp => {
                 if (resp.data?.message?.data?.fsl_nominee_details) {
-                    commit('setNomineeList', resp.data.message.data?.fsl_nominee_details);
-                    if (resp.data.message.data?.fsl_nominee_details.length) {
+                    await dispatch("getOldDeleteNominee")
+                    // commit('setNomineeID', resp.data.message.data?.fsl_nominee_details.nominee_number);
+                    const result = [];
+
+                    if (resp.data.message.data?.fsl_nominee_details && resp.data.message.data?.fsl_nominee_details.length > 0) {
+                        // Loop through array2
+                        resp.data.message.data?.fsl_nominee_details.forEach(item2 => {
+                            // Check if the ID is not present in array1
+                            if (!state.getOldDeleteNominee.some(item1 => item1.nomineeId == item2.nominee_number)) {
+                                result.push({ ...item2, allocation: item2.percentage_allocation });
+                            }
+                        });
+                    }
+
+                    if (result.length > 0) {
                         commit('setNomineeStage', 'nomineeSummary');
                     } else {
+                        dispatch('NomineeDetails')
                         commit('setNomineeStage', 'initialList');
                     }
+
+                    commit('setNomineeList', result);
                 } else {
                 }
             },
                 (err) => {
+                    console.log(err);
                     errorHandle.handleError(err)
                 })
             .finally(() => {
@@ -132,11 +153,10 @@ const actions = {
                 if (resp.status == 200 && resp?.data?.stat === 1) {
                     commit('setNomineeDetails', resp.data.result);
                     state.showNomineeDetails = resp?.data?.result;
-
+                    commit("setNomineeStage", "nomineeSummary")
                 } else {
                     state.showNomineeDetails = []
                     state.nomineeList = []
-                    commit("setNomineeStage", "Nominee")
 
                 }
             },
@@ -192,6 +212,43 @@ const actions = {
         }
         commit("setLoader", false, { root: true });
     },
+
+    async deleteOldNominee({ state, commit, dispatch, rootState, rootGetters }, payload) {
+        // commit("setDeleteLoader", true);
+        try {
+            let json = {
+                id: payload,
+                uccCode: rootGetters['auth/getUserId']
+            }
+            let response = await Nomineeservice.deleteOldNominee(json);
+
+            if (response.status == 200 && response.data.message == "Success") {
+
+                await dispatch("getupdateNomineeDetails")
+            }
+        } catch (error) {
+            errorHandle.handleError(error)
+            // commit("setDeleteLoader", false);
+        }
+        // commit("setDeleteLoader", false);
+    },
+
+    async getOldDeleteNominee({ state, commit, dispatch, rootState, rootGetters }, payload) {
+        commit('setolddeletenomniee', []);
+        try {
+            let uccCode = rootGetters['auth/getUserId']
+            let response = await Nomineeservice.getOldDeleteNominee(uccCode);
+
+            if (response.status == 200 && response.data.message == "Success") {
+                commit('setolddeletenomniee', response.data.result);
+
+            }
+        } catch (error) {
+            errorHandle.handleError(error)
+            // commit("setDeleteLoader", false);
+        }
+        // commit("setDeleteLoader", false);
+    },
 };
 
 const mutations = {
@@ -203,7 +260,9 @@ const mutations = {
         state.nomineeList = payload;
         this.commit('nominee/setNomineeDetails', state.nomineeList)
     },
-
+    setNomineeID(state, payload) {
+        state.setNomineeID = payload;
+    },
     setNomineeDetails(state, payload) {
         state.nomineeList = payload
         sessionStorage.setItem('nomineeList', JSON.stringify(state.nomineeList))
@@ -220,7 +279,9 @@ const mutations = {
         state.deletenomineeId = id
         // this.commit('nominee/setNomineeDetails', state.nomineeList)
     },
-
+    setolddeletenomniee(state, payload) {
+        state.getOldDeleteNominee = payload
+    },
     setIsMinor(state, payload) {
         state.isMinor = payload
     },

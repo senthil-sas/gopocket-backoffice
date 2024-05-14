@@ -8,7 +8,7 @@
             <div v-for="(i, id) in mergedNomineeList" :key="id" class="p-3 border-[0.02rem] rounded-lg min-w-[350px]">
                 <div class="flex justify-between">
                     <span class="primary-color !font-semibold text-sm">Nominee {{ id + 1 }}</span>
-                    <span class="primary-color text-sm cursor-pointer" @click="deleteNominee(i.id)">
+                    <span class="primary-color text-sm cursor-pointer" @click="i.nominee_number? deleteNominee(i.nominee_number): deleteNewNominee(i.id) ">
                         <icon name="delete" height="16" width="16" class="hover:text-red-600"/>
                     </span>
                 </div>
@@ -37,7 +37,7 @@
                       min="1"
                       :max="this.mergedNomineeList.length == 1 ? 100 : this.mergedNomineeList.length == 2 ? 99 :  this.mergedNomineeList.length == 3 ? 98 :''"
                       :disabled="isShare1Disable || this.mergedNomineeList.length == 1"
-                      v-model="i.percentage_allocation"
+                      v-model="i.allocation"
                     />
                     <span>{{ i.percentage_allocation ? i.percentage_allocation : i.allocation  }}%</span>
                   </span>
@@ -50,7 +50,7 @@
                       @input="onShareChange($event, id)"
                       min="1"
                       :max="this.mergedNomineeList.length == 1 ? 100 : this.mergedNomineeList.length == 2 ? 99 :  this.mergedNomineeList.length == 3 ? 98 :''"
-                      v-model="i.percentage_allocation"
+                      v-model="i.allocation"
                     />
                     <span>{{ i.percentage_allocation ? i.percentage_allocation : i.allocation  }}%</span>
                   </span>
@@ -63,7 +63,7 @@
                       @input="onShareChange($event, id)"
                       min="1"
                       :max="this.mergedNomineeList.length == 1 ? 100 : this.mergedNomineeList.length == 2 ? 99 :  this.mergedNomineeList.length == 3 ? 98 :''"
-                      v-model="i.percentage_allocation"
+                      v-model="i.allocation"
                     />
                     <span>{{ i.percentage_allocation ? i.percentage_allocation : i.allocation  }}%</span>
                   </span>
@@ -96,13 +96,15 @@
         :class="mergedNomineeList.length < 3 ? 'justify-between' : 'sm:justify-end'"
       >
         <button
-          v-if="mergedNomineeList.length < 3"
+          v-if="mergedNomineeList.length < 3 && getNomineeList.length == 0"
           class="commonbtn"
           @click="addMoreNominee()"
         >
           Add Another Nominee
         </button>
         <button
+        v-if="mergedNomineeList.length < 3 && getNomineeList.length == 0"
+
         class="border-[#753ED7] text-white primaryBtnColor commonbtn"
           @click="submitNomineeDetails()"
             >
@@ -150,8 +152,10 @@ export default {
         ...mapGetters('nominee',['getNomineeDetails','getnomineedialog']),
 
         mergedNomineeList() {
+
             // Merging getNomineeList and getNomineeDetails
-            const merged = [...this.getNomineeList, ...this.getNomineeDetails]; 
+            let merged = [...this.getNomineeList, ...this.getNomineeDetails]; 
+            merged = merged.flat();
             return merged;
         }
     },
@@ -164,9 +168,16 @@ export default {
             this.$store.commit('nominee/setNomineeStage', 'initialList')
         },
         deleteNominee(id) {
-            this.$store.commit('nominee/deleteNominee', id)
+            // this.$store.commit('nominee/deleteNominee', id)
+            // this.$store.commit('nominee/setnomineedialog', true);
+            this.$store.dispatch('nominee/deleteOldNominee',id)
+            // console.log(id)
+               },
+
+               deleteNewNominee(id){
+                this.$store.commit('nominee/deleteNominee', id)
             this.$store.commit('nominee/setnomineedialog', true);
-                },
+               },
 
 
  onShareChange(eve, id) {
@@ -260,6 +271,7 @@ export default {
   },
   async created() {
         await this.$store.dispatch('nominee/NomineeDetails');
+        console.log(this.mergedNomineeList);
     if(this.mergedNomineeList?.length == 1){
       this.share1 = this.mergedNomineeList[0]?.percentage_allocation ? this.mergedNomineeList[0]?.percentage_allocation : this.mergedNomineeList[0]?.allocation
       this.share2 = this.mergedNomineeList[1]?.percentage_allocation ? this.mergedNomineeList[1].percentage_allocation : this.mergedNomineeList[1]?.allocation ? this.mergedNomineeList[1]?.allocation : 0,

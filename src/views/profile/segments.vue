@@ -112,7 +112,7 @@
                                 >
                                   <MenuItem
                                     v-slot="{ active }"
-                                    @click=""
+                                    @click="updateMcx(dropdown)"
                                   >
                                     <a
                                       :class="[
@@ -186,9 +186,9 @@ export default {
   },
     data() {
         return {
-            McxForm:[ {name:"Others"},{name:"Proprietary Traders"}, {name:"FPOs/Farmers"}, {name:"VCPs/Hedgers"}, {name:"Domestic Financial Institutional"}, {name:"Foreign Participants"},],
-            commodity:true,
-            checked: true,
+       McxForm:[ {name:"Others"},{name:"Proprietary Traders"}, {name:"FPOs/Farmers"}, {name:"VCPs/Hedgers"}, {name:"Domestic Financial Institutional"}, {name:"Foreign Participants"},],
+      commodity:true,
+      checked: true,
       formConsent: true,
       selectedMailingLists: "",
       segmentActive: "",
@@ -205,10 +205,65 @@ export default {
     },
     computed: {
         ...mapGetters('profile', ['getSegments']), 
-        ...mapGetters(['getLoader'])
-
+        ...mapGetters(['getLoader']),
+        ...mapGetters("segment", ["getSavedSegmentDetails"]),
 
     },
+
+    methods: {
+    continueToPayment(){
+      let json ={
+            equity:this.equity,
+            mFunds:this.mFunds,
+            eqDerivatives:this.eDerivatives,
+            currDerivatives:this.cDerivatives,
+            commodity:this.commodity
+          }
+      let mcx ={
+        category:this.selectedMCX,
+        consent:this.acceptTC ? 1 : 0
+      }
+
+      if((this.equity || this.mFunds || this.eDerivatives || this.cDerivatives || this.commodity) && this.acceptTC){
+        // if(this.commodity){
+        //   this.formConsent = false
+        //   this.$store.commit("segment/setCurrentSegment",json)
+        // }else{
+          this.$store.commit("segment/setCurrentSegment",json)
+          this.$store.dispatch('segment/saveSegmentDetails', mcx)
+        // }
+      }
+    },
+    updateMcx(val){
+      this.selectedMCX = val.name
+    },
+    // getCharges() {
+    //   let charge = 0
+    //   if(this.equity) {
+    //     charge = 150;
+    //   }
+    //   this.$store.commit('payment/setAmount', charge)
+    //   return charge;
+    // }
+  },
+  async created() {
+    await this.$store.dispatch("segment/getsegmentDetails");
+    // setters
+    if (this.getSavedSegmentDetails != '' && this.getSavedSegmentDetails != null) {
+      this.equity = this.getSavedSegmentDetails?.equCash == 1 ? true : false
+      this.mFunds = this.getSavedSegmentDetails?.mutFunds == 1 ? true : false
+      this.eDerivatives = this.getSavedSegmentDetails?.ed == 1 ? true : false
+      this.cDerivatives = this.getSavedSegmentDetails?.cd == 1 ? true : false
+      this.commodity = this.getSavedSegmentDetails?.comm == 1 ? true : false
+      this.selectedMCX = this.getSavedSegmentDetails?.category
+    }else if(!this.getSavedSegmentDetails) {
+      this.mFunds = true,
+      this.equity = true ,
+      this.commodity = true,
+      this.cDerivatives = true,
+      this.eDerivatives = true
+    }
+  },
 
 }
 </script>

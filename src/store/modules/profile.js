@@ -24,14 +24,13 @@ const actions = {
 
         service.getProfileDataFromApi(userId)
             .then(resp => {
-                console.log(resp.data.data.mobile_no)
-
                 if (resp.data?.data) {
                     commit('setProfileData', resp.data.data);
                     commit('setbankdetails', resp.data.data.fsl_bank_table);
                     commit('setSegments', resp.data.data);
                     commit('setmobileNo', resp.data.data.mobile_no)
                     commit('setemailID', resp.data.data.email_id)
+
 
                 } else {
                 }

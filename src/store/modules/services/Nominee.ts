@@ -26,6 +26,18 @@ export default {
             headers: authHeader(),
         };
         return axios.post(`${kycURI}/ReEkycnominee/updateNomAlloc`, payload, requestOptions).then();
+    },
+    async deleteOldNominee(nomineeID: any) {
+        const requestOptions = {
+            headers: authHeader(),
+        };
+        return axios.get(`${kycURI}/ReEkycnominee/deleteOldNominee?uccCode=${nomineeID.uccCode}&nomineeID=${nomineeID.id}`, requestOptions).then();
+    },
+    async getOldDeleteNominee(userId: any) {
+        const requestOptions = {
+            headers: authHeader(),
+        };
+        return axios.get(`${kycURI}ReEkycnominee/getOldDeleteNominee?uccCode=${userId}`, requestOptions).then();
     }
 
 }
