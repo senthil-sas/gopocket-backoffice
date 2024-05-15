@@ -19,7 +19,6 @@ const actions = {
 
         service.getDocuments(rootState.auth.userId, documentId)
             .then(resp => {
-                console.log(resp.data.result)
                 if (resp.data.message.toString().trim() == "Success" && resp?.data?.stat == 1) {
                     commit('setDocuments', resp.data.success);
                     notify({

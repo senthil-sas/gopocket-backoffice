@@ -28,8 +28,7 @@
                     <button type="button" class="primaryBtnColor border-[#753ED7] min-widthBtn px-4 h-10 radius4rem text-white commonbtn whitespace-nowrap outline-none"
                       @click="deleteNominee" 
                       >
-                      <!-- <commonIcon name="loader" stroke="#ffffff" fill="none" v-if="getDeleteLoader"/> -->
-                      <p >Confirm</p>
+                      <spinner v-if="getdeleteloader"/><span v-else>Continue</span>
                     </button>
                   </div>
                 </DialogPanel>
@@ -64,7 +63,9 @@
       }
     },
     computed: {
-      ...mapGetters('nominee', ["getnomineedialog",])
+      ...mapGetters('nominee', ["getnomineedialog",]),
+      ...mapGetters('nominee', ['getdeleteloader']),
+
     },
   
     components: {

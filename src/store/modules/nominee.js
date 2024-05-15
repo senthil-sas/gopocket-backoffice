@@ -23,6 +23,7 @@ const state = {
     //
     setNomineeID: [],
     getOldDeleteNominee: '',
+    deleteloader: false,
 
 
 }
@@ -168,7 +169,7 @@ const actions = {
     },
 
     async deleteNominee({ state, commit, dispatch, rootState, rootGetters }, payload) {
-        // commit("setDeleteLoader", true);
+        commit("setdeleteloader", true);
         try {
             let json = {
                 id: state.deletenomineeId,
@@ -184,12 +185,12 @@ const actions = {
             }
         } catch (error) {
             errorHandle.handleError(error)
-            // commit("setDeleteLoader", false);
+            // commit("setdeleteloader", false);
         }
-        // commit("setDeleteLoader", false);
+        commit("setdeleteloader", false);
     },
     async saveSharePercent({ state, commit, dispatch, rootState, rootGetters }, payload) {
-        commit("setLoader", true, { root: true });
+        commit("setdeleteloader", true);
         try {
             let json = {
                 "uccCode": rootGetters['auth/getUserId'],
@@ -210,11 +211,11 @@ const actions = {
         } catch (error) {
             errorHandle.handleError(error)
         }
-        commit("setLoader", false, { root: true });
+        commit("setdeleteloader", false);
     },
 
     async deleteOldNominee({ state, commit, dispatch, rootState, rootGetters }, payload) {
-        // commit("setDeleteLoader", true);
+        commit("setdeleteloader", true);
         try {
             let json = {
                 id: payload,
@@ -230,7 +231,7 @@ const actions = {
             errorHandle.handleError(error)
             // commit("setDeleteLoader", false);
         }
-        // commit("setDeleteLoader", false);
+        commit("setdeleteloader", false);
     },
 
     async getOldDeleteNominee({ state, commit, dispatch, rootState, rootGetters }, payload) {
@@ -310,9 +311,9 @@ const mutations = {
     setnomineedialog(state, payload) {
         state.nomineedialog = payload
     },
-    // setLoader(state, payload) {
-    //     state.loader = payload
-    // }
+    setdeleteloader(state, payload) {
+        state.deleteloader = payload
+    },
 };
 
 const getters = {
@@ -328,6 +329,9 @@ const getters = {
     getGuardianpassword: (state) => state.guardianPassord,
     getnomineedialog: (state) => state.nomineedialog,
     getshowNomineeDetails: (state) => state.showNomineeDetails,
+
+    getdeleteloader: state => state.deleteloader,
+
 
 };
 

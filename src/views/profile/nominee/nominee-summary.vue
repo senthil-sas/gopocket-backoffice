@@ -108,10 +108,7 @@
         class="border-[#753ED7] text-white primaryBtnColor commonbtn"
           @click="submitNomineeDetails()"
             >
-              <!-- <commonIcon name="loader" stroke="#ffffff" fill="none" v-if="getLoader"/> -->
-              <p >
-                Continue
-              </p>
+            <spinner v-if="getdeleteloader"/><span v-else>Continue</span>
         </button>
       </div>
 
@@ -150,6 +147,10 @@ export default {
     computed: {
         ...mapGetters('nominee',['getNomineeList','getshowNomineeDetails']),
         ...mapGetters('nominee',['getNomineeDetails','getnomineedialog']),
+        ...mapGetters(['getLoader']),
+        ...mapGetters('nominee', ['getdeleteloader']),
+
+
 
         mergedNomineeList() {
 

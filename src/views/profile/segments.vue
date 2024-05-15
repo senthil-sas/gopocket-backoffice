@@ -15,11 +15,11 @@
             </div>
             </div>
             <div class="rounded-lg p-3 border-[0.02rem] dark:border-[#232325]">
-                <label class="my-2 primary-color !font-semibold text-sm" id="accinfo_label_derivatives">Derivatives</label>
+                <label class="my-2 primary-color !font-semibold text-sm" id="accinfo_label_derivatives"> Equity derivatives</label>
                 <div class="crd-body mr-3">
                 <div class="my-3 whitespace-nowrap text-xs">
                     <button id="accinfo_label_nfo" class="graybtn mr-2">NFO</button>
-                    <button id="accinfo_label_nse_cur" class="graybtn">NSE CUR</button>
+                    <!-- <button id="accinfo_label_nse_cur" class="graybtn">NSE CUR</button> -->
                 </div>
                 <p class="secondary-color dark:text-[#94A3B8] mb-4 text-sm h-14">Equity derivatives, as well as contract-based assets, such as bonds, commodities & currencies, on NSE</p>
                 <!-- <button id="accinfo_derivatives_isactive" class="commonbtn" >Enable Segment</button> -->
@@ -28,6 +28,32 @@
                     <button v-if="getSegments.fsl_nfo == 'Dormant'" id="accinfo_eq_isactive" class="commonbtn">Start-KYC</button>
                 </div>
             </div>
+            <div class="rounded-lg p-3 border-[0.02rem] dark:border-[#232325]">
+                <label class="my-2 primary-color !font-semibold text-sm" id="accinfo_label_derivatives"> Currency derivatives</label>
+                <div class="crd-body mr-3">
+                <div class="my-3 whitespace-nowrap text-xs">
+                    <button id="accinfo_label_nfo" class="graybtn mr-2">NSE CUR</button>
+                    <!-- <button id="accinfo_label_nse_cur" class="graybtn">NSE CUR</button> -->
+                </div>
+                <p class="secondary-color dark:text-[#94A3B8] mb-4 text-sm h-14">Equity derivatives, as well as contract-based assets, such as bonds, commodities & currencies, on NSE</p>
+                <!-- <button id="accinfo_derivatives_isactive" class="commonbtn" >Enable Segment</button> -->
+                    <button v-if="getSegments.fsl_cds == 'Active'" id="accinfo_eq_isactive" class="commonbtn green" disabled>Active</button>   
+                    <button v-if="getSegments.fsl_cds == 'Inactive'" id="accinfo_eq_isactive" class="commonbtn">Activate Segment</button>  
+                    <button v-if="getSegments.fsl_cds == 'Dormant'" id="accinfo_eq_isactive" class="commonbtn">Start-KYC</button>
+                </div>
+            </div>
+            <!-- <div class="rounded-lg p-3 border-[0.02rem] dark:border-[#232325]">
+                <label class="my-2 primary-color !font-semibold text-sm" id="accinfo_label_derivatives"> Mutual Funds</label>
+                <div class="crd-body mr-3">
+                <div class="my-3 whitespace-nowrap text-xs">
+                    <button id="accinfo_label_nfo" class="graybtn mr-2">NSE MF</button>
+                </div>
+                <p class="secondary-color dark:text-[#94A3B8] mb-4 text-sm h-14">Equity derivatives, as well as contract-based assets, such as bonds, commodities & currencies, on NSE</p>
+                    <button v-if="getSegments.fsl_cds == 'Active'" id="accinfo_eq_isactive" class="commonbtn green" disabled>Active</button>   
+                    <button v-if="getSegments.fsl_cds == 'Inactive'" id="accinfo_eq_isactive" class="commonbtn">Activate Segment</button>  
+                    <button v-if="getSegments.fsl_cds == 'Dormant'" id="accinfo_eq_isactive" class="commonbtn">Start-KYC</button>
+                </div>
+            </div> -->
             <div class="rounded-lg p-3 border-[0.02rem] dark:border-[#232325]">
                 <label class="my-2 primary-color !font-semibold text-sm" id="accinfo_label_com">Commodities</label>
                 <div class="crd-body mr-3">
@@ -44,7 +70,7 @@
                 </div>
             </div>
         </div>
-        <div >
+        <!-- <div >
                 <div class="py-8">
                   <div class="fullSegment  h-16">
                     <p class="segmentColor">Equity (Stocks)</p>
@@ -129,7 +155,7 @@
                           </Menu>
                     </div>
                     </div>
-                  </div>
+                  </div> -->
                   <!-- <div class="fullSegment  h-16">
                     <p class="flex primaryColor whitespace-wrap">Account Opening Charges</p> -->
 
@@ -143,7 +169,7 @@
                       <p class="text-[20px] textGreen">₹{{ accOpenCharge = getCharges() }}</p>
                     </div> -->
 
-                  <!-- </div> -->
+                  <!-- </div>
                 </div>
 
                 <div class="flex items-start" v-if="equity || mFunds">
@@ -170,7 +196,7 @@
                 <div class="flex sm:justify-end h-2">
                   <errorMessage className="error" errMsg="please accept terms and conditions above" v-if="!acceptTC && (this.equity || this.mFunds || this.eDerivatives || this.cDerivatives || this.commodity)"></errorMessage>
                 </div>
-              </div>
+              </div> -->
     </div>
 </template>
 
@@ -211,29 +237,29 @@ export default {
     },
 
     methods: {
-    continueToPayment(){
-      let json ={
-            equity:this.equity,
-            mFunds:this.mFunds,
-            eqDerivatives:this.eDerivatives,
-            currDerivatives:this.cDerivatives,
-            commodity:this.commodity
-          }
-      let mcx ={
-        category:this.selectedMCX,
-        consent:this.acceptTC ? 1 : 0
-      }
+    // continueToPayment(){
+    //   let json ={
+    //         equity:this.equity,
+    //         mFunds:this.mFunds,
+    //         eqDerivatives:this.eDerivatives,
+    //         currDerivatives:this.cDerivatives,
+    //         commodity:this.commodity
+    //       }
+    //   let mcx ={
+    //     category:this.selectedMCX,
+    //     consent:this.acceptTC ? 1 : 0
+    //   }
 
-      if((this.equity || this.mFunds || this.eDerivatives || this.cDerivatives || this.commodity) && this.acceptTC){
-        // if(this.commodity){
-        //   this.formConsent = false
-        //   this.$store.commit("segment/setCurrentSegment",json)
-        // }else{
-          this.$store.commit("segment/setCurrentSegment",json)
-          this.$store.dispatch('segment/saveSegmentDetails', mcx)
-        // }
-      }
-    },
+    //   if((this.equity || this.mFunds || this.eDerivatives || this.cDerivatives || this.commodity) && this.acceptTC){
+    //     // if(this.commodity){
+    //     //   this.formConsent = false
+    //     //   this.$store.commit("segment/setCurrentSegment",json)
+    //     // }else{
+    //       this.$store.commit("segment/setCurrentSegment",json)
+    //       this.$store.dispatch('segment/saveSegmentDetails', mcx)
+    //     // }
+    //   }
+    // },
     updateMcx(val){
       this.selectedMCX = val.name
     },

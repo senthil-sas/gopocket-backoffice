@@ -61,9 +61,9 @@ export default {
                 { name: 'Income Proof', id: 'INCOME_PROOF' },
                 { name: 'Identity Proof', id: 'PAN' },
                 { name: 'Signature Proof', id: 'SIGNATURE' },
-                { name: 'photo', id:'IPV' },
-                { name: `${this.$store.state.brokerName} CMR Copy`, id: 0 },
-                { name: 'Equity application form', id: 0 }
+                // { name: 'photo', id:'IPV' },
+                // { name: `${this.$store.state.brokerName} CMR Copy`, id: 0 },
+                // { name: 'Equity application form', id: 0 }
             ]
         }
     },

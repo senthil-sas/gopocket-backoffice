@@ -116,7 +116,7 @@
                      <!-- years dropdown -->
                      <Listbox as="div" v-model="nomineeYear" class="w-full">
                         <div class="relative">
-                            <ListboxButton class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
+                            <ListboxButton  class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
                                 <span class="block truncate">{{ nomineeYear }}</span>
                                 <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                     <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -146,14 +146,14 @@
 
         
         <div class="my-3 flex gap-5 items-center">
-            <div class="my-3">
+            <!-- <div class="my-3">
                 <div class="primary-color text-sm mb-1">PAN (optional)</div>
                 <div>
                     <input maxlength="10" @input="panNo ? panNo = panNo?.toUpperCase() : panNo" type="text" name="panNo" id="panNo" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="panNo"/>
                 </div>
                 <div class="h-4">
                 </div>
-            </div>
+            </div> -->
 
             <div class="my-3">
                 <div class="primary-color text-sm mb-1">Mobile No</div>
@@ -164,25 +164,6 @@
                     <span class="error-msg" v-if="!isValidMobile() && isSubmit">Enter valid mobile number</span>
                 </div>
             </div>
-        </div>
-
-        <!-- <div class="my-3 flex gap-5 items-center">
-            <div class="my-3">
-                <div class="flex items-center justify-between">
-                    <div class="primary-color text-sm mb-1">Nominee Share Percentage</div> <span class="text-xs">Total available shares: ({{ totalAvilableShare }})</span>
-                </div>
-                <div>
-                    <input maxlength="3" @input="digitKeyOnly($event, 'nomineeSharePercentage')" type="text" name="sharePercentage" id="sharePercentage" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="nomineeSharePercentage"/>
-                </div>
-
-                <div class="h-4">
-                    <span class="error-msg" v-if="nomineeSharePercentage == '' && isSubmit">Share percentage cannot be empty</span>
-                    <span class="error-msg" v-else-if="nomineeSharePercentage > totalAvilableShare && isSubmit">Cannot allocate percentage more than available share</span>
-                </div>
-            </div>
-        </div> -->
-        <div class="my-3 flex gap-5 items-center">
-
             <div>
           <p class="block text-sm font-medium leading-6 text-gray-900">Nominee Proof Type</p>
           <Menu as="div" class="relative  min-w-[350px] xinline-block text-left w-full" id="nominee_proof_type_drop_down">
@@ -220,11 +201,27 @@
                     <span class="error-msg" v-if="!nomineeProoftype && isSubmit">Select proof type</span>
                 </div>
         </div>
+        </div>
 
+        <!-- <div class="my-3 flex gap-5 items-center">
+            <div class="my-3">
+                <div class="flex items-center justify-between">
+                    <div class="primary-color text-sm mb-1">Nominee Share Percentage</div> <span class="text-xs">Total available shares: ({{ totalAvilableShare }})</span>
+                </div>
+                <div>
+                    <input maxlength="3" @input="digitKeyOnly($event, 'nomineeSharePercentage')" type="text" name="sharePercentage" id="sharePercentage" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="nomineeSharePercentage"/>
+                </div>
 
+                <div class="h-4">
+                    <span class="error-msg" v-if="nomineeSharePercentage == '' && isSubmit">Share percentage cannot be empty</span>
+                    <span class="error-msg" v-else-if="nomineeSharePercentage > totalAvilableShare && isSubmit">Cannot allocate percentage more than available share</span>
+                </div>
+            </div>
+        </div> -->
+        <div class="my-3 flex gap-5 items-center">
         <div id="nominee_proof_no_group">
     <div class="flex justify-between">
-      <p class="block text-sm font-medium leading-6 text-gray-900" id="nominee_proof_number_header">Nominee Proof No</p>
+      <p class="block text-sm font-medium leading-6  text-gray-900" id="nominee_proof_number_header">Nominee Proof No</p>
     </div>
     <input type="text" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
       :placeholder="nomineeProoftype == 'Aadhar card' ? 'Enter Aadhar Number' : nomineeProoftype ? `Enter ${nomineeProoftype} Number` : 'Enter Proof Number'"
@@ -237,22 +234,19 @@
       <span class="error-msg" v-if="!nomineeProoftype && isSubmit">Enter proof number</span>
     </div>
   </div>
-        </div>
-        <div class="">
           <div class="">
-            <label for="formFile" class="block text-sm font-medium leading-6 text-gray-900">Nominee Proof</label>
+            <label for="formFile" class="block text-sm font-medium pt-5 leading-6 text-gray-900">Nominee Proof</label>
             <input
               class="relative block  w-[350px] rounded-md commonInputWidth secondaryColor flex-auto cursor-pointer radius4rem border border-solid  bg-white bg-clip-padding px-3 outline-none transition duration-300 ease-in-out file:-mx-3 file:cursor-pointer file:overflow-hidden file:radius4rem-none file:border-0  file:px-3 h-10 file:h-full file:secondaryColor file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem]"
               type="file" @change="nomineeProof($event)" capture id="formFile" accept=".pdf, .png, .jpg, .jpeg" />
             <span class="text-xs textColor pb-1">(Note: File size sholud not be exceed 5MB)</span>
-            <div class="h-4 ">
                 <div class="h-4">
-                    <span class="error-msg" v-if="!nomineeProofFileName && isSubmit">Enter proof number</span>
+                    <span class="error-msg" v-if="!nomineeProofFileName && isSubmit">please upload proof file</span>
                 </div>   
 
-            </div>
           </div>
         </div>
+      
         <div class="my-3">
             <div class="relative flex items-start">
                 <div class="flex h-6 items-center">
@@ -296,7 +290,7 @@
                     <input type="text" name="state" id="state" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="state"/>
                 </div>
                 <div class="h-4">
-                    <span class="error-msg" v-if="state == '' && isSubmit">Enter the Address line 2</span>
+                    <span class="error-msg" v-if="state == '' && isSubmit">Please enter the state</span>
                 </div>
             </div>
 
@@ -306,8 +300,8 @@
                     <input maxlength="6" @input="digitKeyOnly($event, 'pincode')" type="text" name="pincode" id="pincode" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="pincode"/>
                 </div>
                 <div class="h-4">
-                    <span class="error-msg" v-if="pincode == '' && isSubmit">Enter the pincode</span>
-                    <span class="error-msg" v-if="pincode.length != 6 && isSubmit">Enter valid pincode</span>
+            <span class="error-msg" v-if="pincode == '' && isSubmit">Please enter the PIN code</span>
+            <span class="error-msg" v-if="pincode != '' && pincode.length != 6 && isSubmit">Please enter a valid 6-digit PIN code</span>
                 </div>
             </div>
         </div>
@@ -331,7 +325,7 @@
         </div>
 
         <p class="bg-violet-200 leading-6 primary-color !font-semibold text-sm rounded-md p-4 my-4 max-w-[800px]">
-            Since the nominee {{ }} is a minor (below 18 years), you are requested to update the guardian details of the Nominee.
+            Since the nominee  {{ this.firstName }} {{ this.lastName }} is a minor (below 18 years), you are requested to update the guardian details of the Nominee.
             For obvious reasons, you can not add yourself as a guardian to your account.
             Please add a Guardian (who is above 18 years old) to your minor nominee.
         </p>
@@ -344,7 +338,7 @@
                 </div>
                 
                 <div class="h-4">
-                    <span class="error-msg" v-if="guardianFirstName == '' && isSubmited">Enter first name</span>
+                    <span class="error-msg" v-if="guardianFirstName == '' && isSubmit">Enter first name</span>
                 </div>
             </div>
 
@@ -408,7 +402,7 @@
                             <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
                                 <ListboxOptions class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                     <ListboxOption as="template" v-for="i in days" :key="i" :value="i" v-slot="{ active, guardianDate }">
-                                        <li :class="[active ? 'violet-bg text-white' : 'text-gray-900', 'relative cursor-pointer select-none py-2 pl-8 pr-4']">
+                                        <li @change="GuardianfindUserIsMinor" :class="[active ? 'violet-bg text-white' : 'text-gray-900', 'relative cursor-pointer select-none py-2 pl-8 pr-4']">
                                             <span :class="[guardianDate ? 'font-semibold' : 'font-normal', 'block truncate']">{{ i }}</span>
                                             <span v-if="guardianDate" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 left-0 flex items-center pl-1.5']">
                                                 <CheckIcon class="h-5 w-5" aria-hidden="true" />
@@ -432,7 +426,7 @@
 
                             <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
                                 <ListboxOptions class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                    <ListboxOption as="template" v-for="i in getMonths" :key="i" :value="i" v-slot="{ active, guardianMonth }">
+                                    <ListboxOption as="template" @change="GuardianfindUserIsMinor" v-for="i in getMonths" :key="i" :value="i" v-slot="{ active, guardianMonth }">
                                         <li :class="[active ? 'violet-bg text-white' : 'text-gray-900', 'relative cursor-pointer select-none py-2 pl-8 pr-4']">
                                             <span :class="[guardianMonth ? 'font-semibold' : 'font-normal', 'block truncate']">{{ i.month }}</span>
                                             <span v-if="guardianMonth" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 left-0 flex items-center pl-1.5']">
@@ -458,7 +452,7 @@
                             <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
                                 <ListboxOptions class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                     <ListboxOption as="template" v-for="i in getYears" :key="i" :value="i" v-slot="{ active, guardianYear }">
-                                        <li :class="[active ? 'violet-bg text-white' : 'text-gray-900', 'relative cursor-pointer select-none py-2 pl-8 pr-4']">
+                                        <li  @change="GuardianfindUserIsMinor" :class="[active ? 'violet-bg text-white' : 'text-gray-900', 'relative cursor-pointer select-none py-2 pl-8 pr-4']">
                                             <span :class="[guardianYear ? 'font-semibold' : 'font-normal', 'block truncate']">{{ i }}</span>
                                             <span v-if="guardianYear" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 left-0 flex items-center pl-1.5']">
                                                 <CheckIcon class="h-5 w-5" aria-hidden="true" />
@@ -472,6 +466,9 @@
                 </div>
                 <div class="h-4">
                     <span class="error-msg" v-if="(guardianDate == '' || guardianMonth == '' || guardianYear == '') && isSubmit">Select date of birth</span>
+                        <span class="error-msg">{{ guardianError }}</span>
+
+
                 </div>
             </div>
         </div>
@@ -479,43 +476,15 @@
         
         <div class="my-3 flex gap-5 items-center">
             <div class="my-3">
-                <div class="primary-color text-sm mb-1">PAN (optional)</div>
-                <div>
-                    <input maxlength="10" @input="guardianpanNo ? guardianpanNo = guardianpanNo?.toUpperCase() : guardianpanNo" type="text" name="guardianpanNo" id="guardianpanNo" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="guardianpanNo"/>
-                </div>
-                <div class="h-4">
-                </div>
-            </div>
-
-            <div class="my-3">
                 <div class="primary-color text-sm mb-1">Mobile No</div>
                 <div>
                     <input maxlength="10" @input="digitKeyOnly($event, 'mobileNo')" type="text" name="mobileNo" id="mobileNo" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="guardianmobileNo"/>
                 </div>
                 <div class="h-4">
-                    <span class="error-msg" v-if="!isValidMobile() && isSubmit">Enter valid mobile number</span>
+                    <span class="error-msg" v-if="!gdisValidMobile() && isSubmit">Enter valid mobile number</span>
                 </div>
             </div>
-        </div>
-
-        <!-- <div class="my-3 flex gap-5 items-center">
-            <div class="my-3">
-                <div class="flex items-center justify-between">
-                    <div class="primary-color text-sm mb-1">Nominee Share Percentage</div> <span class="text-xs">Total available shares: ({{ totalAvilableShare }})</span>
-                </div>
-                <div>
-                    <input maxlength="3" @input="digitKeyOnly($event, 'nomineeSharePercentage')" type="text" name="sharePercentage" id="sharePercentage" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="nomineeSharePercentage"/>
-                </div>
-
-                <div class="h-4">
-                    <span class="error-msg" v-if="nomineeSharePercentage == '' && isSubmit">Share percentage cannot be empty</span>
-                    <span class="error-msg" v-else-if="nomineeSharePercentage > totalAvilableShare && isSubmit">Cannot allocate percentage more than available share</span>
-                </div>
-            </div>
-        </div> -->
-        <div class="my-3 flex gap-5 items-center">
-
-            <div>
+                 <div>
           <p class="block text-sm font-medium leading-6 text-gray-900">Guardian Proof Type</p>
           <Menu as="div" class="relative  min-w-[350px] xinline-block text-left w-full" id="nominee_proof_type_drop_down">
             <div id="nominee_proof_type_select">
@@ -552,6 +521,26 @@
                     <span class="error-msg" v-if="!guardianProoftype && isSubmit">Select proof type</span>
                 </div>
         </div>
+        </div>
+
+        <!-- <div class="my-3 flex gap-5 items-center">
+            <div class="my-3">
+                <div class="flex items-center justify-between">
+                    <div class="primary-color text-sm mb-1">Nominee Share Percentage</div> <span class="text-xs">Total available shares: ({{ totalAvilableShare }})</span>
+                </div>
+                <div>
+                    <input maxlength="3" @input="digitKeyOnly($event, 'nomineeSharePercentage')" type="text" name="sharePercentage" id="sharePercentage" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="nomineeSharePercentage"/>
+                </div>
+
+                <div class="h-4">
+                    <span class="error-msg" v-if="nomineeSharePercentage == '' && isSubmit">Share percentage cannot be empty</span>
+                    <span class="error-msg" v-else-if="nomineeSharePercentage > totalAvilableShare && isSubmit">Cannot allocate percentage more than available share</span>
+                </div>
+            </div>
+        </div> -->
+        <div class="my-3 flex gap-5 items-center">
+
+       
 
 
         <div id="nominee_proof_no_group">
@@ -569,22 +558,21 @@
       <span class="error-msg" v-if="!guardianProoftype && isSubmit">Enter proof number</span>
     </div>
   </div>
-        </div>
-        <div class="">
           <div class="">
-            <label for="formFile" class="block text-sm font-medium leading-6 text-gray-900">Guardian Proof</label>
+            <label for="formFile" class="block text-sm  pt-5 font-medium leading-6 text-gray-900">Guardian Proof</label>
             <input
               class="relative block  w-[350px] rounded-md commonInputWidth secondaryColor flex-auto cursor-pointer radius4rem border border-solid  bg-white bg-clip-padding px-3 outline-none transition duration-300 ease-in-out file:-mx-3 file:cursor-pointer file:overflow-hidden file:radius4rem-none file:border-0  file:px-3 h-10 file:h-full file:secondaryColor file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem]"
               type="file" @change="guardianProof" id="formFile" accept=".pdf, .png, .jpg, .jpeg" />
             <span class="text-xs textColor pb-1">(Note: File size sholud not be exceed 5MB)</span>
             <div class="h-4 ">
                 <div class="h-4">
-                    <span class="error-msg" v-if="!guardianProofFileName && isSubmit">Enter proof number</span>
+                    <span class="error-msg" v-if="!guardianProofFileName && isSubmit">please upload proof file</span>
                 </div>   
 
-            </div>
           </div>
         </div>
+    </div>
+
         <div class="my-3">
             <div class="relative flex items-start">
                 <div class="flex h-6 items-center">
@@ -628,7 +616,7 @@
                     <input type="text" name="guardianstate" id="guardianstate" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="guardianstate"/>
                 </div>
                 <div class="h-4">
-                    <span class="error-msg" v-if="guardianstate == '' && isSubmit">Enter the Address line 2</span>
+                    <span class="error-msg" v-if="guardianstate == '' && isSubmit">Please enter the state</span>
                 </div>
             </div>
 
@@ -638,9 +626,9 @@
                     <input maxlength="6" @input="digitKeyOnly($event, 'pincode')" type="text" name="pincode" id="pincode" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="guardianPinCode"/>
                 </div>
                 <div class="h-4">
-                    <span class="error-msg" v-if="pincode == '' && isSubmit">Enter the pincode</span>
-                    <span class="error-msg" v-if="pincode.length != 6 && isSubmit">Enter valid pincode</span>
-                </div>
+            <span class="error-msg" v-if="guardianPinCode == '' && isSubmit">Please enter the PIN code</span>
+            <span class="error-msg" v-if="guardianPinCode != '' && guardianPinCode.length != 6 && isSubmit">Please enter a valid 6-digit PIN code</span>
+        </div>
             </div>
         </div>
 
@@ -710,6 +698,7 @@ export default {
             state: '',
             pincode: '',
             nomineeSharePercentage: 0,
+            guardianAge:'18',
 
             // 
             Address: '',
@@ -720,7 +709,6 @@ export default {
             nomineeMonth:'',
             nomineeYear:'',
             isSubmit: false,
-            isSubmited:false,
             //
          nomineeGuardian: "",
       guardianFirstName: "",
@@ -745,6 +733,7 @@ export default {
       guardianProofFileName: '',
       nomineeProoftype: '',
       guardianProoftype: '',
+      guardianError :'',
         }
     },
     computed: {
@@ -780,13 +769,18 @@ export default {
             this.findUserIsMinor();
             return [this.nomineeDate,this.nomineeMonth.month,this.nomineeYear]
         },  
+        guardianisAgeModified() {
+            this.GuardianfindUserIsMinor()
+;
+            return [this.guardianDate,this.guardianMonth.month,this.guardianYear]
+        },
 
         dateOfBirth() {
           return `${this.nomineeDate}-${this.nomineeMonth.id}-${this.nomineeYear}`
         },
 
-dateOfBirthguardian() {
-    return `${this.guardianDate}-${this.guardianMonth.id}-${this.guardianYear}`
+         dateOfBirthguardian() {
+           return `${this.guardianDate}-${this.guardianMonth.id}-${this.guardianYear}`
 
 
 // if (this.guardianDate && this.guardianMonth && this.guardianYear) {
@@ -902,6 +896,7 @@ totalAvilableShare() {
             }
         },
 
+            
         digitKeyOnly(event, type) {
             // Allow only numeric values in the input field
             event.target.value = event.target.value?.toString()?.replace(/[^0-9]/g, '')
@@ -911,7 +906,7 @@ totalAvilableShare() {
 
         validateForm() {
             return this.firstName != '' && this.lastName != '' && this.relationship != '' && (this.nomineeDate != '' && this.nomineeMonth != '' && this.nomineeYear != '') 
-            && this.isValidMobile()  && this.nomineeProofFileName != '' && this.Address != '' && this.AddressLine2
+            && this.isValidMobile()!=''  && this.nomineeProofFileName != '' && this.Address != '' && this.AddressLine2
             && this.state != '' &&( this.pincode != '' && this.pincode.length == 6)
         },
 
@@ -920,12 +915,49 @@ totalAvilableShare() {
             const str = this.mobileNo;
             return panPattern.test(str)
         },
+        gdisValidMobile() {
+            const panPattern = /^[6-9]\d{9}$/gi;
+            const str = this.guardianmobileNo;
+            return panPattern.test(str)
+        },
         
      proofOfNominee(val) {
        this.nomineeProoftype = val.name;
        this.nomineeProofNumber = '';
        
 },
+     
+GuardianfindUserIsMinor() {
+    if (this.guardianDate && this.guardianMonth && this.guardianYear) {
+        var regpan = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
+        var dateChange = `${this.guardianYear}-${this.guardianMonth}-${this.guardianDate}`;
+        var userBirthDate = new Date(dateChange);
+        var birthYear = userBirthDate.getFullYear();
+
+        if (regpan.test(dateChange)) {
+            var currentDate = new Date();
+            let difference = currentDate - userBirthDate;
+            let age = Math.floor(difference / 31557600000);
+
+            if (age > 100) {
+                this.guardianAge = null; // Reset guardian age
+                this.guardianError = "Guardian age cannot be more than 100 years old.";
+            } else if (age < 18) {
+                this.guardianAge = null; // Reset guardian age
+                this.guardianError = "Guardian age cannot be less than 18 years old.";
+            } else {
+                this.guardianAge = age;
+                this.guardianError = null; // Reset guardian error
+            }
+        } else {
+            this.guardianAge = null; // Reset guardian age
+            this.guardianError = "Invalid Birth Year.";
+        }
+    } else {
+        this.guardianError = "Select date of birth.";
+    }
+},
+
 
  navigateNomineeProof() {
       this.isSubmit = true;
@@ -969,14 +1001,14 @@ totalAvilableShare() {
         //   this.$store.dispatch("nominee/saveNomineeDetails", [json, proof, guardProof]).finally(()=>{
         //   })
 
-        if ( this.guardianFirstName && this.guardianLastName && this.guardianProofNumber && this.guardianAddress1 && this.guardianAddress2 && this.guardianrelationship.name && this.guardianmobileNo && this.guardianPinCode.length == 6 && this.guardianmobileNo.toString().length == 10 && this.guardianProoftype) {
+        if ( this.guardianFirstName && this.guardianLastName && this.guardianProofNumber && this.guardianAddress1 && this.guardianAddress2 && this.guardianrelationship.name && this.gdisValidMobile() && this.guardianPinCode.length == 6 && this.guardianmobileNo.toString().length == 10 && this.guardianProoftype) {
           this.$store.dispatch("nominee/saveNomineeDetails", [json, proof, guardProof]).finally(()=>{
             // this.$store.commit("nominee/setGuardianpassword", '');
           })
-        } else if (this.userAge < 18) {
-          this.$store.commit("nominee/setGuardianDateErrMsg", "guardian age can not be less than 18 years old.", { root: true });
+        } else
+         if (this.userAge < 18) {
+        //   this.$store.commit("nominee/setGuardianDateErrMsg", "guardian age can not be less than 18 years old.", { root: true });
         }
-
 
       },
 proofOfGuard(val) {
