@@ -69,13 +69,18 @@
         <div class="primary-color text-sm py-2">To activate the segments SEBI requires you to share your income proof with {{ $store.state.brokerName }}</div>
 
         <!-- vue file agent -->
-        <div class="w-[350px] h-[180px] bg-violet-50 text-violet-600 flex justify-center items-center rounded my-4 cursor-pointer font-extrabold border border-gray-300">
-            <!-- <input
-        type="file"
-        class="opacity-0 w-full h-full absolute top-0 left-0 cursor-pointer" capture id="formFile" accept=".pdf, .png, .jpg, .jpeg"
-        @change="handleFileUpload"
-      /> -->
-            <span class="text-xl mx-1">+</span> <span class="text-sm">Income Proof</span>
+        <div class="w-[350px] h-[180px] relative bg-violet-50 text-violet-600 flex justify-center items-center rounded my-4 cursor-pointer font-extrabold border border-gray-300">
+            <input
+                type="file"
+                class="opacity-0 w-full h-full absolute  cursor-pointer"
+                id="nomineeProofFile"
+                accept=".pdf, .png, .jpg, .jpeg"
+                @change="handleFileUpload"
+            />
+            <label for="nomineeProofFile" class="flex items-center" > <!-- Added label for better accessibility -->
+                <span class="text-xl mx-1">+</span>
+                <span class="text-sm">Upload Nominee Proof</span>
+            </label>
         </div>
 
         <div class="text-base primary-color !font-bold py-4">
@@ -98,7 +103,14 @@
         </div>
 
         <div class="py-8">
-            <button class="commonbtn" @click="confirmationAccept()" :disabled="confirmationAccept == ''">Update financial information</button>
+            <button type="submit" class="commonbtn"  @click="confirmationAccepted()" :disabled="confirmationAccept == ''"> <spinner v-if="getLoader"/><span v-else>Update financial information</span></button>
+
+            <!-- <button class="commonbtn" @click="confirmationAccepted" :disabled="confirmationAccept == ''">
+    <span v-if="loading"> 
+        <spinner></spinner>
+    </span>
+    <span v-else>Update financial information</span>
+</button> -->
         </div>
         
     </div>
@@ -129,29 +141,35 @@ export default {
             confirmations : [
                 { id: 'I accept above declaration', title: 'I accept above declaration' },
             ],
-            confirmationAccept: 'true'
+            confirmationAccept: 'true',
+            fileupload:'',
         }
     },
     computed: {
         ...mapGetters("auth", ["getUserId"]),
+              ...mapGetters(['getLoader']),
+
 
 
     },
     methods: {
-    // handleFileUpload(event) {
-    //   const file = event.target.files[0];
-    //   console.log("Uploaded file:", file);
-    // }
-    confirmationAccept(){
+        handleFileUpload(event) {
+            const file = event.target.files[0]; 
+            this.fileupload = file
+            console.log("Uploaded file:", file);
+            // Handle file upload logic here
+        },
+    confirmationAccepted(){
+
         let json = {
-        "uccCode": this.getUserId, // Assuming getUserId returns user's ID
-        "documentType": "Income Proof", // Assuming this is the document type
+        "uccCode": this.getUserId,
+        "documentType": "REEKYC_INCOME_PROOF", // Assuming this is the document type
         "typeOfProof": this.incomeProofType.name, // Selected income proof type
-        "password": "user_password", // User's password, replace it with actual value
+        "password": "", // User's password, replace it with actual value
         "annualIncome": this.income.name, // Selected annual income
-        "file": "path_to_uploaded_file" // Path to the uploaded file, replace it with actual value
+        "file": this.fileupload, // Path to the uploaded file, replace it with actual value
     };  
-    //  this.$store.dispatch('bankDetails/saveBankDetails', json)
+        this.$store.dispatch('Documents/incomeupload', json);
   }
   },
     

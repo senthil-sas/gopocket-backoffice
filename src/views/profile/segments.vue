@@ -237,29 +237,29 @@ export default {
     },
 
     methods: {
-    // continueToPayment(){
-    //   let json ={
-    //         equity:this.equity,
-    //         mFunds:this.mFunds,
-    //         eqDerivatives:this.eDerivatives,
-    //         currDerivatives:this.cDerivatives,
-    //         commodity:this.commodity
-    //       }
-    //   let mcx ={
-    //     category:this.selectedMCX,
-    //     consent:this.acceptTC ? 1 : 0
-    //   }
+    continueToPayment(){
+      let json ={
+            equity:this.equity,
+            mFunds:this.mFunds,
+            eqDerivatives:this.eDerivatives,
+            currDerivatives:this.cDerivatives,
+            commodity:this.commodity
+          }
+      let mcx ={
+        category:this.selectedMCX,
+        consent:this.acceptTC ? 1 : 0
+      }
 
-    //   if((this.equity || this.mFunds || this.eDerivatives || this.cDerivatives || this.commodity) && this.acceptTC){
-    //     // if(this.commodity){
-    //     //   this.formConsent = false
-    //     //   this.$store.commit("segment/setCurrentSegment",json)
-    //     // }else{
-    //       this.$store.commit("segment/setCurrentSegment",json)
-    //       this.$store.dispatch('segment/saveSegmentDetails', mcx)
-    //     // }
-    //   }
-    // },
+      if((this.equity || this.mFunds || this.eDerivatives || this.cDerivatives || this.commodity) && this.acceptTC){
+        // if(this.commodity){
+        //   this.formConsent = false
+        //   this.$store.commit("segment/setCurrentSegment",json)
+        // }else{
+          this.$store.commit("segment/setCurrentSegment",json)
+          this.$store.dispatch('segment/saveSegmentDetails', mcx)
+        // }
+      }
+    },
     updateMcx(val){
       this.selectedMCX = val.name
     },
