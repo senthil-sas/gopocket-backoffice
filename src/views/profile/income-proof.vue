@@ -77,7 +77,7 @@
                 accept=".pdf, .png, .jpg, .jpeg"
                 @change="handleFileUpload"
             />
-            <label for="nomineeProofFile" class="flex items-center" > <!-- Added label for better accessibility -->
+            <label for="nomineeProofFile" class="flex items-center" >
                 <span class="text-xl mx-1">+</span>
                 <span class="text-sm">Upload Nominee Proof</span>
             </label>

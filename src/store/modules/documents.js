@@ -60,7 +60,7 @@ const actions = {
         console.log(json);
         service.incomeupload(fd)
             .then(resp => {
-                if (resp.data.message.toString().trim() == "Success" && resp?.data?.stat == 0) {
+                if (resp.data.message.toString().trim() == "Success" && resp?.data?.stat == 1) {
                     commit('setincomeproof', resp.data.result);
                 }
                 else {

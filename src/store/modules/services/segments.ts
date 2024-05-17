@@ -13,7 +13,6 @@ export default {
         const requestOptions = {
             headers: authHeader(),
         };
-
         return axios.get(`${kycURI}/reEkycSegment/getSegment?uccCode=${userId}`, requestOptions).then();
     },
 
@@ -21,7 +20,7 @@ export default {
         const requestOptions = {
             headers: authHeader(),
         };
-        return axios.get(`${kycURI}/reEkycSegment/getReekycSegment?uccCode=AB0009${userId}`, requestOptions).then();
+        return axios.get(`${kycURI}/reEkycSegment/getReekycSegment?uccCode=${userId}`, requestOptions).then();
     },
 
 }
