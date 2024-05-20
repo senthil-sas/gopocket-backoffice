@@ -465,11 +465,9 @@
                     </Listbox>
                 </div>
                 <div class="h-4">
-                    <span class="error-msg" v-if="(guardianDate == '' || guardianMonth == '' || guardianYear == '') && isSubmit">Select date of birth</span>
-                        <span class="error-msg">{{ guardianError }}</span>
-
-
-                </div>
+      <!-- <span class="error-msg" v-if="(guardianDate == '' || guardianMonth == '' || guardianYear == '') && isSubmit">Select date of birth</span> -->
+      <span class="error-msg">{{ guardianError }}</span>
+    </div>
             </div>
         </div>
 
@@ -734,6 +732,7 @@ export default {
       nomineeProoftype: '',
       guardianProoftype: '',
       guardianError :'',
+      guardAge:'18'
         }
     },
     computed: {
@@ -896,6 +895,32 @@ totalAvilableShare() {
             }
         },
 
+        GuardianfindUserIsMinor() {
+            if (this.guardianDate && this.guardianMonth.month && this.guardianYear) {
+                var regpan = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
+                var dateChange = `${this.guardianYear}-${this.guardianMonth}-${this.guardianDate}`
+                var userBirthDate = new Date(dateChange);
+                var birthYear = userBirthDate.getFullYear()
+                if (regpan.test(dateChange)) {
+                    var currentDate = new Date();
+                    let difference = currentDate - userBirthDate;
+                    let age = Math.floor(difference / 31557600000)
+                    console.log(age);
+                    this.guardAge = guardage;
+                    if (guardAge < 18) {
+                    this.guardianError = "Guardian age cannot be less than 18 years old";
+                } else if (guardAge > 100) {
+                    this.guardianError = "Guardian age cannot be more than 100 years old";
+                } else {
+                    this.guardianError = '';
+                }
+                        }
+                        
+                    }
+            
+            
+        },
+
             
         digitKeyOnly(event, type) {
             // Allow only numeric values in the input field
@@ -927,36 +952,36 @@ totalAvilableShare() {
        
 },
      
-GuardianfindUserIsMinor() {
-    if (this.guardianDate && this.guardianMonth && this.guardianYear) {
-        var regpan = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
-        var dateChange = `${this.guardianYear}-${this.guardianMonth}-${this.guardianDate}`;
-        var userBirthDate = new Date(dateChange);
-        var birthYear = userBirthDate.getFullYear();
+// GuardianfindUserIsMinor() {
+//     if (this.guardianDate && this.guardianMonth && this.guardianYear) {
+//         var regpan = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
+//         var dateChange = `${this.guardianYear}-${this.guardianMonth}-${this.guardianDate}`;
+//         var userBirthDate = new Date(dateChange);
+//         var birthYear = userBirthDate.getFullYear();
 
-        if (regpan.test(dateChange)) {
-            var currentDate = new Date();
-            let difference = currentDate - userBirthDate;
-            let age = Math.floor(difference / 31557600000);
+//         if (regpan.test(dateChange)) {
+//             var currentDate = new Date();
+//             let difference = currentDate - userBirthDate;
+//             let age = Math.floor(difference / 31557600000);
 
-            if (age > 100) {
-                this.guardianAge = null; // Reset guardian age
-                this.guardianError = "Guardian age cannot be more than 100 years old.";
-            } else if (age < 18) {
-                this.guardianAge = null; // Reset guardian age
-                this.guardianError = "Guardian age cannot be less than 18 years old.";
-            } else {
-                this.guardianAge = age;
-                this.guardianError = null; // Reset guardian error
-            }
-        } else {
-            this.guardianAge = null; // Reset guardian age
-            this.guardianError = "Invalid Birth Year.";
-        }
-    } else {
-        this.guardianError = "Select date of birth.";
-    }
-},
+//             if (age > 100) {
+//                 this.guardianAge = null; // Reset guardian age
+//                 this.guardianError = "Guardian age cannot be more than 100 years old.";
+//             } else if (age < 18) {
+//                 this.guardianAge = null; // Reset guardian age
+//                 this.guardianError = "Guardian age cannot be less than 18 years old.";
+//             } else {
+//                 this.guardianAge = age;
+//                 this.guardianError = null; // Reset guardian error
+//             }
+//         } else {
+//             this.guardianAge = null; // Reset guardian age
+//             this.guardianError = "Invalid Birth Year.";
+//         }
+//     } else {
+//         this.guardianError = "Select date of birth.";
+//     }
+// },
 
 
  navigateNomineeProof() {
@@ -984,14 +1009,14 @@ GuardianfindUserIsMinor() {
         "lastname":  this.guardianLastName,
         "relationship": this.guardianrelationship.name,
         "dateOfbirth": this.dateOfBirthguardian,
-    "mobilenumber": this.guardianmobileNo, 
-    "address1": this.guardianAddress1,
-    "address2": this.guardianAddress2,
-    "pincode": "638656",
-    "state": "tamilnadhu",
-        "attachementUrl": "",
+        "mobilenumber": this.guardianmobileNo, 
+        "address1": this.guardianAddress1,
+        "address2": this.guardianAddress2,
+        "pincode": "638656",
+        "state": "tamilnadhu",
+       "attachementUrl": "",
         "proofId": this.guardianProofNumber,
-    "typeOfProof": this.guardianProoftype,
+       "typeOfProof": this.guardianProoftype,
     }
       };
       let proof = this.nomineeProofFileName

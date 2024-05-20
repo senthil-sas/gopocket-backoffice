@@ -18,16 +18,7 @@ export default {
     mounted() {
       window.addEventListener('resize', this.handleResize)
       this.handleResize();
-
-      // retain state
-      let clientId =  localStorage.getItem('clientId');
-      let sessionId =  localStorage.getItem('sessionId');
-      if(clientId) {
-        this.$store.commit("auth/setUserId", clientId);
-      }
-      if(sessionId) {
-        this.$store.commit("auth/setSessionId", sessionId);
-      }             
+       
     },
     beforeDestroy() {
       window.removeEventListener('resize', this.handleResize)

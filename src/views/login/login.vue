@@ -43,27 +43,12 @@ export default {
         login(){
             window.location.href = `${this.$store.state.ssoRedirectionUrl}?appcode=${this.$store.state.myAppCode}`;
         }
-
     },
     created() {
-        if (this.$store.state.sessionId && this.$store.state.userId) {
-            
-            this.$router.push('dashboard').catch(() => { })
-        
-        }else{
-            
             if (this.$route.query.authCode) {
-                this.isParamAvil = true
                 this.$store.dispatch("auth/getData", this.$route.query.authCode);
             }    
-            else if (this.$route.query.logout) {
-
-            } 
-            // auto redirect
-            // else {
-            //     this.login();
-            // }
-        }
+           
     },
 }
 </script>

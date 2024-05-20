@@ -20,7 +20,7 @@ const router = createRouter({
         { path: '/dashboard', name: 'dashboard', component: () => import('../views/dashboard.vue') },
         { path: '/reports', name: 'reports', component: () => import('../views/reports/reports.vue') },
         { path: '/holdings', name: 'holdings', component: () => import('../views/portfolio.vue') },
-        { path: '/mis_report', name: 'misreport', component: () => import('../views/misReport/misReport.vue')},
+        { path: '/mis_report', name: 'misreport', component: () => import('../views/misReport/misReport.vue') },
         { path: '/action', name: 'action', component: () => import('../views/action.vue') },
         { path: '/profile', name: 'profile', component: () => import('../views/profile.vue') },
       ],
@@ -33,23 +33,26 @@ export default router
 
 
 router.beforeEach((to, from, next) => {
-  const clientId = localStorage.getItem("clientId");
-  const sessionId = localStorage.getItem("sessionId");
+  let isOldLogin = false
+  const clientId = localStorage.getItem("clientId") && localStorage.getItem("clientId") != "undefined" ? JSON.parse(localStorage.getItem("clientId")) : null;
+  const sessionId = localStorage.getItem("sessionId") && localStorage.getItem("sessionId") != "undefined" ? JSON.parse(localStorage.getItem("sessionId")) : null;
+
   common.methods.getDocumentTitle(to);
-  if (clientId !== null) {
-    store.commit("auth/setUserId", clientId);
+
+  if (Object.query(to.query).length == 0) {
+    if (clientId) {
+      store.commit("auth/setUserId", clientId);
+    }
+
+    if (sessionId) {
+      store.commit("auth/setSessionId", sessionId);
+    }
+
+    isOldLogin = clientId && sessionId ? true : false;
   }
-
-  if (sessionId !== null) {
-    store.commit("auth/setSessionId", sessionId);
-  }
-
-  const isValidSession = sessionId !== null && sessionId !== "undefined";
-  const isValidClientId = clientId !== null && clientId !== "undefined";
-
-  if (isValidSession && isValidClientId && from.path === "/" && to.path === "/") {
+  if (isOldLogin && from.path === "/" && to.path === "/") {
     next({ path: "dashboard" });
-  } else if ((!isValidSession || !isValidClientId) && to.path !== "/") {
+  } else if (!isOldLogin && to.path !== "/") {
     next({ path: "" });
   } else {
     next();

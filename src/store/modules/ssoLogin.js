@@ -33,8 +33,8 @@ const auth = {
                 }
                 const response = await service.ssoLogin(json)
                 if (response.data.stat === "Ok") {
-                    localStorage.setItem('clientId', response.data.clientId);
-                    localStorage.setItem('sessionId', response.data.userSession);
+                    localStorage.setItem('clientId', JSON.stringify(response.data.clientId));
+                    localStorage.setItem('sessionId', JSON.stringify(response.data.userSession));
                     commit("setUserId", response.data.clientId);
                     commit("setSessionId", response.data.userSession);
                     router.push({ name: 'dashboard' }).catch(() => { })
