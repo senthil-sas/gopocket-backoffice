@@ -34,12 +34,12 @@ export default router
 
 router.beforeEach((to, from, next) => {
   let isOldLogin = false
-  const clientId = localStorage.getItem("clientId") && localStorage.getItem("clientId") != "undefined" ? JSON.parse(localStorage.getItem("clientId")) : null;
-  const sessionId = localStorage.getItem("sessionId") && localStorage.getItem("sessionId") != "undefined" ? JSON.parse(localStorage.getItem("sessionId")) : null;
+  const clientId = localStorage.getItem("clientId") && localStorage.getItem("clientId") != "undefined" ? checkJSON('clientId') : null;
+  const sessionId = localStorage.getItem("sessionId") && localStorage.getItem("sessionId") != "undefined" ? checkJSON('sessionId') : null;
 
   common.methods.getDocumentTitle(to);
 
-  if (Object.query(to.query).length == 0) {
+  if (to.query && Object.keys(to.query).length == 0) {
     if (clientId) {
       store.commit("auth/setUserId", clientId);
     }
@@ -58,3 +58,11 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
+function checkJSON(data) {
+  try {
+    return JSON.parse(localStorage.getItem(data))
+  } catch (err) {
+    return localStorage.getItem(data)
+  }
+}

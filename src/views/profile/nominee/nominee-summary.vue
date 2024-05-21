@@ -134,7 +134,7 @@ export default {
     components: { icon,deleteNominee },
     data() {
         return {
-            sharePer: 100,
+      sharePer: 100,
       sharePercentageError: "",
       percentage: "",
       percentageCalculation:"",
