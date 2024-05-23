@@ -21,7 +21,8 @@
                     <div class="flex gap-10 pt-4">
                         <span class="secondary-color text-sm min-w-[150px]">Relationship</span>
                         <span class="primary-color text-sm">{{ i.relationship ? i.relationship : 'NA' }}</span>
-                    </div>
+                        
+                      </div>
                     <div class="grid grid-cols-2 h-[50px] items-center mt-2">
                       <span class="secondary-color text-sm min-w-[150px]">Nominee Share <span class="primary-color"></span></span>
               <div class="flex flex-wrap textColor">
@@ -103,9 +104,8 @@
           Add Another Nominee
         </button>
         <button
-        v-if="mergedNomineeList.length < 3 && getNomineeList.length == 0"
 
-        class="border-[#753ED7] text-white primaryBtnColor commonbtn"
+        class="border-[#753ED7] text-white primaryBtnColor commonbtn  "
           @click="submitNomineeDetails()"
             >
             <spinner v-if="getdeleteloader"/><span v-else>Continue</span>
@@ -133,7 +133,7 @@ import deleteNominee from '../../../store/modules/deleteNominee.vue'
 export default {
     components: { icon,deleteNominee },
     data() {
-        return {
+      return {
       sharePer: 100,
       sharePercentageError: "",
       percentage: "",
@@ -149,8 +149,6 @@ export default {
         ...mapGetters('nominee',['getNomineeDetails','getnomineedialog']),
         ...mapGetters(['getLoader']),
         ...mapGetters('nominee', ['getdeleteloader']),
-
-
 
         mergedNomineeList() {
 
@@ -169,16 +167,13 @@ export default {
             this.$store.commit('nominee/setNomineeStage', 'initialList')
         },
         deleteNominee(id) {
-            // this.$store.commit('nominee/deleteNominee', id)
-            // this.$store.commit('nominee/setnomineedialog', true);
             this.$store.dispatch('nominee/deleteOldNominee',id)
-            // console.log(id)
-               },
+        },
 
-               deleteNewNominee(id){
-                this.$store.commit('nominee/deleteNominee', id)
+        deleteNewNominee(id){
+            this.$store.commit('nominee/deleteNominee', id)
             this.$store.commit('nominee/setnomineedialog', true);
-               },
+         },
 
 
  onShareChange(eve, id) {
@@ -256,6 +251,7 @@ export default {
           nominee2:this.share2,
           nominee3:this.share3
         }
+
         this.$store.dispatch('nominee/saveSharePercent',json, )
       }
 

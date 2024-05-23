@@ -13,7 +13,9 @@
                     <span v-if="bank.bankStatus == 0">
                         <button class="graybtn" >Pending</button>
                     </span>  
+                    <span class="primary-color text-sm cursor-pointer" @click=" ">
                         <icon name="delete" height="16" width="16" class="hover:text-red-600"/>
+                    </span>
                      </div>
                 <div class="flex gap-5 items-center my-4">
                     <img :src="hdfcImg" :alt="bank?.name" class="max-w-[60px] max-h-[60px] border rounded p-2">
@@ -47,6 +49,7 @@
         <div class="my-6">
             <button class="commonbtn" @click="addBank()">Add New bank</button>
             </div>
+            
 
             <!-- Recent Transactions -->
             <!-- <button @click="viewBankMandates()">

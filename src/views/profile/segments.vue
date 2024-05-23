@@ -3,7 +3,7 @@
         <div class="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-col-3 sm:grid-cols-2 gap-8 h-auto">
             <div class="rounded-lg p-3 border-[0.02rem] dark:border-[#232325]">
                 <span class="justify-between flex items-center">
-                  <label class=" primary-color !font-semibold text-sm" id="accinfo_label_eq">Equities</label>
+                  <label class=" primary-color !font-semibold text-sm my-2" id="accinfo_label_eq">Equities</label>
 
                         <button class="graybtn " v-if="getreKYCsegment.equCash == 1"  >Pending</button>
                     </span>

@@ -198,12 +198,14 @@ const actions = {
                 "nomTwoAllocation": payload.nominee2,
                 "nomThreeAllocation": payload.nominee3,
             }
+            console.log("Payload before sending:", json);
+
             let response = await Nomineeservice.saveSharePercent(json);
             if (response.status == 200 && response?.data?.stat === 1) {
             } else {
                 notify({
                     group: "auth",
-                    type: "success",
+                    type: "error",
                     title: response.data.reason,
                 })
                 // commit('Notification/setNotificationMsg', { show: true, header: 'Error', subHeader: response?.data?.reason, status: 'failed' }, { root: true })
