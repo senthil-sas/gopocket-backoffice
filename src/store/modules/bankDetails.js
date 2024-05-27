@@ -113,6 +113,49 @@ const actions = {
             });
     },
 
+    async deletenewbank({ state, commit, dispatch, rootState, rootGetters }, payload) {
+        commit("setdeleteloader", true);
+        try {
+            let json = {
+                id: state.deletenomineeId,
+                uccCode: rootGetters['auth/getUserId']
+            }
+            let response = await service.deletenewbank(json);
+
+            if (response.status == 200 && response.data.message == "Success") {
+
+                // await dispatch("getupdateNomineeDetails")
+                // dispatch("NomineeDetails")
+
+            }
+        } catch (error) {
+            errorHandle.handleError(error)
+            // commit("setdeleteloader", false);
+        }
+        commit("setdeleteloader", false);
+    },
+
+
+    async deleteoldbank({ state, commit, dispatch, rootState, rootGetters }, payload) {
+        commit("setdeleteloader", true);
+        try {
+            let json = {
+                id: payload,
+                uccCode: rootGetters['auth/getUserId']
+            }
+            let response = await service.deleteoldbank(json);
+
+            if (response.status == 200 && response.data.message == "Success") {
+
+                await dispatch("getupdateNomineeDetails")
+            }
+        } catch (error) {
+            errorHandle.handleError(error)
+            // commit("setDeleteLoader", false);
+        }
+        commit("setdeleteloader", false);
+    },
+
 };
 
 const mutations = {

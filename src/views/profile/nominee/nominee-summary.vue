@@ -1,129 +1,99 @@
 <template>
-    <div>
-        <div class="mb-4 primary-color !font-bold text-sm">
-            Nominee Details
-        </div>
-        
-        <div class="grid grid-cols-3 gap-3 flex-wrap">
-            <div v-for="(i, id) in mergedNomineeList" :key="id" class="p-3 border-[0.02rem] rounded-lg min-w-[350px]">
-                <div class="flex justify-between">
-                    <span class="primary-color !font-semibold text-sm">Nominee {{ id + 1 }}</span>
-                    <span class="primary-color text-sm cursor-pointer" @click="i.nominee_number? deleteNominee(i.nominee_number): deleteNewNominee(i.id) ">
-                        <icon name="delete" height="16" width="16" class="hover:text-red-600"/>
-                    </span>
-                </div>
+ <div>
+    <div class="mb-4 primary-color !font-bold text-sm">
+        Nominee Details
+    </div>
 
-                <div class="my-3">
-                    <div class="flex gap-10 pt-4">
-                        <span class="secondary-color text-sm min-w-[150px]">Full name</span>
-                        <span class="primary-color text-sm">{{i.firstname || i.nominee_name  }}</span>
+    <div class="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-col-3 sm:grid-cols-2 gap-8 h-auto">
+        <div v-for="(i, id) in mergedNomineeList" :key="id" class="p-3 border-[0.02rem] rounded-lg ">
+            <div class="flex justify-between">
+                <span class="primary-color !font-semibold text-sm">Nominee {{ id + 1 }}</span>
+                <span class="primary-color text-sm cursor-pointer" @click="i.nominee_number ? deleteNominee(i.nominee_number) : deleteNewNominee(i.id)">
+                    <icon name="delete" height="16" width="16" class="hover:text-red-600"/>
+                </span>
+            </div>
+
+            <div class="my-3">
+                <div class="flex flex-wrap gap-10 pt-4">
+                    <span class="secondary-color text-sm  sm:min-w-[150px]">Full name</span>
+                    <span class="primary-color text-sm">{{ i.firstname || i.nominee_name }}</span>
+                </div>
+                <div class="flex flex-wrap gap-10 pt-4">
+                    <span class="secondary-color text-sm  sm:min-w-[150px]">Relationship</span>
+                    <span class="primary-color text-sm">{{ i.relationship ? i.relationship : 'NA' }}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 h-[50px] items-center mt-2">
+                    <span class="secondary-color text-sm  sm:min-w-[150px]">Nominee Share <span class="primary-color"></span></span>
+                    <div class="flex flex-wrap textColor">
+                        <span v-if="id == 0">
+                            <span class="flex flex-nowrap gap-2">
+                                <input
+                                    type="range"
+                                    :class="isShare1Disable ? 'cursor-not-allowed' : 'cursor-pointer'"
+                                    @input="onShareChange($event, id)"
+                                    min="1"
+                                    :max="this.mergedNomineeList.length == 1 ? 100 : this.mergedNomineeList.length == 2 ? 99 : this.mergedNomineeList.length == 3 ? 98 : ''"
+                                    :disabled="isShare1Disable || this.mergedNomineeList.length == 1"
+                                    v-model="i.allocation"
+                                />
+                                <span>{{ i.percentage_allocation ? i.percentage_allocation : i.allocation }}%</span>
+                            </span>
+                        </span>
+                        <span v-if="id == 1">
+                            <span class="flex flex-nowrap gap-2">
+                                <input
+                                    type="range"
+                                    class="cursor-pointer"
+                                    @input="onShareChange($event, id)"
+                                    min="1"
+                                    :max="this.mergedNomineeList.length == 1 ? 100 : this.mergedNomineeList.length == 2 ? 99 : this.mergedNomineeList.length == 3 ? 98 : ''"
+                                    v-model="i.allocation"
+                                />
+                                <span>{{ i.percentage_allocation ? i.percentage_allocation : i.allocation }}%</span>
+                            </span>
+                        </span>
+                        <span v-if="id == 2">
+                            <span class="flex flex-nowrap gap-2">
+                                <input
+                                    type="range"
+                                    class="cursor-pointer"
+                                    @input="onShareChange($event, id)"
+                                    min="1"
+                                    :max="this.mergedNomineeList.length == 1 ? 100 : this.mergedNomineeList.length == 2 ? 99 : this.mergedNomineeList.length == 3 ? 98 : ''"
+                                    v-model="i.allocation"
+                                />
+                                <span>{{ i.percentage_allocation ? i.percentage_allocation : i.allocation }}%</span>
+                            </span>
+                        </span>
                     </div>
-                    <div class="flex gap-10 pt-4">
-                        <span class="secondary-color text-sm min-w-[150px]">Relationship</span>
-                        <span class="primary-color text-sm">{{ i.relationship ? i.relationship : 'NA' }}</span>
-                        
-                      </div>
-                    <div class="grid grid-cols-2 h-[50px] items-center mt-2">
-                      <span class="secondary-color text-sm min-w-[150px]">Nominee Share <span class="primary-color"></span></span>
-              <div class="flex flex-wrap textColor">
-                <span v-if="id == 0">
-                  <span class="flex flex-nowrap gap-2">
-                    <input
-                      type="range"
-                      class=""
-                      :class="
-                        isShare1Disable ? 'cursor-not-allowed' : 'cursor-pointer	'
-                      "
-                      @input="onShareChange($event, id)"
-                      min="1"
-                      :max="this.mergedNomineeList.length == 1 ? 100 : this.mergedNomineeList.length == 2 ? 99 :  this.mergedNomineeList.length == 3 ? 98 :''"
-                      :disabled="isShare1Disable || this.mergedNomineeList.length == 1"
-                      v-model="i.allocation"
-                    />
-                    <span>{{ i.percentage_allocation ? i.percentage_allocation : i.allocation  }}%</span>
-                  </span>
-                </span>
-                <span v-if="id == 1">
-                  <span class="flex flex-nowrap gap-2">
-                    <input
-                      type="range"
-                      class="cursor-pointer"
-                      @input="onShareChange($event, id)"
-                      min="1"
-                      :max="this.mergedNomineeList.length == 1 ? 100 : this.mergedNomineeList.length == 2 ? 99 :  this.mergedNomineeList.length == 3 ? 98 :''"
-                      v-model="i.allocation"
-                    />
-                    <span>{{ i.percentage_allocation ? i.percentage_allocation : i.allocation  }}%</span>
-                  </span>
-                </span>
-                <span v-if="id == 2">
-                  <span class="flex flex-nowrap gap-2">
-                    <input
-                      type="range"
-                      class="cursor-pointer"
-                      @input="onShareChange($event, id)"
-                      min="1"
-                      :max="this.mergedNomineeList.length == 1 ? 100 : this.mergedNomineeList.length == 2 ? 99 :  this.mergedNomineeList.length == 3 ? 98 :''"
-                      v-model="i.allocation"
-                    />
-                    <span>{{ i.percentage_allocation ? i.percentage_allocation : i.allocation  }}%</span>
-                  </span>
-                </span>
-              </div>
-            </div>
                 </div>
             </div>
         </div>
-        <div class="h-7 mt-4 flex justify-between">
+    </div>
+    <div class="h-7 mt-4 flex justify-between">
         <div class="text-sm primaryColor">
-          Total share : <span>{{ this.percentageCalculation}} %</span>
+            Total share : <span>{{ this.percentageCalculation }} %</span>
         </div>
-        <!-- <errorMessage
-          v-if="sharePercentageError != ''"
-          className="error"
-          :errMsg="this.sharePercentageError"
-        >
-        </errorMessage>
-
-        <errorMessage
-          v-if="decimalPercentage() != 0"
-          className="error"
-          :errMsg="'Nominee share percentage not accept decimal value'"
-        >
-        </errorMessage> -->
-      </div>
-      <div
-        class="mt-4 mb-5 flex space-x-2"
-        :class="mergedNomineeList.length < 3 ? 'justify-between' : 'sm:justify-end'"
-      >
+    </div>
+    <div class="mt-4 mb-5 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2" :class="mergedNomineeList.length < 3 ? 'justify-between' : 'sm:justify-end'">
         <button
-          v-if="mergedNomineeList.length < 3 && getNomineeList.length == 0"
-          class="commonbtn"
-          @click="addMoreNominee()"
+            v-if="mergedNomineeList.length < 3 && getNomineeList.length == 0"
+            class="commonbtn"
+            @click="addMoreNominee()"
         >
-          Add Another Nominee
+            Add Another Nominee
         </button>
         <button
-
-        class="border-[#753ED7] text-white primaryBtnColor commonbtn  "
-          @click="submitNomineeDetails()"
-            >
+            class="border-[#753ED7] text-white primaryBtnColor commonbtn"
+            @click="submitNomineeDetails()"
+        >
             <spinner v-if="getdeleteloader"/><span v-else>Continue</span>
         </button>
-      </div>
+    </div>
 
-        <!-- <div class="my-10 flex gap-3">
-            <button type="submit" class="commonbtn" @click="addMoreNominee()" :disabled="getNomineeList?.length == 3">Add another nominee</button>
-        </div>
+    <deleteNominee/>
+</div>
 
-        <p class="bg-violet-200 leading-6 primary-color !font-semibold text-sm rounded-md p-4 my-4 max-w-[800px]" v-if="getNomineeList?.length == 3">
-            You have successfully allocated the maximum allotment of 3 Nominees to your Account.
-            If you wish to include additional nominees, kindly remove an existing nominee before proceeding to add more.
-        </p> -->
-
-   <deleteNominee/>
-   
-   </div>
 </template>
 
 <script>

@@ -465,7 +465,7 @@
                     </Listbox>
                 </div>
                 <div class="h-4">
-      <!-- <span class="error-msg" v-if="(guardianDate == '' || guardianMonth == '' || guardianYear == '') && isSubmit">Select date of birth</span> -->
+      <span class="error-msg" v-if="(guardianDate == '' || guardianMonth == '' || guardianYear == '') && isSubmit">Select date of birth</span>
       <span class="error-msg">{{ guardianError }}</span>
     </div>
             </div>
@@ -894,8 +894,8 @@ totalAvilableShare() {
                 }
             }
         },
-
         GuardianfindUserIsMinor() {
+            
             if (this.guardianDate && this.guardianMonth.month && this.guardianYear) {
                 var regpan = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
                 var dateChange = `${this.guardianYear}-${this.guardianMonth}-${this.guardianDate}`

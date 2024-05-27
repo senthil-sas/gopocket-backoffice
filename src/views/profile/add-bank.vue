@@ -113,7 +113,7 @@ export default {
     
     validateForm() {
         
-            return this.ifscCode != '' && this.accountNumber == this.reEnterAccountNumber && this.ifscCode.length == 11
+            return this.ifscCode != '' && this.accountNumber !== '' && this.reEnterAccountNumber !== ''  &&  this.accountNumber == this.reEnterAccountNumber && this.ifscCode.length == 11
         },
     async validateIfsc(){
             if(this.ifscCode.length == 11){
