@@ -8,12 +8,12 @@
                 <div class="flex justify-between">
                     <span class="primary-color !font-semibold text-xs mt-1"> BANK {{ id + 1 }}</span>
                     <span v-if="(bank.isPrimary == 1|| bank.primary == 1) && bank.bankStatus != 0">
-                        <button class="graybtn" >Primary</button>
+                        <button class="graybtn" >Primary </button>
                     </span>
                     <span v-if="bank.bankStatus == 0">
                         <button class="graybtn" >Pending</button>
                     </span>  
-                    <span>
+                    <span class="primary-color text-sm cursor-pointer"  @click="bank.id ? deleteNewBank(bank.id) : deleteoldbank(bank.account_no)">
                         <icon name="delete" height="16" width="16" class="hover:text-red-600"/>
                         </span>
                      </div>
@@ -70,8 +70,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue';
-import { mapGetters } from 'vuex';
+import { computed, onMounted } from 'vue';
 
 import add_bank from './add-bank.vue'
 import icon from '../../components/utilComponents/icons.vue'
@@ -93,6 +92,13 @@ const updatebankdetails = computed(() => store.getters['bankDetails/getupdateban
 
 const addBank = () => {
     store.commit('bankDetails/setIsAddBank', true)
+};
+
+const deleteNewBank = (id: number) => {
+  store.dispatch('bankDetails/deletenewbank', id);
+};
+const deleteoldbank = (accountNo: number) => {
+  store.dispatch('bankDetails/deleteoldbank', accountNo);
 };
 const mergedBankDetails = computed(() => {
     // Merge two arrays using the spread operator

@@ -9,6 +9,8 @@ const state = {
     errormsg: '',
     saveBankDetails: [],
     updatebankdetails: [],
+    deleteoldbank: [],
+
 
 }
 
@@ -113,14 +115,11 @@ const actions = {
             });
     },
 
-    async deletenewbank({ state, commit, dispatch, rootState, rootGetters }, payload) {
-        commit("setdeleteloader", true);
+    async deletenewbank({ commit }, bankId) {
+        // commit("setdeleteloader", true);
         try {
-            let json = {
-                id: state.deletenomineeId,
-                uccCode: rootGetters['auth/getUserId']
-            }
-            let response = await service.deletenewbank(json);
+
+            let response = await service.deletenewbank(bankId);
 
             if (response.status == 200 && response.data.message == "Success") {
 
@@ -132,28 +131,24 @@ const actions = {
             errorHandle.handleError(error)
             // commit("setdeleteloader", false);
         }
-        commit("setdeleteloader", false);
+        // commit("setdeleteloader", false);
     },
 
 
-    async deleteoldbank({ state, commit, dispatch, rootState, rootGetters }, payload) {
-        commit("setdeleteloader", true);
+    async deleteoldbank({ commit, dispatch, rootGetters }, accountNo) {
+        // commit("setdeleteloader", true);
         try {
-            let json = {
-                id: payload,
-                uccCode: rootGetters['auth/getUserId']
-            }
-            let response = await service.deleteoldbank(json);
+            let response = await service.deleteoldbank(accountNo, rootGetters['auth/getUserId']);
 
             if (response.status == 200 && response.data.message == "Success") {
+                commit('setolddeletebank', response.data.result);
 
-                await dispatch("getupdateNomineeDetails")
             }
         } catch (error) {
             errorHandle.handleError(error)
             // commit("setDeleteLoader", false);
         }
-        commit("setdeleteloader", false);
+        // commit("setdeleteloader", false);
     },
 
 };
@@ -177,6 +172,9 @@ const mutations = {
     },
     setupdatebankdetails(state, payload) {
         state.updatebankdetails = payload
+    },
+    setolddeletebank(state, payload) {
+        state.deleteoldbank = payload
     },
 
 };
