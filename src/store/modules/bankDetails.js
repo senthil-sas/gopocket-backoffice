@@ -115,7 +115,7 @@ const actions = {
             });
     },
 
-    async deletenewbank({ commit }, bankId) {
+    async deletenewbank(bankId) {
         // commit("setdeleteloader", true);
         try {
 
@@ -135,7 +135,7 @@ const actions = {
     },
 
 
-    async deleteoldbank({ commit, dispatch, rootGetters }, accountNo) {
+    async deleteoldbank({ commit, rootGetters }, accountNo) {
         // commit("setdeleteloader", true);
         try {
             let response = await service.deleteoldbank(accountNo, rootGetters['auth/getUserId']);

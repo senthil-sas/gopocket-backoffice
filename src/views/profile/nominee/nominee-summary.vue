@@ -74,6 +74,8 @@
         <div class="text-sm primaryColor">
             Total share : <span>{{ this.percentageCalculation }} %</span>
         </div>
+
+        <span class="error-msg"  v-if="decimalPercentage() != 0">Nominee share percentage not accept decimal value</span>
     </div>
     <div class="mt-4 mb-5 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2" :class="mergedNomineeList.length < 3 ? 'justify-between' : 'sm:justify-end'">
         <button

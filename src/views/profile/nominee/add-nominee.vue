@@ -231,7 +231,9 @@
     />
     <div class="h-4">
       <span v-if="nomineeProoftype == 'Aadhar card'" class="text-[11px] secondaryColor">(Note: Enter Last 4 Digits of Aadhar)</span>
-      <span class="error-msg" v-if="!nomineeProoftype && isSubmit">Enter proof number</span>
+      <div >
+      <span class="error-msg" v-if="!nomineeProofNumber && isSubmit">Enter proof number</span>
+    </div>
     </div>
   </div>
           <div class="">
@@ -247,7 +249,7 @@
           </div>
         </div>
       
-        <div class="my-3">
+        <div class="my-8">
             <div class="relative flex items-start">
                 <div class="flex h-6 items-center">
                   <input name="isSameAddress" type="checkbox" class="h-4 w-4 rounded border-gray-300 primary-color cursor-pointer accent-violet-600"  @change="fetchAddress" v-model="isSameAsAddress"/>
@@ -538,8 +540,6 @@
         </div> -->
         <div class="my-3 flex gap-5 items-center">
 
-       
-
 
         <div id="nominee_proof_no_group">
     <div class="flex justify-between">
@@ -553,7 +553,9 @@
     />
     <div class="h-4">
       <span v-if="guardianProoftype == 'Aadhar card'" class="text-[11px] secondaryColor">(Note: Enter Last 4 Digits of Aadhar)</span>
-      <span class="error-msg" v-if="!guardianProoftype && isSubmit">Enter proof number</span>
+      <div>
+      <span class="error-msg" v-if="!guardianProofNumber && isSubmit">Enter proof number</span>
+    </div>
     </div>
   </div>
           <div class="">
@@ -571,7 +573,7 @@
         </div>
     </div>
 
-        <div class="my-3">
+    <div class="my-8">
             <div class="relative flex items-start">
                 <div class="flex h-6 items-center">
                   <input name="isSameAddress" type="checkbox" class="h-4 w-4 rounded border-gray-300 primary-color cursor-pointer accent-violet-600"  @change="fetchAddressGuardian" v-model="isSameAsAddressGuardian"/>
@@ -931,7 +933,7 @@ totalAvilableShare() {
 
         validateForm() {
             return this.firstName != '' && this.lastName != '' && this.relationship != '' && (this.nomineeDate != '' && this.nomineeMonth != '' && this.nomineeYear != '') 
-            && this.isValidMobile()!=''  && this.nomineeProofFileName != '' && this.Address != '' && this.AddressLine2
+            && this.isValidMobile()!=''  && this.nomineeProofFileName != '' && this.nomineeProofNumber != '' && this.Address != '' && this.AddressLine2
             && this.state != '' &&( this.pincode != '' && this.pincode.length == 6)
         },
 
