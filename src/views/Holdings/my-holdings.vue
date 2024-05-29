@@ -1,7 +1,7 @@
 <template>
     <div class="h-[calc(100vh-96px)] overflow-y-auto " v-if="!getLoader">
      <!-- <holdings_widget /> -->
-        <table  v-if="getHoldingsData && getHoldingsData.length > 7" id="holdings_table" class="w-full rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px]" >
+        <table  v-if="getHoldingsData && getHoldingsData.length > 0" id="holdings_table" class="w-full rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px]" >
         <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
             <tr>
                 <th v-for="(head,id) in tableHeads" :key="id" scope="col" :class="head.class" class="py-3.5 px-3 text-xs font-semibold secondary-color whitespace-nowrap" id="holdings_th_instrument"> {{head.name}}</th>
