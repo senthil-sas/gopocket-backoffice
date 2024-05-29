@@ -115,7 +115,7 @@ const actions = {
             });
     },
 
-    async deletenewbank(bankId) {
+    async deletenewbank({ dispatch }, bankId) {
         // commit("setdeleteloader", true);
         try {
 
@@ -124,8 +124,7 @@ const actions = {
             if (response.status == 200 && response.data.message == "Success") {
 
                 // await dispatch("getupdateNomineeDetails")
-                // dispatch("NomineeDetails")
-
+                dispatch('updatebankdetails');
             }
         } catch (error) {
             errorHandle.handleError(error)

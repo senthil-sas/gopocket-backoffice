@@ -95,7 +95,7 @@ const addBank = () => {
 };
 
 const deleteNewBank = (id: number) => {
-  store.dispatch('bankDetails/deletenewbank', id);
+    store.dispatch('bankDetails/deletenewbank', id);
 };
 const deleteoldbank = (accountNo: number) => {
   store.dispatch('bankDetails/deleteoldbank', accountNo);

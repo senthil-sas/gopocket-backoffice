@@ -22,6 +22,7 @@ export default {
         }
         return axios.post(`${kycURI}reEkycBank/saveBank`, payload, requestOptions);
     },
+
     async getBankDetails(userId: any) {
         const requestOptions = {
             headers: authHeader(),

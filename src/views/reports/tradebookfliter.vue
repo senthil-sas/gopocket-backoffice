@@ -95,10 +95,8 @@
         <button class="bg-[#753ED7] text-white  px-2 py-2 rounded-md " @click="setNextYear">
           <span class="text-[12px] whitespace-nowrap	text-center">Next Year</span>
         </button> -->
-        <button class="bg-[#753ED7] text-white  px-2 py-2 rounded-md" @click="getTradeBook">
-          <!-- <spinner v-if="loader" /> -->
-          <span class="text-[12px] whitespace-nowrap text-center">Get Reports</span>
-        </button>
+          <button type="submit" class="commonbtn" @click="getTradeBook"><spinner v-if="getLoader"/><span v-else>Get Reports</span></button>
+
       </div>
     </div>
   </div>
@@ -140,7 +138,7 @@ const popover = ref({
 const today = new Date();
 const fromDate = ref(getFinancialYearDates(today).startDate);
 const toDate = ref(getFinancialYearDates(today).endDate);
-const loader = computed(() => store.getters["getLoader"]);
+const getLoader = computed(() => store.getters["getLoader"]);
 const getUserId = computed(() => store.getters["auth/getUserId"]);
 
 

@@ -87,7 +87,7 @@
 </div> -->
     <div class="px-4">
       <div class="h-[calc(100vh-200px)] overflow-y-auto border-t">
-        <table class="w-full relative" v-if="getLedgerData?.length > 0">
+        <table class="w-full relative" v-if="getLedgerData.length > 0">
           <thead>
             <tr class="h-12">
               <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class"

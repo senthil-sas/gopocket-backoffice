@@ -86,6 +86,7 @@
             Add Another Nominee
         </button>
         <button
+        v-if="mergedNomineeList.length > 1 "
             class="border-[#753ED7] text-white primaryBtnColor commonbtn"
             @click="submitNomineeDetails()"
         >
