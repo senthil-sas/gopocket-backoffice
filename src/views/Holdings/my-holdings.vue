@@ -10,7 +10,7 @@
                     
         <tbody>
             <tr v-for="(item, id) in getHoldingsData" :key="id" class="border-b">
-                <td class="pl-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative">{{ item.symbol }} {{ getHoldingsData && getHoldingsData.length > 0 }}</td>
+                <td class="pl-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative"> {{ item.symbol }} </td>
                 <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.qty }}</td>
                 <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.buy_avg }}</td>
                 <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.buy_value }}</td>
