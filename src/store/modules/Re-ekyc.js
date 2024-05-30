@@ -13,6 +13,8 @@ const state = {
     LoginId: '',
     isNewEmailOrNewMobileUpdate: false,
     loginloader: false,
+    isVerified: false,
+
 
 };
 
@@ -108,8 +110,12 @@ const actions = {
                 // console.log(resp);
                 if ((resp.data.message.toString().trim() == "Success" && resp.status == "200")) {
                     commit('setUpdateMobileNumber', resp.data.result);
+                    commit('setIsVerified', true);
+
 
                 } else {
+                    commit('setIsVerified', false);
+
                     notify({
                         group: "auth",
                         type: "error",
@@ -176,8 +182,12 @@ const actions = {
                 // console.log(resp);
                 if ((resp.data.message.toString().trim() == "Success" && resp.status == "200")) {
                     commit('setUpdateEmailId', resp.data.result);
+                    commit('setIsVerified', true);
+
 
                 } else {
+                    commit('setIsVerified', false);
+
                     notify({
                         group: "auth",
                         type: "error",
@@ -291,6 +301,9 @@ const mutations = {
     setloginloader(state, payload) {
         state.loginloader = payload
     },
+    setIsVerified(state, value) {
+        state.isVerified = value;
+    },
 };
 
 const getters = {
@@ -298,6 +311,8 @@ const getters = {
     getverifyOTP: state => state.verifyOTP,
     getverifyMobileNumber: state => state.verifyMobileNumber,
     getloginloader: state => state.loginloader,
+    getIsVerified: state => state.isVerified,
+
 };
 
 const reekyc = {

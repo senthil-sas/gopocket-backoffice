@@ -4,8 +4,8 @@
         Nominee Details
     </div>
 
-    <div class="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-col-3 sm:grid-cols-2 gap-8 h-auto">
-        <div v-for="(i, id) in mergedNomineeList" :key="id" class="p-3 border-[0.02rem] rounded-lg ">
+    <div class="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-col-3 sm:grid-cols-2 gap-8 h-auto ">
+        <div v-for="(i, id) in mergedNomineeList" :key="id" class="p-4 border-[0.02rem] rounded-lg ">
             <div class="flex justify-between">
                 <span class="primary-color !font-semibold text-sm">Nominee {{ id + 1 }}</span>
                 <span class="primary-color text-sm cursor-pointer" @click="i.nominee_number ? deleteNominee(i.nominee_number) : deleteNewNominee(i.id)">
@@ -26,7 +26,7 @@
                     <span class="secondary-color text-sm  sm:min-w-[150px]">Nominee Share <span class="primary-color"></span></span>
                     <div class="flex flex-wrap textColor">
                         <span v-if="id == 0">
-                            <span class="flex flex-nowrap gap-2">
+                            <span class="flex flex-nowrap ">
                                 <input
                                     type="range"
                                     :class="isShare1Disable ? 'cursor-not-allowed' : 'cursor-pointer'"
@@ -40,7 +40,7 @@
                             </span>
                         </span>
                         <span v-if="id == 1">
-                            <span class="flex flex-nowrap gap-2">
+                            <span class="flex flex-nowrap ">
                                 <input
                                     type="range"
                                     class="cursor-pointer"
@@ -53,7 +53,7 @@
                             </span>
                         </span>
                         <span v-if="id == 2">
-                            <span class="flex flex-nowrap gap-2">
+                            <span class="flex flex-nowrap ">
                                 <input
                                     type="range"
                                     class="cursor-pointer"
