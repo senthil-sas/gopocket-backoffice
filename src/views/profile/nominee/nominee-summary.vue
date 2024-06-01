@@ -4,7 +4,7 @@
         Nominee Details
     </div>
 
-    <div class="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-col-3 sm:grid-cols-2 gap-8 h-auto ">
+    <div class="grid lg:grid-cols-2 gap-4 xl:grid-cols-3 2xl:grid-col-3 sm:grid-cols-2 h-auto ">
         <div v-for="(i, id) in mergedNomineeList" :key="id" class="p-4 border-[0.02rem] rounded-lg ">
             <div class="flex justify-between">
                 <span class="primary-color !font-semibold text-sm">Nominee {{ id + 1 }}</span>
@@ -22,7 +22,7 @@
                     <span class="secondary-color text-sm  sm:min-w-[150px]">Relationship</span>
                     <span class="primary-color text-sm">{{ i.relationship ? i.relationship : 'NA' }}</span>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 h-[50px] items-center mt-2">
+                <div class="flex h-[50px] items-center mt-2">
                     <span class="secondary-color text-sm  sm:min-w-[150px]">Nominee Share <span class="primary-color"></span></span>
                     <div class="flex flex-wrap textColor">
                         <span v-if="id == 0">

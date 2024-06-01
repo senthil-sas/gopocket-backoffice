@@ -62,8 +62,21 @@
 
             <div class="my-3">
                 <div class="primary-color text-sm mb-1">Date of Birth</div>
-                <div class="flex justify-between gap-2 min-w-[350px]">
-                    <!-- Days dropdown -->
+<div class="primaryColor whitespace-nowrap commonInputWidth grid grid-cols-3 gap-3">
+                        <select name="" id="nom_Date" class="py-2 px-2 radius height bg-white border focus:outline-none min-w-full" v-model="nomineeDate" @change="findUserIsMinor">
+                        <option value="" selected disabled hidden>Date</option>
+                        <option v-for="item in days" :key="item" :value="item">{{ item }}</option>
+                        </select>
+                        <select name="" id="nom_Month" class="py-2 px-2 radius height bg-white border focus:outline-none min-w-full" v-model="nomineeMonth" @change="findUserIsMinor">
+                        <option  value="" selected disabled hidden>Month</option>
+                        <option v-for="item in getMonths" :key="item.id" :value="item.id">{{ item.month}}</option>
+                        </select>
+                        <select name="" id="nom_Year" class="py-2 px-2 radius height bg-white border focus:outline-none min-w-full" v-model="nomineeYear" @change="findUserIsMinor">
+                        <option  value="" selected disabled hidden>Year</option>
+                        <option v-for="item in getYears" :key="item" :value="item">{{ item }}</option>
+                        </select>
+                    </div>
+                <!-- <div class="flex justify-between gap-2 min-w-[350px]">
                     <Listbox as="div" v-model="nomineeDate" class="w-full">
                         <div class="relative">
                             <ListboxButton class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
@@ -88,7 +101,6 @@
                         </div>
                     </Listbox>
 
-                    <!-- Months dropdown -->
                     <Listbox as="div" v-model="nomineeMonth" class="w-full">
                         <div class="relative">
                             <ListboxButton class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
@@ -113,7 +125,6 @@
                         </div>
                     </Listbox>
 
-                     <!-- years dropdown -->
                      <Listbox as="div" v-model="nomineeYear" class="w-full">
                         <div class="relative">
                             <ListboxButton  class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
@@ -137,7 +148,7 @@
                             </transition>
                         </div>
                     </Listbox>
-                </div>
+                </div> -->
                 <div class="h-4">
                     <span class="error-msg" v-if="(nomineeDate == '' || nomineeMonth == '' || nomineeYear == '') && isSubmit">Select date of birth</span>
                 </div>
@@ -225,14 +236,16 @@
     </div>
     <input type="text" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
       :placeholder="nomineeProoftype == 'Aadhar card' ? 'Enter Aadhar Number' : nomineeProoftype ? `Enter ${nomineeProoftype} Number` : 'Enter Proof Number'"
-      v-model="nomineeProofNumber" @input="nomineeProoftype == 'Aadhar card' ? nomineeProofNumber = nomineeProofNumber.replace(/[^0-9]/g, '') : ''"
-      :maxlength="nomineeProoftype == 'Aadhar card' ? 4 : 45"
+      v-model="nomineeProofNumber"      @input="validateProofNumber(nomineeProoftype, nomineeProofNumber)"
+      :maxlength="getMaxLength(nomineeProoftype)"
       id="nom_proofNum"
     />
     <div class="h-4">
       <span v-if="nomineeProoftype == 'Aadhar card'" class="text-[11px] secondaryColor">(Note: Enter Last 4 Digits of Aadhar)</span>
       <div >
       <span class="error-msg" v-if="!nomineeProofNumber && isSubmit">Enter proof number</span>
+      <span class="error-msg" v-if="errorMessage">{{ errorMessage }}</span>
+
     </div>
     </div>
   </div>
@@ -260,8 +273,6 @@
             </div>
             <div class="primary-color text-sm mb-1"></div>
         </div>
-
-
 
         <div class="my-4 flex gap-5 items-center" v-if="!isSameAsAddress">
             <div>
@@ -389,88 +400,99 @@
             </div>
 
             <div class="my-3">
-                <div class="primary-color text-sm mb-1">Date of Birth</div>
-                <div class="flex justify-between gap-2 min-w-[350px]">
-                    <!-- Days dropdown -->
-                    <Listbox as="div" v-model="guardianDate" class="w-full">
-                        <div class="relative">
-                            <ListboxButton class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
-                                <span class="block truncate">{{ guardianDate }}</span>
-                                <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                                    <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+    <div class="primary-color text-sm mb-1">Date of Birth</div>
+    <div class="primaryColor whitespace-nowrap commonInputWidth grid grid-cols-3 gap-3">
+                        <select name="" id="nom_Date" class="py-2 px-2 radius height bg-white border focus:outline-none min-w-full" v-model="guardianDate" @change="GuardianfindUserIsMinor">
+                        <option value="" selected disabled hidden>Date</option>
+                        <option v-for="item in guarddays" :key="item" :value="item">{{ item }}</option>
+                        </select>
+                        <select name="" id="nom_Month" class="py-2 px-2 radius height bg-white border focus:outline-none min-w-full" v-model="guardianMonth" @change="GuardianfindUserIsMinor">
+                        <option  value="" selected disabled hidden>Month</option>
+                        <option v-for="item in getMonths" :key="item.id" :value="item.id">{{ item.month}}</option>
+                        </select>
+                        <select name="" id="nom_Year" class="py-2 px-2 radius height bg-white border focus:outline-none min-w-full" v-model="guardianYear" @change="GuardianfindUserIsMinor">
+                        <option  value="" selected disabled hidden>Year</option>
+                        <option v-for="item in guardgetYears" :key="item" :value="item">{{ item }}</option>
+                        </select>
+                    </div>
+    <!-- <div class="flex justify-between gap-2 min-w-[350px]">
+        <Listbox as="div" v-model="guardianDate" class="w-full">
+            <div class="relative">
+                <ListboxButton class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
+                    <span class="block truncate">{{ guardianDate }}</span>
+                    <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                        <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                    </span>
+                </ListboxButton>
+
+                <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
+                    <ListboxOptions class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                        <ListboxOption  @Change="GuardianfindUserIsMinor" as="template" v-for="i in guarddays" :key="i" :value="i" v-slot="{ active, selected }">
+                            <li  :class="[active ? 'violet-bg text-white' : 'text-gray-900', 'relative cursor-pointer select-none py-2 pl-8 pr-4']">
+                                <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">{{ i }}</span>
+                                <span v-if="selected" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 left-0 flex items-center pl-1.5']">
+                                    <CheckIcon class="h-5 w-5" aria-hidden="true" />
                                 </span>
-                            </ListboxButton>
-
-                            <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
-                                <ListboxOptions class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                    <ListboxOption as="template" v-for="i in days" :key="i" :value="i" v-slot="{ active, guardianDate }">
-                                        <li @change="GuardianfindUserIsMinor" :class="[active ? 'violet-bg text-white' : 'text-gray-900', 'relative cursor-pointer select-none py-2 pl-8 pr-4']">
-                                            <span :class="[guardianDate ? 'font-semibold' : 'font-normal', 'block truncate']">{{ i }}</span>
-                                            <span v-if="guardianDate" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 left-0 flex items-center pl-1.5']">
-                                                <CheckIcon class="h-5 w-5" aria-hidden="true" />
-                                            </span>
-                                        </li>
-                                    </ListboxOption>
-                                </ListboxOptions>
-                            </transition>
-                        </div>
-                    </Listbox>
-
-                    <!-- Months dropdown -->
-                    <Listbox as="div" v-model="guardianMonth" class="w-full">
-                        <div class="relative">
-                            <ListboxButton class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
-                                <span class="block truncate">{{ guardianMonth.month }}</span>
-                                <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                                    <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                </span>
-                            </ListboxButton>
-
-                            <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
-                                <ListboxOptions class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                    <ListboxOption as="template" @change="GuardianfindUserIsMinor" v-for="i in getMonths" :key="i" :value="i" v-slot="{ active, guardianMonth }">
-                                        <li :class="[active ? 'violet-bg text-white' : 'text-gray-900', 'relative cursor-pointer select-none py-2 pl-8 pr-4']">
-                                            <span :class="[guardianMonth ? 'font-semibold' : 'font-normal', 'block truncate']">{{ i.month }}</span>
-                                            <span v-if="guardianMonth" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 left-0 flex items-center pl-1.5']">
-                                                <CheckIcon class="h-5 w-5" aria-hidden="true" />
-                                            </span>
-                                        </li>
-                                    </ListboxOption>
-                                </ListboxOptions>
-                            </transition>
-                        </div>
-                    </Listbox>
-
-                     <!-- years dropdown -->
-                     <Listbox as="div" v-model="guardianYear" class="w-full">
-                        <div class="relative">
-                            <ListboxButton class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
-                                <span class="block truncate">{{ guardianYear }}</span>
-                                <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                                    <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                </span>
-                            </ListboxButton>
-
-                            <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
-                                <ListboxOptions class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                    <ListboxOption as="template" v-for="i in getYears" :key="i" :value="i" v-slot="{ active, guardianYear }">
-                                        <li  @change="GuardianfindUserIsMinor" :class="[active ? 'violet-bg text-white' : 'text-gray-900', 'relative cursor-pointer select-none py-2 pl-8 pr-4']">
-                                            <span :class="[guardianYear ? 'font-semibold' : 'font-normal', 'block truncate']">{{ i }}</span>
-                                            <span v-if="guardianYear" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 left-0 flex items-center pl-1.5']">
-                                                <CheckIcon class="h-5 w-5" aria-hidden="true" />
-                                            </span>
-                                        </li>
-                                    </ListboxOption>
-                                </ListboxOptions>
-                            </transition>
-                        </div>
-                    </Listbox>
-                </div>
-                <div class="h-4">
-      <span class="error-msg" v-if="(guardianDate == '' || guardianMonth == '' || guardianYear == '') && isSubmit">Select date of birth</span>
-      <span class="error-msg">{{ guardianError }}</span>
-    </div>
+                            </li>
+                        </ListboxOption>
+                    </ListboxOptions>
+                </transition>
             </div>
+        </Listbox>
+
+        <Listbox as="div" v-model="guardianMonth" class="w-full">
+            <div class="relative">
+                <ListboxButton class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
+                    <span class="block truncate">{{ guardianMonth.month }}</span>
+                    <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                        <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                    </span>
+                </ListboxButton>
+
+                <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
+                    <ListboxOptions class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                        <ListboxOption as="template" @Change="GuardianfindUserIsMinor" v-for="i in getMonths" :key="i.id" :value="i" v-slot="{ active, selected }">
+                            <li :class="[active ? 'violet-bg text-white' : 'text-gray-900', 'relative cursor-pointer select-none py-2 pl-8 pr-4']">
+                                <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">{{ i.month }}</span>
+                                <span v-if="selected" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 left-0 flex items-center pl-1.5']">
+                                    <CheckIcon class="h-5 w-5" aria-hidden="true" />
+                                </span>
+                            </li>
+                        </ListboxOption>
+                    </ListboxOptions>
+                </transition>
+            </div>
+        </Listbox>
+
+        <Listbox as="div" v-model="guardianYear" class="w-full">
+            <div class="relative">
+                <ListboxButton class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
+                    <span class="block truncate">{{ guardianYear }}</span>
+                    <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                        <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                    </span>
+                </ListboxButton>
+
+                <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
+                    <ListboxOptions class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                        <ListboxOption as="template" v-for="i in guardgetYears" :key="i" :value="i" v-slot="{ active, selected }">
+                            <li @Change="GuardianfindUserIsMinor" :class="[active ? 'violet-bg text-white' : 'text-gray-900', 'relative cursor-pointer select-none py-2 pl-8 pr-4']">
+                                <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">{{ i }}</span>
+                                <span v-if="selected" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 left-0 flex items-center pl-1.5']">
+                                    <CheckIcon class="h-5 w-5" aria-hidden="true" />
+                                </span>
+                            </li>
+                        </ListboxOption>
+                    </ListboxOptions>
+                </transition>
+            </div>
+        </Listbox>
+    </div> -->
+    <div class="h-4">
+        <span class="error-msg" v-if="(guardianDate == '' || guardianMonth == '' || guardianYear == '') && isSubmit">Select date of birth</span>
+        <span class="error-msg">{{ guardianError }}</span>
+    </div>
+</div>
         </div>
 
         
@@ -540,21 +562,22 @@
         </div> -->
         <div class="my-3 flex gap-5 items-center">
 
-
         <div id="nominee_proof_no_group">
     <div class="flex justify-between">
       <p class="block text-sm font-medium leading-6 text-gray-900" id="nominee_proof_number_header">Guardian Proof No</p>
     </div>
     <input type="text" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
       :placeholder="guardianProoftype == 'Aadhar card' ? 'Enter Aadhar Number' : guardianProoftype ? `Enter ${guardianProoftype} Number` : 'Enter Proof Number'"
-      v-model="guardianProofNumber" @input="guardianProoftype == 'Aadhar card' ? guardianProofNumber = guardianProofNumber.replace(/[^0-9]/g, '') : ''"
-      :maxlength="guardianProoftype == 'Aadhar card' ? 4 : 45"
+      v-model="guardianProofNumber" @input="validateProofNumber(guardianProoftype, guardianProofNumber)"
+      :maxlength="getMaxLength(guardianProoftype)"
       id="nom_proofNum"
     />
     <div class="h-4">
       <span v-if="guardianProoftype == 'Aadhar card'" class="text-[11px] secondaryColor">(Note: Enter Last 4 Digits of Aadhar)</span>
       <div>
       <span class="error-msg" v-if="!guardianProofNumber && isSubmit">Enter proof number</span>
+      <span class="error-msg" v-if="errorMessage">{{ errorMessage }}</span>
+
     </div>
     </div>
   </div>
@@ -584,7 +607,6 @@
             </div>
             <div class="primary-color text-sm mb-1"></div>
         </div>
-
 
 
         <div class="my-4 flex gap-5 items-center" v-if="!isSameAsAddressGuardian">
@@ -734,7 +756,8 @@ export default {
       nomineeProoftype: '',
       guardianProoftype: '',
       guardianError :'',
-      guardAge:'18'
+      guardAge:'18',
+      errorMessage:'',
         }
     },
     computed: {
@@ -744,8 +767,9 @@ export default {
         ...mapGetters('profile', ['getProfileData']),
         ...mapGetters('reekyc', ['getloginloader']),
 
+        //nomineeadd
         days() {
-            const daysInMonth = new Date(this.nomineeYear || 2023, this.nomineeMonth.month || 'JAN', 0).getDate() || 31
+            const daysInMonth = new Date(this.nomineeYear || 2023, this.nomineeMonth || 'JAN', 0).getDate() || 31
             let arr = []
             for (let i = 1; i <= daysInMonth; i++) {
                 if (i < 10) {
@@ -765,6 +789,29 @@ export default {
             }
             return arr
         },
+//guardianadd
+
+guarddays() {
+            const daysInMonth = new Date(this.guardianYear || 2023, this.guardianMonth || 'JAN', 0).getDate() || 31
+            let arr = []
+            for (let i = 1; i <= daysInMonth; i++) {
+                if (i < 10) {
+                    i = (`${0}${i}`);
+                }
+                arr.push(i)
+            }
+            return arr
+        },
+guardgetYears() {
+            let currentDate = new Date()
+            let currentYear = currentDate.getFullYear()
+            let arr = []
+            for (let i = currentYear; i >= 1901; i--) {
+                arr.push(i)
+            }
+            return arr
+        },
+///
 
         isAgeModified() {
             this.findUserIsMinor();
@@ -777,41 +824,22 @@ export default {
         },
 
         dateOfBirth() {
-          return `${this.nomineeDate}-${this.nomineeMonth.id}-${this.nomineeYear}`
+          return `${this.nomineeDate}-${this.nomineeMonth}-${this.nomineeYear}`
         },
 
          dateOfBirthguardian() {
-           return `${this.guardianDate}-${this.guardianMonth.id}-${this.guardianYear}`
+           return `${this.guardianDate}-${this.guardianMonth}-${this.guardianYear}`
 
-
-// if (this.guardianDate && this.guardianMonth && this.guardianYear) {
-//   this.guardianAge = `${this.guardianDate}-${this.guardianMonth}-${this.guardianYear}`
-// }
-
-// if (this.guardianDate < 1 || this.guardianDate > new Date(this.guardianYear, this.guardianMonth, 0).getDate()) {
-//   this.guardianDate = ''
-//   var error
-//   error = 'Please enter a valid date for the selected month and year.'
-// //   this.$store.commit("nominee/setGuardianDateErrMsg", error, { root: true })
-// }
-
-// if (this.guardianAge) {
-//   var dateChange
-//   if (this.guardianDate) {
-//     dateChange = `${this.nomineeDate}-${this.nomineeMonth.id}-${this.nomineeYear}`
-//   }
-//   this.getAge(dateChange, 'Guardian')
-// }
 },
 
-totalAvilableShare() {
+    totalAvilableShare() {
             const sum = this.getNomineeList.reduce((accumulator, object) => {
                 return accumulator + object.percentage_allocation;
             }, 0);
             return 100 - sum
         }
     },
-    methods: {
+methods: {
         async addNominee() {
             this.isSubmit = true
             if (this.validateForm()) {
@@ -832,7 +860,6 @@ totalAvilableShare() {
     "attachementUrl": "",
     "proofId": this.nomineeProofNumber,
     "typeOfProof": this.nomineeProoftype,
-
       };
       let proof = this.nomineeProofFileName
                 if (this.userAge < 18 ) {
@@ -845,6 +872,62 @@ totalAvilableShare() {
         }
             },
 
+    validateProofNumber(proofType, proofNumber) {
+      if (!proofNumber) {
+        this.errorMessage = '';
+        return;
+      }
+
+      if (proofType === 'Aadhar card') {
+        if (!/^\d{4}$/.test(proofNumber)) {
+          this.errorMessage = 'Aadhar card must be exactly 4 digits';
+        } else {
+          this.errorMessage = '';
+        }
+      } else if (proofType === 'Pan') {
+        if (!/^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/.test(proofNumber)) {
+          this.errorMessage = 'Invalid PAN Number';
+        } else {
+          this.errorMessage = '';
+        }
+      } else if (proofType === 'Voter ID') {
+        if (!/^[A-Z]{3}[0-9]{7}$/.test(proofNumber)) {
+          this.errorMessage = 'Voter ID must be exactly 10 characters';
+        } else {
+          this.errorMessage = '';
+        }
+      } else if (proofType === 'Driving licence') {
+        if (!/^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$/.test(proofNumber)) {
+          this.errorMessage = 'Driving licence must be 15-20 characters';
+        } else {
+          this.errorMessage = '';
+        }
+      } else if (proofType === 'Passport') {
+        if (!/^[A-PR-WY][1-9]\d\s?\d{4}[1-9]$/.test(proofNumber)) {
+          this.errorMessage = 'Passport must be exactly 8 characters';
+        } else {
+          this.errorMessage = '';
+        }
+      } else {
+        this.errorMessage = '';
+      }
+    },
+
+    getMaxLength(prooftype) {
+      if (prooftype === 'Aadhar card') {
+        return 4;
+      } else if (prooftype === 'Pan') {
+        return 10;
+      } else if (prooftype === 'Voter ID') {
+        return 10;
+      } else if (prooftype === 'Driving licence') {
+        return 16; 
+      } else if (prooftype === 'Passport') {
+        return 8;
+      }
+      return 45; 
+    },
+
 
         backToNomineeDetails() {
             if(this.getNomineeList.length) {
@@ -853,7 +936,7 @@ totalAvilableShare() {
                 this.$store.commit('nominee/setNomineeStage', 'initialList')
             }
         },
-        cancelGuardianAdd() {
+   cancelGuardianAdd() {
       this.isMinor = false;
       this.nomineeProofFileName = ''
     },
@@ -882,9 +965,12 @@ totalAvilableShare() {
     },
 
         findUserIsMinor() {
-            if (this.nomineeDate && this.nomineeMonth.month && this.nomineeYear) {
+            console.log(this.nomineeDate)
+            console.log(this.nomineeMonth)
+            console.log(this.nomineeYear)
+               if (this.nomineeDate && this.nomineeMonth && this.nomineeYear) {
                 var regpan = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
-                var dateChange = `${this.nomineeYear}-${this.nomineeMonth.id}-${this.nomineeDate}`
+                var dateChange = `${this.nomineeYear}-${this.nomineeMonth}-${this.nomineeDate}`
                 var userBirthDate = new Date(dateChange);
                 var birthYear = userBirthDate.getFullYear()
                 if (regpan.test(dateChange)) {
@@ -893,25 +979,28 @@ totalAvilableShare() {
                     let age = Math.floor(difference / 31557600000)
                     console.log(age);
                     this.userAge = age;
+                    console.log(this.userAge)
                 }
             }
         },
         GuardianfindUserIsMinor() {
-            
-            if (this.guardianDate && this.guardianMonth.month && this.guardianYear) {
+            console.log(this.guardianDate)
+            console.log(this.guardianMonth)
+            console.log(this.guardianYear)
+
+            if (this.guardianDate && this.guardianMonth && this.guardianYear) {
                 var regpan = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
                 var dateChange = `${this.guardianYear}-${this.guardianMonth}-${this.guardianDate}`
                 var userBirthDate = new Date(dateChange);
-                var birthYear = userBirthDate.getFullYear()
+                console.log(dateChange);
                 if (regpan.test(dateChange)) {
                     var currentDate = new Date();
                     let difference = currentDate - userBirthDate;
-                    let age = Math.floor(difference / 31557600000)
-                    console.log(age);
-                    this.guardAge = guardage;
-                    if (guardAge < 18) {
+                    let guardnomnieeAge = Math.floor(difference / 31557600000)
+                    this.guardAge = guardnomnieeAge;
+                    if (guardnomnieeAge < 18) {
                     this.guardianError = "Guardian age cannot be less than 18 years old";
-                } else if (guardAge > 100) {
+                } else if (guardnomnieeAge > 100) {
                     this.guardianError = "Guardian age cannot be more than 100 years old";
                 } else {
                     this.guardianError = '';
@@ -933,7 +1022,7 @@ totalAvilableShare() {
 
         validateForm() {
             return this.firstName != '' && this.lastName != '' && this.relationship != '' && (this.nomineeDate != '' && this.nomineeMonth != '' && this.nomineeYear != '') 
-            && this.isValidMobile()!=''  && this.nomineeProofFileName != '' && this.nomineeProofNumber != '' && this.Address != '' && this.AddressLine2
+            && this.isValidMobile()!='' && this.validateProofNumber()!="" && this.nomineeProofFileName != '' && this.nomineeProofNumber != '' && this.Address != '' && this.AddressLine2
             && this.state != '' &&( this.pincode != '' && this.pincode.length == 6)
         },
 
@@ -951,40 +1040,10 @@ totalAvilableShare() {
      proofOfNominee(val) {
        this.nomineeProoftype = val.name;
        this.nomineeProofNumber = '';
+       this.errorMessage = '';
+
        
 },
-     
-// GuardianfindUserIsMinor() {
-//     if (this.guardianDate && this.guardianMonth && this.guardianYear) {
-//         var regpan = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
-//         var dateChange = `${this.guardianYear}-${this.guardianMonth}-${this.guardianDate}`;
-//         var userBirthDate = new Date(dateChange);
-//         var birthYear = userBirthDate.getFullYear();
-
-//         if (regpan.test(dateChange)) {
-//             var currentDate = new Date();
-//             let difference = currentDate - userBirthDate;
-//             let age = Math.floor(difference / 31557600000);
-
-//             if (age > 100) {
-//                 this.guardianAge = null; // Reset guardian age
-//                 this.guardianError = "Guardian age cannot be more than 100 years old.";
-//             } else if (age < 18) {
-//                 this.guardianAge = null; // Reset guardian age
-//                 this.guardianError = "Guardian age cannot be less than 18 years old.";
-//             } else {
-//                 this.guardianAge = age;
-//                 this.guardianError = null; // Reset guardian error
-//             }
-//         } else {
-//             this.guardianAge = null; // Reset guardian age
-//             this.guardianError = "Invalid Birth Year.";
-//         }
-//     } else {
-//         this.guardianError = "Select date of birth.";
-//     }
-// },
-
 
  navigateNomineeProof() {
       this.isSubmit = true;
@@ -1028,7 +1087,7 @@ totalAvilableShare() {
         //   this.$store.dispatch("nominee/saveNomineeDetails", [json, proof, guardProof]).finally(()=>{
         //   })
 
-        if ( this.guardianFirstName && this.guardianLastName && this.guardianProofNumber && this.guardianAddress1 && this.guardianAddress2 && this.guardianrelationship.name && this.gdisValidMobile() && this.guardianPinCode.length == 6 && this.guardianmobileNo.toString().length == 10 && this.guardianProoftype) {
+        if ( this.guardianFirstName && this.guardianLastName && this.guardianProofNumber && this.guardianAddress1 && this.guardianAddress2  && !this.guardianError && this.guardianrelationship.name  && this.gdisValidMobile() && this.guardianPinCode.length == 6 && this.guardianmobileNo.toString().length == 10 && this.guardianProoftype) {
           this.$store.dispatch("nominee/saveNomineeDetails", [json, proof, guardProof]).finally(()=>{
             // this.$store.commit("nominee/setGuardianpassword", '');
           })
@@ -1076,7 +1135,6 @@ fetchAddress() {
      this.fetchAddress()
     },
     watch: {
-        isAgeModified(val) { }
     },
 }
 </script>
