@@ -45,6 +45,9 @@
         </form>
         </div>
     </div> -->
+    <div>
+    <h1 class="text-center my-10">Coming Soon!</h1>
+  </div>
 </template>
 <!-- 
 <script>

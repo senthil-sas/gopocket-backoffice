@@ -30,8 +30,9 @@
                     <div>
                         <input type="text" name="MICRcode" id="MICRcode" maxlength="25" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Bank’s MICR Code"  v-model="MICRcode" @input="keyPressAlphaNumericMicr" />
                      </div>
-                     <div class="h-5"></div>
-                </div>
+                     <div class="h-4">
+                       <span class="text-red-500 text-xs pt-1 h-3" v-if="MICRcode == '' && isSubmit">Enter MICR Number</span>
+                    </div>                </div>
             </div>
 
             <div class="my-4  items-center gap-5 flex-wrap">
@@ -112,14 +113,13 @@ export default {
     },
     
     validateForm() {
-        
-            return this.ifscCode != '' && this.accountNumber !== '' && this.reEnterAccountNumber !== ''  &&  this.accountNumber == this.reEnterAccountNumber && this.ifscCode.length == 11
+            return this.ifscCode != '' && this.accountNumber !== '' && this.MICRcode !==  '' && this.reEnterAccountNumber !== ''  &&  this.accountNumber == this.reEnterAccountNumber && this.ifscCode.length == 11
         },
     async validateIfsc(){
             if(this.ifscCode.length == 11){
                 await this.$store.dispatch('bankDetails/IFSCDetails', this.ifscCode)
                 this.MICRcode = this.getIFSCDetails.MICR || '';
-                console.log(this.getIFSCDetails.MICR)
+                // console.log(this.getIFSCDetails.MICR)
 
             }else{
                 this.MICRcode = '' 

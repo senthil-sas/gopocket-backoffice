@@ -134,13 +134,14 @@ const actions = {
     },
 
 
-    async deleteoldbank({ commit, rootGetters }, accountNo) {
+    async deleteoldbank({ commit, dispatch, rootGetters }, accountNo) {
         // commit("setdeleteloader", true);
         try {
             let response = await service.deleteoldbank(accountNo, rootGetters['auth/getUserId']);
 
             if (response.status == 200 && response.data.message == "Success") {
-                commit('setolddeletebank', response.data.result);
+                dispatch('updatebankdetails');
+
 
             }
         } catch (error) {
