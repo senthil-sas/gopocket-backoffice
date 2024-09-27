@@ -17,6 +17,7 @@ const auth = {
         },
         setUserId(state, payload) {
             state.userId = payload
+            localStorage.setItem("clientId", payload)
         },
         setSessionId(state, payload) {
             state.sessionId = payload

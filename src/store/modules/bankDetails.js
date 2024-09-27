@@ -60,7 +60,6 @@ const actions = {
     async saveBankDetails({ commit }, payload) {
         commit('setLoader', true, { root: true });
         service.saveBankDetails(payload).then(resp => {
-            console.log(resp)
             if (resp.status == 200 && resp.data.message.Success == 1) {
                 commit('setsaveBankDetails', resp.data.result);
 

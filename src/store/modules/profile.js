@@ -24,8 +24,6 @@ const actions = {
 
         service.getProfileDataFromApi(userId)
             .then(resp => {
-                console.log(resp.data.data.mobile_no)
-
                 if (resp.data?.data) {
                     commit('setProfileData', resp.data.data);
                     commit('setbankdetails', resp.data.data.fsl_bank_table);

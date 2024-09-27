@@ -282,8 +282,6 @@
     const [toyeardate] = formatDate(toDate.value).split("-");
   
     if (Number(toyeardate) !== curYear.value) {
-      console.log("toyeardate", toyeardate);
-      console.log("curyear", curYear.value);
       const [fyear, fmon, fday] = formatDate(fromDate.value).split("-");
       fromDate.value = new Date(
         (Number(fyear) + 1).toString() + "-" + fmon + "-" + fday
@@ -305,7 +303,6 @@
   };
   
   const setDate = () => {
-    console.log("check");
     const curfullYear = new Date();
     const currentYear = curfullYear.getFullYear();
     const currentMonth = curfullYear.getMonth();

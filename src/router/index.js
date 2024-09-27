@@ -32,21 +32,30 @@ export default router
 
 
 router.beforeEach((to, from, next) => {
+  const isQuery = to.query.hasOwnProperty('authCode')
+  const queryUserId = to.query.userId
   const clientId = localStorage.getItem("clientId");
+  let userId = ''
+  
+  if(isQuery && queryUserId) {
+    userId = queryUserId
+  } else if(clientId !== null) {
+    userId = clientId
+  }
+  if(userId) {
+    store.commit("auth/setUserId", userId);
+  }
   const sessionId = localStorage.getItem("sessionId");
   common.methods.getDocumentTitle(to);
-  if (clientId !== null) {
-    store.commit("auth/setUserId", clientId);
-  }
-
+  
   if (sessionId !== null) {
     store.commit("auth/setSessionId", sessionId);
   }
 
   const isValidSession = sessionId !== null && sessionId !== "undefined";
-  const isValidClientId = clientId !== null && clientId !== "undefined";
-
-  if (isValidSession && isValidClientId && from.path === "/" && to.path === "/") {
+  const isValidClientId = userId !== null && userId !== "undefined";
+  
+  if (isValidSession && isValidClientId && from.path === "/" && to.path === "/" && isQuery) {
     next({ path: "dashboard" });
   } else if ((!isValidSession || !isValidClientId) && to.path !== "/") {
     next({ path: "" });

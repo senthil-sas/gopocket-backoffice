@@ -128,7 +128,6 @@ export default {
     },
     watch: {
         income(val) {
-            console.log(val,'val');
         }
     },
 }

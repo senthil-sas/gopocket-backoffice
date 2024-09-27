@@ -30,12 +30,9 @@ export default {
         ...mapGetters('popup', ['getIsResetSupportCode', 'getIsEmailVerify','getIsOtpVerify','getIsEmailOrMobileUpdate','getisNewEmailOrNewMobileUpdate']),
         ...mapGetters('auth', ['getUserId'])
     },
-
     created() {
         let userId = this.getUserId
         this.$store.dispatch('profile/getProfileDataFromApi', userId)
     },
 }
-
-
 </script>

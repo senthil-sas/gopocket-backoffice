@@ -119,7 +119,6 @@ export default {
             if(this.ifscCode.length == 11){
                 await this.$store.dispatch('bankDetails/IFSCDetails', this.ifscCode)
                 this.MICRcode = this.getIFSCDetails.MICR || '';
-                console.log(this.getIFSCDetails.MICR)
 
             }else{
                 this.MICRcode = '' 

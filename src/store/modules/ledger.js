@@ -41,7 +41,6 @@ const mutations = {
 
     setDataPoints(state, payload) {
 
-        console.log("payload", payload)
         let dataPoints = {}
         let dates = []
 
@@ -53,7 +52,6 @@ const mutations = {
         // state.startDate = new Date(Math.min.apply(null, dates));
         // state.endDate = new Date(Math.max.apply(null, dates));
         state.dataPoints = dataPoints
-        console.log("v3", dataPoints);
     },
 };
 

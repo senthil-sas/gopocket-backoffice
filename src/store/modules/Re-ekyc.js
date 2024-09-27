@@ -199,7 +199,6 @@ const actions = {
 
         service.getDigilocker(rootState.auth.userId,)
             .then(resp => {
-                console.log(resp.data.result);
 
                 if (resp.status == 200 && resp?.data?.stat === 1) {
                     state.digiURL = resp?.data?.result;

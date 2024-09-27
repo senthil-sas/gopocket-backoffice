@@ -5,6 +5,9 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  optimizeDeps: {
+    include: ['source-map-js'],
+  },
   plugins: [
     vue(),
   ],
@@ -13,17 +16,8 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  css: {
-    modules: {
-      scopeBehaviour: "local"
-    }
-  },
   server: {
     port: 8081,
-    watch: {
-      usePolling: true,
-      ignored: ['!**/bundle/**', '!**/lib/**']
-    }
   },
   // base: '/reports',
 })

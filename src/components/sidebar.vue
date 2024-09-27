@@ -17,10 +17,10 @@
             <div class="flex">
               <icon name="date" height="18" width="18" class="mr-4"/>
               <p class="primaryColor text-[14px]">
-                 {{ formatDate(getProfileData.fsl_dob) }}
+                  {{ formatDate(getProfileData.fsl_dob) }}
               </p>
             </div>
-             <div class="flex pl-5">
+            <div class="flex pl-5">
             <icon name="male" height="20" width="20" v-if="getProfileData.gender == 'MALE' || getProfileData.gender == 'Male'"/>
             <icon name="female" height="20" width="20" v-if="getProfileData.gender == 'FEMALE' || getProfileData.gender == 'Female'"/>
             <p class="primaryColor text-[14px] ml-2">
@@ -165,64 +165,35 @@
   </div>
   </template>
   
-  <script setup lang="ts">
-  import { ref } from 'vue';
-  import { reactive, computed } from 'vue';
-  // import commonIcon from '@/components/commonIcon.vue';
+<script setup lang="ts">
+import { computed } from 'vue';
 import tradebookfliter from '../views/reports/tradebookfliter.vue';
-  import box from './utilComponents/box.vue';
-  import icon from './utilComponents/icons.vue';
-  import { useRouter } from 'vue-router';
+import box from './utilComponents/box.vue';
+import icon from './utilComponents/icons.vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+const store = useStore()
+const getProfileData = computed(() => store.getters['profile/getProfileData']);
 
-  import { useStore } from 'vuex';
-  import tabs from './utilComponents/tabs.vue'
-
-  const store = useStore()
-  const getProfileData = computed(() => store.getters['profile/getProfileData']);
-  const getLoader = computed(() => store.getters['profile/getLoader']);
-  // const activeTab = computed(() => store.getters['tabs/getActiveTab']);
-
-  const changeTab = (id) => {
-  store.dispatch('tabs/setActiveTab', { path: router.path, id });
-  setTimeout(() => {
-    store.commit('tabs/setProfileCurrentTab', JSON.stringify(id));
-  }, 500);
+const router = useRouter();
+const updateEmailOrMobile = async (type: string) => {
+  router.push('/profile').catch(() => { });
+  store.commit('tabs/setProfileCurrentTab', JSON.stringify(5));
+  store.dispatch('tabs/setActiveTab', { path: router.path, id: 5 });
+  store.commit('popup/setUpdateType', type);
+  store.commit('popup/setIsEmailOrMobileUpdate', true);
 };
-  const supportText = ref('....');
-  
-  const startFromPan = () => {};
-  const viewSupportCode = () => {
-      supportText.value = '1234';
-  };
-  const hideSupportCode = () => {
-      supportText.value = '....';
-  };
-  const router = useRouter();
-
-  const updateEmailOrMobile = async (type: string) => {
-      router.push('/profile').catch(() => {});
-      store.commit('tabs/setProfileCurrentTab', JSON.stringify(5));
-      store.dispatch('tabs/setActiveTab', { path: router.path, id: 5 });
-      store.commit('popup/setUpdateType', type);
-      store.commit('popup/setIsEmailOrMobileUpdate', true);
-  };
-  
-  const resetSupportCode = async () => {
-      store.commit('popup/setIsResetSupportCode', true);
-  };
-  const formatDate = (dateString: string) => {
-      const date = new Date(dateString);
-      const day = date.getDate().toString().padStart(2, '0');
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      const year = date.getFullYear().toString();
-      return `${day}-${month}-${year}`;
-  }
-  
-  
-  const getDigioLink = (val) => {
-    store.dispatch('reekyc/getDigilocker',val)
-        };
-  const props = defineProps({
-    isBox: { type: Boolean, default: true }
-  });
-  </script>
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear().toString();
+  return `${day}-${month}-${year}`;
+}
+const getDigioLink = (val) => {
+  store.dispatch('reekyc/getDigilocker', val)
+};
+const props = defineProps({
+  isBox: { type: Boolean, default: true }
+});
+</script>
