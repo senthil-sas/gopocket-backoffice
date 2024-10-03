@@ -5,5 +5,8 @@ export function AUTH_HEADER () {
     let headers = {
         Authorization: `Bearer ${token}`,
     };
-    return headers;
+    const requestOptions = {
+        headers: headers,
+    }
+    return requestOptions;
 }

@@ -8,14 +8,13 @@
                 <p class="primary-color text-sm mt-8 mb-2">
                     We highly recommend that you add a nominee to your account.
                 </p>
-                <p class="secondary-color text-xs py-2">
+                <!-- <p class="secondary-color text-xs py-2">
                     You can add upto 3 nominees to your demat account.
-                </p>
+                </p> -->
             </div>
-            <div class="my-6 flex justify-center gap-4">
-                <!-- <button class="cancelbtn" @click="skip()">Opt Out</button> -->
+            <!-- <div class="my-6 flex justify-center gap-4">
                 <button class="commonbtn" @click="addNominee()">Add Nominee</button>
-            </div>
+            </div> -->
         </div>
         <add_nominee v-if="getNomineeStage == 'addNominee'" />
         <nominee_summary v-if="getNomineeStage == 'nomineeSummary' || getNomineeStage == 'nomineeList'" />
@@ -56,10 +55,6 @@ export default {
             this.$store.commit('nominee/setNomineeDetails', nomineeList)
         }
         this.$store.dispatch('nominee/getNomineeDetails')
-        
-
-
-
     }
 }
 </script>

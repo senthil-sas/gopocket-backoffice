@@ -32,6 +32,7 @@ export default router
 
 
 router.beforeEach((to, from, next) => {
+  store.commit('setLoader', false)
   const isQuery = to.query.hasOwnProperty('authCode')
   const queryUserId = to.query.userId
   const clientId = localStorage.getItem("clientId");
@@ -55,7 +56,7 @@ router.beforeEach((to, from, next) => {
   const isValidSession = sessionId !== null && sessionId !== "undefined";
   const isValidClientId = userId !== null && userId !== "undefined";
   
-  if (isValidSession && isValidClientId && from.path === "/" && to.path === "/" && isQuery) {
+  if (isValidSession && isValidClientId && from.path === "/" && to.path === "/" && !isQuery) {
     next({ path: "dashboard" });
   } else if ((!isValidSession || !isValidClientId) && to.path !== "/") {
     next({ path: "" });

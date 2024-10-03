@@ -9,14 +9,14 @@
                 <div class="flex justify-between">
                     <span class="primary-color !font-semibold text-sm">Nominee {{ id + 1 }}</span>
                     <span class="primary-color text-sm cursor-pointer" @click="deleteNominee(id)">
-                        <icon name="delete" height="16" width="16" class="hover:text-red-600"/>
+                        <!-- <icon name="delete" height="16" width="16" class="hover:text-red-600"/> -->
                     </span>
                 </div>
 
                 <div class="my-3">
                     <div class="flex gap-10 pt-4">
                         <span class="secondary-color text-sm min-w-[150px]">Full name</span>
-                        <span class="primary-color text-sm">{{ i.nominee_name ? i.nominee_name : 'NA' }}</span>
+                        <span class="primary-color text-sm">{{ i.nomineeName ? i.nomineeName : 'NA' }}</span>
                     </div>
                     <div class="flex gap-10 pt-4">
                         <span class="secondary-color text-sm min-w-[150px]">Relationship</span>
@@ -25,9 +25,9 @@
                     <div class="flex gap-10 pt-4">
                         <span class="secondary-color text-sm min-w-[150px]">Nominee Share <span class="primary-color"></span></span>
                         <span class="primary-color text-sm">
-                            <input class="accent-violet-600" type="range" min="1" max="100" v-model="i.percentage_allocation">
+                            <input disabled class="accent-violet-600" type="range" min="1" max="100" v-model="i.percentageAllocation">
                             <div class="mt-1">
-                                ({{ i.percentage_allocation }}%)
+                                ({{ i.percentageAllocation }}%)
                             </div>
                         </span>
                     </div>

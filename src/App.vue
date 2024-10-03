@@ -192,7 +192,7 @@ input[type="text"] {
   @apply bg-white;
 }
 .commonbtn.green {
-  @apply !bg-[#f0ffeb] !text-[#3a702b];
+  @apply !bg-[#f0ffeb] !text-[#3a702b] cursor-not-allowed;
 }
 
 

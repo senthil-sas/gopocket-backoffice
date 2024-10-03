@@ -7,78 +7,52 @@
           <div class="flex mt-4">
             <icon name="profile" height="18" width="18" class="mr-4"/>
             <p class="primaryColor text-[14px]">
-              
-              {{ getProfileData.customer_name }}
+              {{ getProfileData.customerName }}
             </p>
+            <div class="flex pl-5">
+              <icon name="male" height="20" width="20" v-if="getProfileData.gender == 'M'"/>
+              <icon name="female" height="20" width="20" v-if="getProfileData.gender == 'F'"/>
+              <p class="primaryColor text-[14px] ml-2">
+                {{ getProfileData.gender == 'M' ? 'Male' : getProfileData.gender == 'F' ? 'Female' : getProfileData.gender }}
+              </p>
+            </div> 
           </div>
           <div class="h-5"></div>
-
           <div class="flex mt-4">
             <div class="flex">
               <icon name="date" height="18" width="18" class="mr-4"/>
               <p class="primaryColor text-[14px]">
-                  {{ formatDate(getProfileData.fsl_dob) }}
+                  {{ getProfileData.dob ? formatDate(getProfileData.dob) : getProfileData.dob }}
               </p>
             </div>
-            <div class="flex pl-5">
-            <icon name="male" height="20" width="20" v-if="getProfileData.gender == 'MALE' || getProfileData.gender == 'Male'"/>
-            <icon name="female" height="20" width="20" v-if="getProfileData.gender == 'FEMALE' || getProfileData.gender == 'Female'"/>
-            <p class="primaryColor text-[14px] ml-2">
-              {{ getProfileData.gender || "NA" }}
-            </p>
-          </div> 
           </div>
           <div class="h-5"></div>
           <div class="flex mt-4 gap-4 items-center">
             <icon name="mail" height="18" width="18"/>
             <p class="primaryColor text-[14px]">
-              {{ getProfileData.email_id }}
+              {{ getProfileData.emailId }}
             </p>
-            <span class="ml-auto cursor-pointer" @click="updateEmailOrMobile('email')"><icon name="edit" height="16" width="16" /></span>
+            <a class="ml-auto cursor-pointer" @click="updateEmailOrMobile('email')"><icon name="edit" height="16" width="16" /></a>
           </div>
           <div class="h-5"></div>
           <div class="flex mt-4 gap-4 items-center">
             <icon name="phone" height="18" width="18"/>
             <p class="primaryColor text-[14px]">
-              {{ getProfileData.mobile_no }}
+              {{ getProfileData.mobileNo }}
             </p>
-            <span class="ml-auto cursor-pointer"  @click="updateEmailOrMobile('mobile')"><icon name="edit" height="16" width="16" /></span>
+            <abbr class="ml-auto cursor-pointer"  @click="updateEmailOrMobile('mobile')"><icon name="edit" height="16" width="16" /></abbr>
           </div>
           <div class="h-5"></div>
           <div class="flex mt-4">
             <icon name="address" height="18" width="18" class="mr-4"/>
             <div class="primaryColor text-[14px]">
               <div class="primaryColor text-[14px] leading-[1.3rem]">
-                <!-- {{ getProfileData.address ? getProfileData.address.join(', ') : 'NA' }} -->
-                {{ getProfileData.primary_address  }}
-
+                {{ getProfileData.primaryAddress  }}
               </div>
-
             </div>
-            <span class="ml-auto cursor-pointer"  @click="getDigioLink(val)" ><icon name="edit" height="16" width="16" /></span>
-
+            <span class="ml-auto cursor-pointer"  @click="getDigioLink()" ><icon name="edit" height="16" width="16" /></span>
           </div>
         </box>
-        <!-- <box class="w-full py-[40px] px-[24px] " >
-            <p class="primaryColor text-[14px]">Your PAN</p>
-            <p class="pb-3 text-[20px] violet-color">
-              {{ getProfileData.fsl_pan_card }}
-            </p>
-            <p class="primaryColor text-[14px]">Your Demat (BO)</p>
-            <p class="pb-3 text-[20px] violet-color">
-              {{ getProfileData.fsl_demat_id ? getProfileData.fsl_demat_id : 'NA' }}
-            </p>
-            <p class="primaryColor text-[14px]">Call & Trade TPIN</p>
-            <p class="pb-1 text-[#070A26] flex justify-between items-center" >
-              <span class="text-[20px] violet-color" v-if="supportText != '....'">{{ getProfileData?.fsl_support_code ? getProfileData?.fsl_support_code : 'NA'}}</span>
-              <span class="text-[18px]" v-if="supportText == '....'">&#x2022;&#x2022;&#x2022;&#x2022;</span>
-              <span class="select-none">
-                  <span class="text-blue-400 hover:text-blue-600 mx-3 text-xs cursor-pointer" @click="viewSupportCode()" v-if="supportText == '....'">View</span>
-                  <span class="text-blue-400 hover:text-blue-600 text-xs cursor-pointer" @click="hideSupportCode()" v-if="supportText != '....'">Hide</span>
-                  <span class="text-[#070A26] ml-2 text-xs cursor-pointer" v-if="supportText != '....'" @click="resetSupportCode()">Reset</span>
-              </span>
-            </p>
-        </box> -->
       </div>
 
       <div v-if="isBox && $route.path == '/reports'">
@@ -173,7 +147,7 @@ import icon from './utilComponents/icons.vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 const store = useStore()
-const getProfileData = computed(() => store.getters['profile/getProfileData']);
+const getProfileData = computed(() => store.getters['boReports/getProfileData']);
 
 const router = useRouter();
 const updateEmailOrMobile = async (type: string) => {
@@ -190,8 +164,8 @@ const formatDate = (dateString: string) => {
   const year = date.getFullYear().toString();
   return `${day}-${month}-${year}`;
 }
-const getDigioLink = (val) => {
-  store.dispatch('reekyc/getDigilocker', val)
+const getDigioLink = () => {
+  store.dispatch('reekyc/getDigilocker')
 };
 const props = defineProps({
   isBox: { type: Boolean, default: true }

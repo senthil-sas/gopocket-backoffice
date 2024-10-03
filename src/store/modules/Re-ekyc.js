@@ -194,7 +194,7 @@ const actions = {
                 commit('setloginloader', false,);
             });
     },
-    getDigilocker({ commit, rootState },) {
+    getDigilocker({ commit, rootState }) {
         commit('setloginloader', true,);
 
         service.getDigilocker(rootState.auth.userId,)
@@ -202,8 +202,8 @@ const actions = {
 
                 if (resp.status == 200 && resp?.data?.stat === 1) {
                     state.digiURL = resp?.data?.result;
-                    window.open(state.digiURL, '_self')
-
+                    // window.open(state.digiURL, '_self')
+                    window.open(state.digiURL, '_blank')
                 } else {
                 }
             })

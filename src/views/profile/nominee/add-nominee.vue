@@ -252,8 +252,9 @@
         <div class="my-10 flex gap-3">
             <button type="button" class="cancelbtn" @click="backToNomineeDetails()">Cancel</button>
             <button type="submit" class="commonbtn">
-                <span v-if="!getLoader">Submit</span>
-                <button_spinner v-else />
+                <span>Submit</span>
+                <!-- <span v-if="!getLoader">Submit</span> -->
+                <!-- <button_spinner v-else /> -->
             </button>
         </div>
     </form>
@@ -354,8 +355,8 @@ export default {
                         "fsl_nominee_details": []
                     }
                 }
-                if (this.getNomineeList.length)
-                    json.data.fsl_nominee_details = [...this.getNomineeList]
+                if (this.getNomineeList.length) json.data.fsl_nominee_details = [...this.getNomineeList]
+
                     json.data.fsl_nominee_details.push({
                         "nominee_name": this.firstName,
                         "percentage_allocation": Number(this.nomineeSharePercentage),
@@ -364,12 +365,12 @@ export default {
                         "pan": this.panNo,
                         "mobile_number": this.mobileNo,
                         "email_id": "",
-                        "address": address[0] ? address[0].trim() : address[0],
-                        "address_2": address[1] ? address[1].trim() : address[1],
-                        "address_3": address[2] ? address[2].trim() : address[2],
-                        "city": this.AddressLine2,
-                        "state": this.state,
-                        "pincode": this.pincode,
+                        // "address": address[0] ? address[0].trim() : address[0],
+                        // "address_2": address[1] ? address[1].trim() : address[1],
+                        // "address_3": address[2] ? address[2].trim() : address[2],
+                        // "city": this.AddressLine2,
+                        // "state": this.state,
+                        // "pincode": this.pincode,
                         "nominee_number": "",
                         "guardian": null
                     })
@@ -428,8 +429,7 @@ export default {
 
         validateForm() {
             return this.firstName != '' && this.lastName != '' && this.relationship != '' && (this.nomineeDate != '' && this.nomineeMonth != '' && this.nomineeYear != '') 
-            && this.isValidMobile() && this.nomineeSharePercentage <= this.totalAvilableShare && this.Address != '' && this.AddressLine2
-            && this.state != '' &&( this.pincode != '' && this.pincode.length == 6)
+            && this.isValidMobile() && this.nomineeSharePercentage <= this.totalAvilableShare
         },
 
         isValidMobile() {

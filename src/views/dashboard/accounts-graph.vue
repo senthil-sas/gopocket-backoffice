@@ -13,8 +13,7 @@ export default {
 
 <template>
   <div class="p-5">
-    <div class="primary-color mb-6">Hi  {{ getProfileData.customer_name }}
- ,</div>
+    <div class="primary-color mb-6">Hi <span>{{ getProfileData.customerName }}</span>,</div>
     <div class="w-full flex flex-wrap">
       <div class="w-[50%]">
         <div>
@@ -127,7 +126,7 @@ export default {
     };
   },
   computed: {
-        ...mapGetters('profile', ['getProfileData']),
+        ...mapGetters('boReports', ['getProfileData']),
     },
   methods: {
     viewRecentTransactions() {

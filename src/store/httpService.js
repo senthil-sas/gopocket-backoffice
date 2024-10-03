@@ -55,12 +55,12 @@ export default {
     //     return axios.get(`${baseUrlTemp}method/ninjafox.custom_api.get_customer_nominee_details?customer=${userId}`, requestOptions).then();
     // },
 
-    // async addNomineeDetails(payload) {
-    //     const requestOptions = {
-    //         headers: this.authHeader(),
-    //     };
-    //     return axios.put(`${baseUrlTemp}resource/Customer/${userId}`, payload, requestOptions).then();
-    // },
+    async addNomineeDetails(payload) {
+        const requestOptions = {
+            headers: this.authHeader(),
+        };
+        return axios.put(`${baseUrlTemp}resource/Customer/${userId}`, payload, requestOptions).then();
+    },
     async getSegments() {
         let fields = `["fsl_nse","fsl_bse","fsl_nfo","fsl_bfo","fsl_cds","fsl_bcd","fsl_mcx"]`
         let filters = `[["fsl_ucc_code","=","SKY34914"]]`

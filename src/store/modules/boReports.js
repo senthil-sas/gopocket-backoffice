@@ -3,27 +3,18 @@ import errorHandle from "../../handleError/errorHandling.ts"
 
 const getDefaultState = () => {
     return {
-        profileData: [],
+        profileData: {},
         DPData: '',
-        userId: '',
-        tradeLogData: [],
         tradeBookData: [],
         dataPoints: {},
         loader: true,
         startDate: '',
         endDate: '',
-        pnlData: [],
         ledgerData: [],
         debitAmount: 0.00,
         creditAmount: 0.00,
-        positionData: [],
-        holdingsData: [],
-        totalInvestment: 0,
-        totalcurrentValue: 0,
-        totalPnlChange: 0,
-        daysPnlChange: 0,
-        totalPnl: 0,
-        daysPnl: 0,
+
+        bankDetails: []
     }
 }
 const state = getDefaultState();
@@ -45,38 +36,9 @@ const actions = {
             commit('setLoader', false, { root: true })
         })
     },
-    async getProfileDataFromApi({ commit }, userId) {
-        commit('setLoader', true, { root: true })
-        service.getProfileDetails(userId).then(resp => {
-            if (resp?.data?.data) {
-                commit('setProfileData', resp?.data?.data)
-            } else {
-                commit('setProfileData', [])
-            }
-        }, (error) => {
-            errorHandle.handleError(error)
-        }).finally(() => {
-            commit('setLoader', false, { root: true })
-        })
-    },
-    getPositionsFromApi({ commit }, payload) {
-        commit('setLoader', true, { root: true })
-        service.getPositions(payload).then(resp => {
-            if (resp?.data?.result) {
-                commit('setPositionData', resp?.data?.result)
-            } else {
-                commit('setPositionData', [])
-            }
-        }).catch((error) => {
-            errorHandle.handleError(error)
-        }).finally(() => {
-            commit('setLoader', false, { root: true })
-        })
-    },
     async getDPData({ commit }, payload) {
         commit('setLoader', true, { root: true })
         service.getDPData(payload).then(resp => {
-
             if (resp?.data?.result[0].message?.data.length) {
                 commit('setDPData', resp?.data?.result[0].message?.data[0])
             } else {
@@ -109,7 +71,34 @@ const actions = {
             commit('setLoader', false, { root: true })
         })
     },
-
+    async getProfileDataFromApi({ commit }) {
+        commit('setLoader', true, { root: true })
+        service.getProfileDetails().then(resp => {
+            if (resp.status == 200 &&  resp?.data?.message == 'Success' &&  resp?.data?.status == 'Ok') {
+                commit('setProfileData', resp?.data?.result[0])
+            } else {
+                commit('setProfileData', {})
+            }
+        }, (error) => {
+            errorHandle.handleError(error)
+        }).finally(() => {
+            commit('setLoader', false, { root: true })
+        })
+    },
+    async getBankDetails({ commit }) {
+        commit('setLoader', true, { root: true })
+        service.getBankDetails().then(resp => {
+            if (resp.status == 200 &&  resp?.data?.message == 'Success' &&  resp?.data?.status == 'Ok') {
+                commit('setBankDetails', resp?.data?.result)
+            } else {
+                commit('setBankDetails', {})
+            }
+        }, (error) => {
+            errorHandle.handleError(error)
+        }).finally(() => {
+            commit('setLoader', false, { root: true })
+        })
+    },
 };
 
 const mutations = {
@@ -155,12 +144,20 @@ const mutations = {
     resetState(state) {
         Object.assign(state, getDefaultState())
     },
+    setProfileData(state, payload) {
+        state.profileData = payload
+    },
+    setBankDetails(state, payload) {
+        state.bankDetails = payload
+    },
 };
 
 const getters = {
     getTradeBookData: state => state.tradeBookData,
     getLedgersData: state => state.ledgerData,
     getDataPoints: state => state.dataPoints,
+    getProfileData: state => state.profileData,
+    getBankDetails: state => state.bankDetails,
 };
 
 const boReports = {

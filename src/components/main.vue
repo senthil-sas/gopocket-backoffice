@@ -31,8 +31,7 @@ export default {
         ...mapGetters('auth', ['getUserId'])
     },
     created() {
-        let userId = this.getUserId
-        this.$store.dispatch('profile/getProfileDataFromApi', userId)
+        this.$store.dispatch('boReports/getProfileDataFromApi')
     },
 }
 </script>
