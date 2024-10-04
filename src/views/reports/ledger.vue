@@ -20,9 +20,9 @@
                   {{ i.descript ? i.descript : 'NA' }}
                 </div>
               </td>
-              <td class="px-2 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+              <!-- <td class="px-2 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
                 {{ i.voucher }}
-              </td>
+              </td> -->
               <td class="px-2 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">
                 {{ i.damount }}
               </td>
@@ -48,7 +48,7 @@ const store = useStore();
 const tableHeads = ref([
   { name: "Date", class: "text-left" },
   { name: "Description", class: "text-left" },
-  { name: "Voucher No", class: "text-center" },
+  // { name: "Voucher No", class: "text-center" },
   { name: "Debit", class: "text-right" },
   { name: "Credit.", class: "text-right" },
   // { name: "Entry Code", class: "text-right" },

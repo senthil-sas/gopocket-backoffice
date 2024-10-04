@@ -2,11 +2,11 @@
     <div class="h-[calc(100vh-96px)] overflow-y-auto " v-if="!getLoader">
      <!-- <holdings_widget /> -->
         <table id="holdings_table" class="w-full rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px]" v-if="getHoldingsData?.length > 0">
-        <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
+        <!-- <thead class="border-b dark:border-[#232325] dark:bg-[#181818] sticky top-0 bg-[#fbfbf9] z-[10]"> -->
             <tr>
-                <th v-for="(head,id) in tableHeads" :key="id" scope="col" :class="head.class" class="py-3.5 px-3 text-xs font-semibold secondary-color whitespace-nowrap" id="holdings_th_instrument"> {{head.name}}</th>
+                <th v-for="(head,id) in tableHeads" :key="id" scope="col" :class="head.class" class="py-3.5 px-3 text-xs font-semibold whitespace-nowrap sticky top-0 bg-[#fbfbf9] z-10" id="holdings_th_instrument"> {{head.name}}</th>
             </tr>
-        </thead>
+        <!-- </thead> -->
                     
         <tbody>
             <tr v-for="(item, id) in getHoldingsData" :key="id" class="border-b">
@@ -18,7 +18,7 @@
                 <!-- <td class="pr-3 py-4 text-sm relative text-right" :class="{'green-color' : Number(item.pnl) > 0, 'red-color' : Number(item.pnl) < 0, 'primary-color' : Number(item.pnl) == 0}">{{ netPnlCalc(item)?.toFixed(2) }}</td> -->
                 <td class="pr-3 py-4 text-sm relative text-right">{{ item.pnl }}</td>
                 <td class="pr-3 py-4 text-sm relative text-right">{{ item.pnl_change }}</td>
-               <!-- <td class="px-3 py-4 text-sm relative text-right" :class="{'green-color' : Number(item.pnl_change) > 0, 'red-color' : Number(item.pnl_change) < 0, 'primary-color' : Number(item.pnlChg) == 0}">{{ netChgCalc(item) }}%</td> -->
+                <!-- <td class="px-3 py-4 text-sm relative text-right" :class="{'green-color' : Number(item.pnl_change) > 0, 'red-color' : Number(item.pnl_change) < 0, 'primary-color' : Number(item.pnlChg) == 0}">{{ netChgCalc(item) }}%</td> -->
             </tr>
         </tbody>
         </table>
