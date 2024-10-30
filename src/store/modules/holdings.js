@@ -1,4 +1,5 @@
 import service from "../modules/services/profile.ts";
+import errorHandle from '../../handleError/errorHandling'
 const state = {
     holdingsData: [],
     totalInvestment: 0,
@@ -26,15 +27,17 @@ const actions = {
     //     }
     // }
 
-    getHoldingsFromApi({ commit }, userId) {
+    getHoldingsFromApi({ commit, rootGetters }, userId) {
         commit('setHoldingsData', []);
         commit('setLoader', true, { root: true });
 
-
-        service.getHoldingsFromApi(userId)
+        let json = {
+            "userId":rootGetters['auth/getUserId']
+        }
+        service.getHoldingsFromApi(json)
             .then(resp => {
-                if (resp.data.message.data.length > 0 && resp.data.message.data) {
-                    commit('setHoldingsData', resp.data.message.data);
+                if (resp.data.result.length > 0 && resp.data.status == 'Ok') {
+                    commit('setHoldingsData', resp.data.result);
                 } else {
                 }
             },

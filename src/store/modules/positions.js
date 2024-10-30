@@ -23,15 +23,17 @@ const actions = {
 
 
 
-    getPositionsFromApi({ commit }, userId) {
+    getPositionsFromApi({ commit, rootGetters }, userId) {
         commit('setPositionData', []);
         commit('setLoader', true, { root: true });
 
-
-        service.getPositionsFromApi(userId)
+        let json = {
+            "userId":rootGetters['auth/getUserId']
+        }
+        service.getPositionsFromApi(json)
             .then(resp => {
-                if (resp.data.message.data.positions !== 'Positions Not Exists') {
-                    commit('setPositionData', resp.data.message.data.positions);
+                if (resp.data.result.length > 0 && resp.data.status == 'Ok') {
+                    commit('setPositionData', resp.data.result);
                 } else {
 
                 }

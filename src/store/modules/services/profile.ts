@@ -1,5 +1,6 @@
 import axios from "axios";
 import { authHeader, baseUrl } from '../services/env';
+import { AUTH_HEADER, holding_URL } from '../../services/env'
 
 export default {
     async getProfileDataFromApi(userId: any) {
@@ -10,10 +11,7 @@ export default {
     },
 
     async getHoldingsFromApi(userId: any) {
-        const requestOptions = {
-            headers: authHeader(),
-        };
-        return axios.get(`${baseUrl}boupdate/holdingsDetails?ucc=${userId}`, requestOptions);
+        return axios.post(`${holding_URL}portfolio/getHoldings`, userId, AUTH_HEADER());
 
     },
 

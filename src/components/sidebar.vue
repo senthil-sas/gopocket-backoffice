@@ -4,21 +4,20 @@
     <div v-if="isBox && ($route.path == '/dashboard' || $route.path == '/holdings' || $route.path == '/profile')">
         <box class="w-full py-[40px] px-[24px] " >
           <p class="loginHeader font-bold pa-3 header">Personal Details</p>
-          <div class="flex mt-4">
+          <div class="flex mt-6">
             <icon name="profile" height="18" width="18" class="mr-4"/>
             <p class="primaryColor text-[14px]">
               {{ getProfileData.customerName }}
-            </p>
-            <div class="flex pl-5">
+            </p> 
+          </div>
+          <div class="flex gap-4 mt-6">
               <icon name="male" height="20" width="20" v-if="getProfileData.gender == 'M'"/>
               <icon name="female" height="20" width="20" v-if="getProfileData.gender == 'F'"/>
-              <p class="primaryColor text-[14px] ml-2">
+              <p class="primaryColor text-[14px]">
                 {{ getProfileData.gender == 'M' ? 'Male' : getProfileData.gender == 'F' ? 'Female' : getProfileData.gender }}
               </p>
-            </div> 
-          </div>
-          <div class="h-5"></div>
-          <div class="flex mt-4">
+            </div>
+          <div class="flex mt-6">
             <div class="flex">
               <icon name="date" height="18" width="18" class="mr-4"/>
               <p class="primaryColor text-[14px]">
@@ -26,24 +25,21 @@
               </p>
             </div>
           </div>
-          <div class="h-5"></div>
-          <div class="flex mt-4 gap-4 items-center">
+          <div class="flex mt-6 gap-4 items-center">
             <icon name="mail" height="18" width="18"/>
             <p class="primaryColor text-[14px]">
               {{ getProfileData.emailId }}
             </p>
             <a class="ml-auto cursor-pointer" @click="updateEmailOrMobile('email')"><icon name="edit" height="16" width="16" /></a>
           </div>
-          <div class="h-5"></div>
-          <div class="flex mt-4 gap-4 items-center">
+          <div class="flex mt-6 gap-4 items-center">
             <icon name="phone" height="18" width="18"/>
             <p class="primaryColor text-[14px]">
               {{ getProfileData.mobileNo }}
             </p>
             <abbr class="ml-auto cursor-pointer"  @click="updateEmailOrMobile('mobile')"><icon name="edit" height="16" width="16" /></abbr>
           </div>
-          <div class="h-5"></div>
-          <div class="flex mt-4">
+          <div class="flex mt-6">
             <icon name="address" height="18" width="18" class="mr-4"/>
             <div class="primaryColor text-[14px]">
               <div class="primaryColor text-[14px] leading-[1.3rem]">
