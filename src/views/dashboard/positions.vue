@@ -1,7 +1,6 @@
 <template>
     <div class="p-5" v-if="!getLoader">
-        <table id="positions_table"
-            class="w-full rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] "
+        <table id="positions_table" class="w-full rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] "
             v-if="getPositionData?.length > 0">
             <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
                 <tr>

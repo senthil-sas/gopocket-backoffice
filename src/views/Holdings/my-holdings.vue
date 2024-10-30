@@ -37,7 +37,6 @@ export default {
     components: { holdings_widget } ,
     data() {
         return {
-            
             tableHeads: [
                 { name: 'Instrument', class: 'text-left'},
                 { name: 'Qty.', class: 'text-right'},
