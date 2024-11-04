@@ -61,7 +61,7 @@
 }
 </style>
 <template>
-  <div class="relative top-0 z-[9]">
+  <div class="relative top-0 z-50">
     <div class="flex header items-center justify-between py-[50px] ">
       <div class="flex items-center z-50 w-full">
         <div class="flex lg:hidden">
