@@ -1,5 +1,5 @@
 <template>
-    <table id="transactions_table" class="w-full rounded-b border-t border-[#ededed] dark:border-[#232325] relative my-4">
+    <table id="transactions_table" class="w-full rounded-b border-[#ededed] dark:border-[#232325] relative my-4">
         <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
             <tr>
                 <th v-for="(head,id) in tableHeads" :key="id" scope="col" :class="head.class" class="py-3.5 px-3 text-xs font-semibold secondary-color whitespace-nowrap" id="transactions_th_instrument"> {{head.name}}</th>

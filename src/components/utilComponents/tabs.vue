@@ -1,5 +1,5 @@
 <template>
-  <div class="flex" :class="{'secondary-violet-bg ': isBgBlue}" >
+  <div class="flex border-b" :class="{'secondary-violet-bg ': isBgBlue}" >
     <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab">
       <li class="mr-2 hover:font-bold" role="presentation" v-for="(b, id) in getTabs()" :key='id' @click="changeActive(b.id)" :id="`${$route.name}_${id}_b.name`">
         <button class="inline-block p-3 " type="button" :class="(b.active) ?

@@ -1,6 +1,6 @@
 <template>
     <div class="">
-      <div class="h-[calc(100vh-100px)] overflow-y-auto border-t">
+      <div class="h-[calc(100vh-100px)] overflow-y-auto">
         <table class="w-full relative" v-if="getLedgerData?.length > 0">
           <thead>
             <tr class="h-12">
