@@ -126,7 +126,7 @@
               leave-to-class="transform opacity-0 scale-95"
             >
               <MenuItems
-                class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                class="absolute right-0 z-20 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
               >
                 <div class="py-1">
                   <MenuItem v-slot="{ active }">
@@ -220,9 +220,9 @@
           @close="mobileMenuOpen = false"
           :open="mobileMenuOpen"
         >
-          <div class="fixed inset-0 z-10" />
+          <div class="fixed inset-0 z-20" />
           <DialogPanel
-            class="fixed inset-y-0 left-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+            class="fixed inset-y-0 left-0 z-20 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
           >
             <div class="flex items-center justify-between">
               <a href="#" class="">

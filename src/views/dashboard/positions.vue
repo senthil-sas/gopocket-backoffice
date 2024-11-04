@@ -1,11 +1,10 @@
 <template>
     <div class="h-full overflow-y-auto" v-if="!getLoader">
-        <table id="positions_table" class="w-full rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] "
-            v-if="getPositionData?.length > 0">
+        <table id="positions_table" class="w-full rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] " v-if="getPositionData?.length > 0">
             <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
                 <tr>
                     <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class"
-                        class="py-3.5 px-3 text-xs font-semibold whitespace-nowrap sticky top-0 bg-[#fbfbf9] z-10"
+                        class="py-3.5 px-3 text-xs font-semibold whitespace-nowrap bg-[#fbfbf9]"
                         id="holdings_th_instrument"> {{ head.name }}</th>
                 </tr>
             </thead>

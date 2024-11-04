@@ -36,11 +36,13 @@ const actions = {
             commit('setLoader', false, { root: true })
         })
     },
-    async getDPData({ commit }, payload) {
+
+    async getDematData({ commit }, payload) {
         commit('setLoader', true, { root: true })
-        service.getDPData(payload).then(resp => {
-            if (resp?.data?.result[0].message?.data.length) {
-                commit('setDPData', resp?.data?.result[0].message?.data[0])
+        service.getDematData(payload).then(resp => {
+            console.log(resp?.data);
+            if (resp?.data?.result[0].dematId) {
+                commit('setDPData', resp?.data?.result[0].dematId)
             } else {
                 commit('setDPData', [])
             }
@@ -50,6 +52,7 @@ const actions = {
             commit('setLoader', false, { root: true })
         })
     },
+
     async getLedgerdata({ commit, state }, payload) {
         commit('setLoader', true, { root: true })
         service.getLedgerData(payload).then((resp) => {
@@ -71,11 +74,16 @@ const actions = {
             commit('setLoader', false, { root: true })
         })
     },
-    async getProfileDataFromApi({ commit }) {
+
+    async getProfileDataFromApi({ commit, dispatch, rootGetters }) {
         commit('setLoader', true, { root: true })
         service.getProfileDetails().then(resp => {
             if (resp.status == 200 &&  resp?.data?.message == 'Success' &&  resp?.data?.status == 'Ok') {
                 commit('setProfileData', resp?.data?.result[0])
+                let json = {
+                    "userId": rootGetters["auth/getUserId"]
+                }
+                dispatch("getDematData", json)
             } else {
                 commit('setProfileData', {})
             }
@@ -85,6 +93,7 @@ const actions = {
             commit('setLoader', false, { root: true })
         })
     },
+
     async getBankDetails({ commit }) {
         commit('setLoader', true, { root: true })
         service.getBankDetails().then(resp => {
@@ -150,6 +159,9 @@ const mutations = {
     setBankDetails(state, payload) {
         state.bankDetails = payload
     },
+    setDPData(state, payload) {
+        state.DPData = payload
+    },
 };
 
 const getters = {
@@ -158,6 +170,7 @@ const getters = {
     getDataPoints: state => state.dataPoints,
     getProfileData: state => state.profileData,
     getBankDetails: state => state.bankDetails,
+    getDPData: state => state.DPData
 };
 
 const boReports = {

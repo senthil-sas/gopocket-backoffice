@@ -44,13 +44,13 @@
       <div class="flex mt-5 justify-between">
         <div class="mr-4 text-[14px]"> Depository Name:</div>
         <p class="primaryColor text-[14px]">
-          {{ getProfileData.dematId ? getProfileData.dematId : 'NA' }}
+          CDSL
         </p>
       </div>
       <div class="flex mt-5 justify-between">
         <div class="mr-4 text-[14px]"> Demat Account Number:</div>
         <p class="primaryColor text-[14px]">
-          {{ getProfileData.dematId ? getProfileData.dematId : 'NA' }}
+          {{ getDPData ? getDPData : 'NA' }}
         </p>
       </div>
     </div>
@@ -147,7 +147,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('boReports', ['getProfileData']),
+    ...mapGetters('boReports', ['getProfileData', 'getDPData']),
   },
 };
 </script>

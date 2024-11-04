@@ -1,6 +1,6 @@
 import axios from "axios";
 import { authHeader, baseUrl } from '../services/env';
-import { AUTH_HEADER, holding_URL } from '../../services/env'
+import { AUTH_HEADER, BASE_URL } from '../../services/env'
 
 export default {
     async getProfileDataFromApi(userId: any) {
@@ -11,7 +11,7 @@ export default {
     },
 
     async getHoldingsFromApi(userId: any) {
-        return axios.post(`${holding_URL}portfolio/getHoldings`, userId, AUTH_HEADER());
+        return axios.post(`${BASE_URL}portfolio/getHoldings`, userId, AUTH_HEADER());
 
     },
 
