@@ -12,8 +12,8 @@
             <tr v-for="(item, id) in getHoldingsData" :key="id" class="border-b">
                 <td class="pl-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative">{{ item.symbol }}</td>
                 <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.qty }}</td>
-                <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.buyAvg }}</td>
                 <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.buyPrice }}</td>
+                <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.buyAvg }}</td>
                 <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.price  }}</td>
                 <!-- <td class="pr-3 py-4 text-sm relative text-right" :class="{'green-color' : Number(item.pnl) > 0, 'red-color' : Number(item.pnl) < 0, 'primary-color' : Number(item.pnl) == 0}">{{ netPnlCalc(item)?.toFixed(2) }}</td> -->
                 <td class="pr-3 py-4 text-sm relative text-right">{{ item.pnl }}</td>

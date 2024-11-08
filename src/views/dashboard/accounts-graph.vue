@@ -12,7 +12,7 @@ export default {
 </script> -->
 
 <template>
-  <div class="p-5">
+  <div class="p-5" v-if="!getLoader">
     <div class="primary-color mb-6">Hi <span>{{ getProfileData.customerName }}</span>,</div>
     <div class="w-full flex flex-wrap">
       <div class="w-[50%]">
@@ -24,27 +24,27 @@ export default {
           > -->
         </div>
 
-        <div class="flex justify-between flex-wrap max-w-[300px] my-8">
+        <div class="flex justify-between flex-wrap max-w-[400px] gap-4 my-8">
           <div class="flex flex-col flex-wrap">
             <div class="secondary-color mb-1 text-xs">Account value</div>
-            <div class="primary-color">{{ accountValue }}</div>
+            <div class="primary-color">{{ accBalance }}</div>
           </div>
 
-          <div class="flex-col flex">
+          <div class="flex-col flex gap-4">
             <div class="flex flex-col flex-wrap">
               <div class="flex items-center space-x-2 mb-1">
                 <div class="h-2 w-2 bg-green-500 rounded-full"></div>
                 <span class="text-xs secondary-color">Equity holdings</span>
               </div>
-              <div class="primary-color ml-4">{{ equityHoldings }}</div>
+              <div class="primary-color ml-4">{{ getTotalHoldingValue }}</div>
             </div>
 
-            <div class="flex flex-col flex-wrap pt-4">
+            <div class="flex flex-col flex-wrap">
               <div class="flex items-center space-x-2 mb-1">
                 <div class="h-2 w-2 bg-yellow-500 rounded-full"></div>
                 <span class="text-xs secondary-color">Cash balance</span>
               </div>
-              <div class="primary-color ml-4">{{ cashBalance }}</div>
+              <div class="primary-color ml-4">{{ cash_Balance }}</div>
             </div>
           </div>
         </div>
@@ -127,6 +127,15 @@ export default {
   },
   computed: {
         ...mapGetters('boReports', ['getProfileData']),
+        ...mapGetters('holdings', ['getHoldingsData', 'getTotalHoldingValue']),
+        ...mapGetters('profile', ['getFundDetails']),
+        ...mapGetters(['getLoader']),
+        cash_Balance(){
+          return (Number(this.getFundDetails.payin) + Number(this.getFundDetails.openingBalance) + Number(this.getFundDetails.unclearedCash)).toFixed(2)
+        },
+        accBalance(){
+          return Number(this.cash_Balance) + Number(this.getTotalHoldingValue)
+        }
     },
   methods: {
     viewRecentTransactions() {
@@ -169,5 +178,9 @@ export default {
       return formattedDate;
     },
   },
-};
+  async created(){
+    await this.$store.dispatch('holdings/getHoldingsFromApi')
+    await this.$store.dispatch('profile/getFundsDetails')
+  }
+};  
 </script>

@@ -1,4 +1,5 @@
 import service from "../modules/services/profile.ts";
+import dashboardService from "../modules/services/Dasboard.ts"
 import errorHandle from '../../handleError/errorHandling'
 
 
@@ -10,7 +11,7 @@ const state = {
     isAddBank: false,
     mobileNO: '',
     EmailID: '',
-
+    fundDetails:''
 
 };
 
@@ -40,6 +41,23 @@ const actions = {
             .finally(() => {
                 commit('setLoader', false, { root: true });
             });
+    },
+
+    // get funds details
+    getFundsDetails({ commit }, userId) {
+        commit('setLoader', true, { root: true });
+        commit('setFundsDetails', '')
+        dashboardService.getFundsDetails(userId).then(resp => {
+            if (resp.data && resp.data.status == 'Ok' && resp.data.result.length > 0) {
+                commit('setFundsDetails', resp.data.result[0])
+            } else {
+            }
+            },(err) => {
+                errorHandle.handleError(err)
+            })
+            .finally(() => {
+                commit('setLoader', false, { root: true });
+            });
     }
 
 };
@@ -65,6 +83,9 @@ const mutations = {
     setemailID(state, payload) {
         state.EmailID = payload;
     },
+    setFundsDetails(state, payload){
+        state.fundDetails = payload
+    }
 };
 
 const getters = {
@@ -73,8 +94,8 @@ const getters = {
     getSegments: state => state.segments,
     getbankdetails: state => state.bankdetails,
     getmobileNO: state => state.mobileNO,
-    getEmailID: state => state.EmailID
-
+    getEmailID: state => state.EmailID,
+    getFundDetails: state => state.fundDetails
 };
 
 const profile = {
