@@ -16,8 +16,13 @@
                         {{ i.exchange == 'CDS' || i.exchange == 'BCD' ? parseFloat(i?.avgPrice).toFixed(4) :
                 parseFloat(i?.avgPrice).toFixed(2) }}
                     </td>
-                    <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ i.pdc }}</td>
-                    <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ Number(i.pnl)}}</td>
+                    <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">
+                        {{ ruppesFormat(i.exchange == 'CDS' || i.exchange == 'BCD' ? parseFloat(i?.price).toFixed(4) :
+                            parseFloat(i?.price).toFixed(2)) }}
+                    </td>
+                    <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ parseFloat(i.pdc).toFixed(2) }}</td>
+                    <td class="pr-3 py-4 text-sm dark:text-[#94A3B8] relative text-right" :class="{ 'positive-color': Number(i.pnl) >= 0, 'negative-color' : Number(i.pnl) < 0}">{{ parseFloat(i.pnl).toFixed(2)}}</td>
+                    <td class="pr-3 py-4 text-sm dark:text-[#94A3B8] relative text-right" :class="{ 'positive-color': Number(i.pnlChange) >= 0, 'negative-color' : Number(i.pnlChange) < 0}">{{ parseFloat(i.pnlChange || '0.00').toFixed(2) }} %</td>
                 </tr>
             </tbody>
         </table>
@@ -29,15 +34,19 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import commonjs from '../../mixins/common';
 export default {
+    mixins: [commonjs],
     data() {
         return {
             tableHeads: [
                 { name: 'Instrument', class: 'text-left' },
                 { name: 'Qty.', class: 'text-right' },
                 { name: 'Avg.Price', class: 'text-right' },
+                { name: 'Price', class: 'text-right' },
                 { name: 'Prev. close Price', class: 'text-right' },
                 { name: 'P&L', class: 'text-right' },
+                { name: 'P&L chg.', class: 'text-right' },
             ],
         }
     },
@@ -48,7 +57,6 @@ export default {
 
     },
     async created() {
-     
         this.$store.dispatch('positions/getPositionsFromApi', this.getUserId)
     },
 }

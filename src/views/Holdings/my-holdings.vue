@@ -12,12 +12,12 @@
             <tr v-for="(item, id) in getHoldingsData" :key="id" class="border-b">
                 <td class="pl-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative">{{ item.symbol }}</td>
                 <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.qty }}</td>
-                <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.buyPrice }}</td>
-                <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.buyAvg }}</td>
-                <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ item.price  }}</td>
+                <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ parseFloat(item.buyPrice).toFixed(2) }}</td>
+                <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ parseFloat(item.buyAvg).toFixed(2) }}</td>
+                <td class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-right">{{ parseFloat(item.price).toFixed(2)  }}</td>
                 <!-- <td class="pr-3 py-4 text-sm relative text-right" :class="{'green-color' : Number(item.pnl) > 0, 'red-color' : Number(item.pnl) < 0, 'primary-color' : Number(item.pnl) == 0}">{{ netPnlCalc(item)?.toFixed(2) }}</td> -->
-                <td class="pr-3 py-4 text-sm relative text-right">{{ item.pnl }}</td>
-                <td class="pr-3 py-4 text-sm relative text-right">{{ item.pnlChange }}</td>
+                <td class="pr-3 py-4 text-sm relative text-right" :class="{ 'positive-color': Number(item.pnl) >= 0, 'negative-color' : Number(item.pnl) < 0}">{{ parseFloat(item.pnl).toFixed(2) }}</td>
+                <td class="pr-3 py-4 text-sm relative text-right" :class="{ 'positive-color': Number(item.pnlChange) >= 0, 'negative-color' : Number(item.pnlChange) < 0}">{{ parseFloat(item.pnlChange).toFixed(2) }} %</td>
                 <!-- <td class="px-3 py-4 text-sm relative text-right" :class="{'green-color' : Number(item.pnl_change) > 0, 'red-color' : Number(item.pnl_change) < 0, 'primary-color' : Number(item.pnlChg) == 0}">{{ netChgCalc(item) }}%</td> -->
             </tr>
         </tbody>

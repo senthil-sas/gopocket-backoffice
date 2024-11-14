@@ -276,6 +276,13 @@ input[type="text"] {
 .active-filter {
   filter: invert(40%) sepia(38%) saturate(7169%) hue-rotate(176deg) brightness(89%) contrast(101%);
 }
+
+.positive-color {
+  @apply text-[#4caf50]
+}
+.negative-color {
+  @apply text-[#e34242]
+}
 </style>
 
 
