@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <h1 class="mb-4 primary-color !font-bold text-sm">Close  Account</h1>
-    <p class="block text-sm semi-bold font-medium leading-6 text-gray-900 mb-4">You’re about to close your Upstox account permanently. Avoid opening any new positions at this stage.</p>
+    <p class="block text-sm semi-bold font-medium leading-6 text-gray-900 mb-4">You’re about to close your Pocket account permanently. Avoid opening any new positions at this stage.</p>
     
     <div class="flex justify-between">
     <div class="space-y-4 w-[350px] ">
@@ -21,7 +21,7 @@
   <div class=" text-primary font-bold text-sm">Note</div>
   <ol class="p-3">
     <div class="list-decimal list-outside ">
-    <li>In case you've remaining funds, it'll get credited to the primary bank account linked to your Upstox account.</li>
+    <li>In case you've remaining funds, it'll get credited to the primary bank account linked to your Pocket account.</li>
     <li>Please download all the reports related to your Demat account early, as you won't be able to access them after closing your account.</li>
   </div>
   </ol>

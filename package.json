@@ -2,10 +2,13 @@
   "name": "cosmos",
   "version": "1.0.0",
   "private": true,
+  "buildtime": "2024.12.05_17.00.49",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=./",
-    "preview": "vite preview"
+    "build": "npm run update-version && vite build --base=./ && npm run rename-build",
+    "preview": "vite preview",
+    "update-version": "node updateVersion.mjs",
+    "rename-build": "node rename-build.mjs"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.14",
