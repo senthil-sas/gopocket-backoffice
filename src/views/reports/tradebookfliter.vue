@@ -128,8 +128,8 @@ const getTradeBook = () => {
   if(!fromDate.value || !toDate.value) return
   let payload = {
     "exchange": segment.value.exch,
-    "from_date": formateDate(fromDate.value),
-    "to_date": formateDate(toDate.value),
+    "from_date": (window as any).formatDate(fromDate.value, 'D'),
+    "to_date": (window as any).formatDate(toDate.value,'D'),
   }
   localStorage.setItem('tradeBookDates', JSON.stringify({ fromDate: new Date(fromDate.value).toString(), toDate: new Date(toDate.value).toString() }))
   if (activeReportTab.value === 0) {
@@ -137,13 +137,6 @@ const getTradeBook = () => {
   } else if (activeReportTab.value === 2) {
     store.dispatch("boReports/getLedgerdata", payload);
   }
-};
-
-const formateDate = (data: any) => {
-  const date = new Date(data);
-  date.setFullYear(2024);
-  const formattedDate = date.toLocaleDateString('en-CA');
-  return formattedDate
 };
 
 onMounted(async() => {
