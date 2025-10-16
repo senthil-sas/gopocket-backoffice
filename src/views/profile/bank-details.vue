@@ -10,7 +10,7 @@
                         </span>
                     </div>
                     <div class="flex gap-5 items-center my-4">
-                        <img :src="hdfcImg" :alt="bank?.bankName" class="max-w-[60px] max-h-[60px] border rounded p-2">
+                        <img :src="bankSvg" :alt="bank?.bankName" class="max-w-[60px] max-h-[60px] border rounded p-2">
                         <span>
                             <div class="primary-color text-sm">{{ bank.bankName}}</div>
                             <div class="secondary-color text-xs">{{ bank.branch }}</div>
@@ -41,6 +41,7 @@ import { ref, computed, onMounted } from 'vue'
 import add_bank from './add-bank.vue'
 import hdfcImg from '../../assets/images/hdfc.png'
 import { useStore } from 'vuex'
+import bankSvg from '../../assets/images/bank.svg'
 
 const store = useStore()
 
@@ -52,7 +53,8 @@ const cancelAddBank = () => {
 
 const getbankdetails = computed(() => store.getters['boReports/getBankDetails']);
 const addBank = () => {
-    isAddBank.value = true;
+    // isAddBank.value = true;
+    store.dispatch('ekycReirection');
 }
 
 onMounted(() => {

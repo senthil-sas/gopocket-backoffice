@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="flex gap-4 w-full py-4">
-                        <input placeholder="Amount to withdraw" type="text" name="withdrawAmount" id="withdrawAmount" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="withdrawAmountCom"/>
+                        <input placeholder="Amount to withdraw" type="text" name="withdrawAmount" id="withdrawAmount" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" v-model="withdrawAmountCom"/>
                         <button class="commonbtn" >Continue</button>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                     </div>
 
                     <div class="flex gap-4 w-full py-4">
-                        <input placeholder="Amount to withdraw" type="text" name="withdrawAmount" id="withdrawAmount" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="withdrawAmount"/>
+                        <input placeholder="Amount to withdraw" type="text" name="withdrawAmount" id="withdrawAmount" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" v-model="withdrawAmount"/>
                         <button class="commonbtn" >Continue</button>
                     </div>
                 </div>

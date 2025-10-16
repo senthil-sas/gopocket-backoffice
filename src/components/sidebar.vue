@@ -43,7 +43,7 @@
             <icon name="address" height="18" width="18" class="mr-4"/>
             <div class="primaryColor text-[14px]">
               <div class="primaryColor text-[14px] leading-[1.3rem]">
-                {{ getProfileData.primaryAddress  }}
+                {{ getProfileData.primaryAddress || 'NA' }}
               </div>
             </div>
             <span class="ml-auto cursor-pointer"  @click="getDigioLink()" ><icon name="edit" height="16" width="16" /></span>
@@ -147,11 +147,12 @@ const getProfileData = computed(() => store.getters['boReports/getProfileData'])
 
 const router = useRouter();
 const updateEmailOrMobile = async (type: string) => {
-  router.push('/profile').catch(() => { });
-  store.commit('tabs/setProfileCurrentTab', JSON.stringify(5));
-  store.dispatch('tabs/setActiveTab', { path: router.path, id: 5 });
-  store.commit('popup/setUpdateType', type);
-  store.commit('popup/setIsEmailOrMobileUpdate', true);
+  // router.push('/profile').catch(() => { });
+  // store.commit('tabs/setProfileCurrentTab', JSON.stringify(5));
+  // store.dispatch('tabs/setActiveTab', { path: router.path, id: 5 });
+  // store.commit('popup/setUpdateType', type);
+  // store.commit('popup/setIsEmailOrMobileUpdate', true);
+  store.dispatch('ekycReirection');
 };
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -161,7 +162,8 @@ const formatDate = (dateString: string) => {
   return `${day}-${month}-${year}`;
 }
 const getDigioLink = () => {
-  store.dispatch('reekyc/getDigilocker')
+  // store.dispatch('reekyc/getDigilocker')
+  store.dispatch('ekycReirection');
 };
 const props = defineProps({
   isBox: { type: Boolean, default: true }

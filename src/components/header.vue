@@ -18,7 +18,7 @@
 }
 .router-link-exact-active,
 .router-link-active {
-  @apply font-semibold text-[#753ED7];
+  @apply font-semibold text-[#3977de];
 }
 .dropdown:focus-within .dropdown-menu {
   opacity: 1;
@@ -26,8 +26,8 @@
   visibility: visible;
 }
 .headerMobile .active {
-  fill: #753ed7 !important;
-  stroke: #753ed7 !important;
+  fill: #3977de !important;
+  stroke: #3977de !important;
 }
 .pinned-ins.shake {
   animation: shake 0.15s ease;
@@ -75,7 +75,7 @@
           </button>
         </div>
         <div class="-pointer logo mr-auto flex items-center">
-          <img :src="clientLogo" class="h-6 px-4 max-w-[104px]" alt="logo" />
+          <img :src="clientLogo" class="max-w-full h-[48px]" alt="logo" />
         </div>
         <div class="menu-list">
           <ul class="py-0 pl-0 pr-4 hidden lg:flex">
@@ -318,8 +318,10 @@ export default {
     //   this.$router.push('/profile');
     // },
     logout() {
-      localStorage.clear();
-      this.$router.push("/");
+      const localKeys = ['portfolioTab', 'profileTab', 'nomineeList', 'clientId', 'sessionId', 'actionTab', 'dashboard', 'reportsTab','tradeBookDates'];
+      localKeys.forEach(key => localStorage.removeItem(key));
+      // this.$router.push("/?logout=true");
+      this.$router.push({ path: '/', query: { logout: 'true' } });
     },
     navigatePage(type) {
       if (type && type != "") {

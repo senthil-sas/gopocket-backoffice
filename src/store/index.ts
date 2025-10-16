@@ -15,14 +15,15 @@ import funds from './modules/funds'
 import popup from './modules/popup'
 import ledger from './modules/ledger'
 import reekyc from './modules/Re-ekyc'
-import Documents from "./modules/Documents"
+import Documents from "./modules/documents"
 import boReports from "./modules/boReports"
 export default createStore({
   state: {
-    brokerName: "GoPocket",
+    brokerName: "RMONEY",
     ekycLink: 'https://ekyc.gopocket.in/',
-    ssoRedirectionUrl: 'http://web.gopocket.in/',
-    myAppCode: 'oJGBKnveAXcHOWG',
+    ssoRedirectionUrl: 'https://weblive.rmoneyindia.net/',
+    myAppCode: 'TleoyPuHYUmhUsw',
+    appSecret: 'yuhtdrWmUvdWlisrXBvlHslotbpoiuRzAwpoTgKQiuyrbEOuQnnLyGHHZZqeltAEownvrOOlsgdfUUvqwYYjm',
     version: "1.0.0",
     months: [
       { month: "Jan", id: "01" },
@@ -42,30 +43,44 @@ export default createStore({
     windowHeigth: 0,
     loader: false,
     currenttab: "0",
+    redirectionAppCode: "UgtsKytrlEXjsyQau"
   },
 
   mutations: {
-    setWindowHeightWidth(state, payload) {
+    setWindowHeightWidth(state:any, payload:any) {
       state.windowWidth = payload.w
       state.windowHeigth = payload.h
     },
-    setLoader(state, payload) {
+    setLoader(state:any, payload:any) {
       state.loader = payload
     },
-    setcurrenttab(state, payload) {
+    setcurrenttab(state:any, payload:any) {
       state.currenttab = payload
 
     }
   },
 
-  actions: {},
+  actions: {
+    ekycReirection({ state, dispatch, rootGetters }:any) {
+      const userId = rootGetters["auth/getUserId"]
+      const appcode = state.redirectionAppCode
+      // // const redirectionUrl = 'https://e-kyc.rmoneyindia.com/account/?_gl=1*8b6een*_gcl_au*MTI3MjE1ODE5Ny4xNzU5MTI5MzYy*_ga*MjUxMTIyMzUyLjE3NTkxMjkzNjI.*_ga_JKBNJZVCSY*czE3NTkxNDUzMjMkbzIkZzEkdDE3NTkxNDU0NDkkajQxJGwwJGgw'
+      // const redirectionUrl = `https://e-kyc-rmoneyindia-stg.app/account/user/validateCode?authCode=${authcode}&userId=${userId}&appname=RMoney&appcode=${appcode}&action=mobile/email/account`
+      // window.open(redirectionUrl, '_blank');
+      const json = {
+        "userId": userId,
+        "vendor": appcode
+      }
+      dispatch("auth/ssoRedirection", json)
+    }
+  },
 
   getters: {
-    getMonths: state => state.months,
-    getWindowWidth: state => state.windowWidth,
-    getLoader: state => state.loader,
-    getcurrenttab: state => state.currenttab
-
+    getMonths: (state:any) => state.months,
+    getWindowWidth: (state:any) => state.windowWidth,
+    getLoader: (state:any) => state.loader,
+    getcurrenttab: (state:any) => state.currenttab,
+    getRedirectionAppCode: (state:any) => state.redirectionAppCode
   },
 
   modules: { tabs, bankDetails, nominee, reekyc, Documents, subAcc, giftStocks, auth, profile, segment, ledger, tradebook, holdings, positions, reports, funds, popup, boReports },

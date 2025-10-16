@@ -2,6 +2,20 @@ import service from "../modules/services/profile.ts";
 import dashboardService from "../modules/services/Dasboard.ts"
 import errorHandle from '../../handleError/errorHandling'
 
+const fundsRespModal = {
+        "availableMargin": 0.0,
+        "openingBalance": 0.0,
+        "marginUsed": 0.0,
+        "payin": 0.0,
+        "stockPledge": 0.0,
+        "holdingSellCredit": 0.0,
+        "brokerage": 0.0,
+        "exposure": 0.0,
+        "span": 0.0,
+        "premium": 0.0,
+        "unclearedCash": 0.0,
+        "payout": 0.0
+    }
 
 const state = {
     profileData: [],
@@ -11,8 +25,7 @@ const state = {
     isAddBank: false,
     mobileNO: '',
     EmailID: '',
-    fundDetails:''
-
+    fundDetails: fundsRespModal
 };
 
 const actions = {
@@ -46,11 +59,12 @@ const actions = {
     // get funds details
     getFundsDetails({ commit }, userId) {
         commit('setLoader', true, { root: true });
-        commit('setFundsDetails', '')
+        commit('setFundsDetails', fundsRespModal)
         dashboardService.getFundsDetails(userId).then(resp => {
             if (resp.data && resp.data.status == 'Ok' && resp.data.result.length > 0) {
                 commit('setFundsDetails', resp.data.result[0])
             } else {
+                commit('setFundsDetails', state.fundsRespModal)
             }
             },(err) => {
                 errorHandle.handleError(err)

@@ -1,10 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory  } from 'vue-router'
 import store from "../store";
 import common from "../mixins/common.js"
 
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
@@ -55,11 +55,10 @@ router.beforeEach((to, from, next) => {
 
   const isValidSession = sessionId !== null && sessionId !== "undefined";
   const isValidClientId = userId !== null && userId !== "undefined";
-  
   if (isValidSession && isValidClientId && from.path === "/" && to.path === "/" && !isQuery) {
     next({ path: "dashboard" });
-  } else if ((!isValidSession || !isValidClientId) && to.path !== "/") {
-    next({ path: "" });
+  } else if ((!isValidSession || !isValidClientId) && to.path !== "/" && !to.query.hasOwnProperty('logout')) {
+    next({ path: "/" });
   } else {
     next();
   }

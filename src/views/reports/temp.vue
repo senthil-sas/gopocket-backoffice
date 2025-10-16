@@ -6,7 +6,7 @@
         <Listbox as="div" v-model="segment" class="w-[200px]">
           <div class="relative">
             <ListboxButton
-              class="min-h-[28px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              class="min-h-[28px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 sm:text-sm sm:leading-6"
             >
               <span class="block truncate">{{ segment.name }}</span>
               <span

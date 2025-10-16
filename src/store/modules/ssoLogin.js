@@ -1,12 +1,23 @@
 import service from '../httpService';
 import router from '@/router';
+
+async function sha256(message) {
+    const msgBuffer = new TextEncoder().encode(message);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashHex;
+} 
+
 const auth = {
     namespaced: true,
     state: {
         error_message: null,
         loader: false,
         userId: '',
-        setSessionId: ''
+        setSessionId: '',
+        isAuthorizeDialog: false,
+        authLoader: false
     },
     mutations: {
         setErrorMessage(state, payload) {
@@ -21,6 +32,12 @@ const auth = {
         },
         setSessionId(state, payload) {
             state.sessionId = payload
+        },
+        setIsAuthorizeDialog(state, payload) {
+            state.isAuthorizeDialog = payload
+        },
+        setAuthLoader(state, payload) {
+            state.authLoader = payload
         }
     },
     actions: {
@@ -28,19 +45,19 @@ const auth = {
             commit('setLoader', true)
             commit('setErrorMessage', null)
             try {
-                let json = {
-                    vendor: rootState['myAppCode'],
-                    authCode: payload,
-                }
-                const response = await service.ssoLogin(json)
+                // let json = {
+                //     vendor: rootState['myAppCode'],
+                //     authCode: ""
+                // }
+                const response = await service.ssoLogin(payload)
                 if (response.data.stat === "Ok") {
                     localStorage.setItem('clientId', response.data.clientId);
                     localStorage.setItem('sessionId', response.data.userSession);
                     commit("setUserId", response.data.clientId);
                     commit("setSessionId", response.data.userSession);
                     router.push({ name: 'dashboard' }).catch(() => { })
-                } else if (response.data.message) {
-                    commit('setErrorMessage', response.data.message)
+                } else if (response.data.emsg) {
+                    commit('setErrorMessage', response.data.emsg)
                 }
                 commit('setLoader', false)
             } catch (error) {
@@ -57,11 +74,42 @@ const auth = {
                 }
             },
                 (err) => { }).finally(() => { state.logoutLoader = false; })
+        },
+
+        async ssoRedirection({ commit }, payload) {
+            service.ssoRedirection(payload).then((resp) => {
+                if(resp.status == 200 && Array.isArray(resp.data.result) && resp.data.result[0].hasOwnProperty("authorized") && !resp.data.result[0].authorized) {
+                    commit("setIsAuthorizeDialog", true)
+                } else if (resp.status == 200 && Array.isArray(resp.data.result) && resp.data.result[0].hasOwnProperty("redirectUrl")) {
+                    const redirectUrl = resp.data.result[0].redirectUrl
+                    window.open(redirectUrl, "_blank")
+                } else {
+                    notify({ group: 'auth', type: 'error', title: resp.data.message })
+                }
+            })
+        },
+
+        async authorize({commit}, payload) {
+            commit("setAuthLoader", true)
+            service.ssoAuthorize(payload).then((resp) => {
+                if (resp.status == 200 && Array.isArray(resp.data.result) && resp.data.result[0].hasOwnProperty("redirectUrl")) {
+                    const redirectUrl = resp.data.result[0].redirectUrl
+                    window.open(redirectUrl, "_blank")
+                    commit("setIsAuthorizeDialog", false)
+                } else {
+                    notify({ group: 'auth', type: 'error', title: resp.data.message })
+                }
+            }).finally(() => {
+                commit("setAuthLoader", false)
+            })
         }
     },
     getters: {
         getLoader: (state) => state.loader,
-        getUserId: (state) => state.userId
+        getUserId: (state) => state.userId,
+        getErrorMessage: (state) => state.error_message,
+        getIsAuthorizeDialog: (state) => state.isAuthorizeDialog,
+        getAuthLoader: (state) => state.authLoader
     },
 
 }

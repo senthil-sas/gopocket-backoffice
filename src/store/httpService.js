@@ -4,7 +4,7 @@ import { mapGetters } from 'vuex'
 const headers = {
     "Content-Type": "application/json",
 };
-const baseUrl = 'https://web.gopocket.in/';
+const baseUrl = 'https://weblive.rmoneyindia.net/';
 const baseUrlTemp = 'https://orbit.gopocket.in/api/'
 const userId = "SKY34914"
 export default {
@@ -31,7 +31,7 @@ export default {
     },
 
     async ssoLogin(payload) {
-        return await axios.post(`${baseUrl}am/sso/vendor/auth/getUserDetails`, payload)
+        return await axios.post(`${baseUrl}auth/sso/vendor/auth/getUserDetails`, payload)
     },
 
     // async getProfileDetails() {
@@ -131,6 +131,22 @@ export default {
     //     return axios.get(`${baseUrl}api/resource/Customer/SKY40491`, requestOptions)
     //         .then();
     // }
+
+    async ssoRedirection(payload) {
+        const requestOptions = {
+            headers: this.authHeader(),
+        };
+        return axios.post(`${baseUrl}auth/sso/vendor/authorize/check`, payload, requestOptions)
+            .then();
+    },
+
+    async ssoAuthorize(payload) {
+        const requestOptions = {
+            headers: this.authHeader(),
+        };
+        return axios.post(`${baseUrl}auth/sso/vendor/authorize`, payload, requestOptions)
+            .then();
+    },
 
 
 }

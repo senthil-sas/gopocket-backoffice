@@ -27,7 +27,7 @@ export default {
         <div class="flex justify-between flex-wrap max-w-[400px] gap-4 my-8">
           <div class="flex flex-col flex-wrap">
             <div class="secondary-color mb-1 text-xs">Account value</div>
-            <div class="primary-color">{{ accBalance }}</div>
+            <div class="primary-color">{{ ruppesFormat(parseFloat(accBalance).toFixed(2)) }}</div>
           </div>
 
           <div class="flex-col flex gap-4">
@@ -36,7 +36,7 @@ export default {
                 <div class="h-2 w-2 bg-green-500 rounded-full"></div>
                 <span class="text-xs secondary-color">Equity holdings</span>
               </div>
-              <div class="primary-color ml-4">{{ getTotalHoldingValue }}</div>
+              <div class="primary-color ml-4">{{ ruppesFormat(getTotalHoldingValue) }}</div>
             </div>
 
             <div class="flex flex-col flex-wrap">
@@ -44,7 +44,7 @@ export default {
                 <div class="h-2 w-2 bg-yellow-500 rounded-full"></div>
                 <span class="text-xs secondary-color">Cash balance</span>
               </div>
-              <div class="primary-color ml-4">{{ cash_Balance }}</div>
+              <div class="primary-color ml-4">{{ ruppesFormat(cash_Balance) }}</div>
             </div>
           </div>
         </div>
@@ -113,8 +113,10 @@ const calendorSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox
   <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
 </svg>
 `;
+import commonFunc from '../../mixins/common';
 export default {
   components: { icon, transactions_table, linechart },
+  mixins: [commonFunc],
   data() {
     return {
       withdrawAmount: "",
@@ -131,7 +133,7 @@ export default {
         ...mapGetters('profile', ['getFundDetails']),
         ...mapGetters(['getLoader']),
         cash_Balance(){
-          return (Number(this.getFundDetails.payin) + Number(this.getFundDetails.openingBalance) + Number(this.getFundDetails.unclearedCash)).toFixed(2)
+          return (Number(this.getFundDetails?.payin) + Number(this.getFundDetails?.openingBalance) + Number(this.getFundDetails?.unclearedCash))?.toFixed(2)
         },
         accBalance(){
           return Number(this.cash_Balance) + Number(this.getTotalHoldingValue)

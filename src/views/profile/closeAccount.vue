@@ -5,11 +5,11 @@
             <p class="mb-4 primary-color !font-bold text-sm">Account Closure</p>
 
             <Listbox as="div" v-model="Closure" class="max-w-[350px] mb-4">
-                <ListboxLabel class="block text-sm semi-bold font-medium leading-6 text-gray-900 mb-4">Why do you wish to close your account with Pocket? <span class="red">*</span> 
+                <ListboxLabel class="block text-sm semi-bold font-medium leading-6 text-gray-900 mb-4">Why do you wish to close your account with <span class="capitalize">{{ store.state.appName }}</span>? <span class="red">*</span> 
                 </ListboxLabel>
                 <div class="relative mt-2">
                     <ListboxButton
-                        class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        class="min-h-[40px] relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 sm:text-sm sm:leading-6">
                         <span class="block truncate">{{ Closure.name }}</span>
                         <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                             <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -38,7 +38,7 @@
             </Listbox>
 
             <p class="secondary-color text-sm mb-4 max-w-[600px] leading-6">
-                If you close your account, you won’t be able to trade with Pocket. To reopen your account, you’ll have to complete the KYC process again and will get a new Demat account.             </p>
+                If you close your account, you won’t be able to trade with <span class="capitalize">{{ store.state.appName }}</span>. To reopen your account, you’ll have to complete the KYC process again and will get a new Demat account.             </p>
             <div>
                 <button type="submit" class="commonbtn" @click.prevent="handleClosePocket">Continue</button>
             </div>

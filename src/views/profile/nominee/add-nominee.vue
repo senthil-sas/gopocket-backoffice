@@ -8,7 +8,7 @@
             <div>
                 <div class="primary-color text-sm mb-1">First Name</div>
                 <div>
-                    <input type="text" name="firstName" id="firstName" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" @input="toUpperCaseModel('firstName')" v-model="firstName"/>
+                    <input type="text" name="firstName" id="firstName" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" @input="toUpperCaseModel('firstName')" v-model="firstName"/>
                 </div>
                 
                 <div class="h-4">
@@ -19,7 +19,7 @@
             <div>
                 <div class="primary-color text-sm mb-1">Last Name</div>
                 <div>
-                    <input type="text" name="lastName" id="lastName" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" @input="toUpperCaseModel('lastName')" v-model="lastName"/>
+                    <input type="text" name="lastName" id="lastName" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" @input="toUpperCaseModel('lastName')" v-model="lastName"/>
                 </div>
                 <div class="h-4">
                     <span class="error-msg" v-if="lastName == '' && isSubmit">Enter last name</span>
@@ -149,7 +149,7 @@
             <div class="my-3">
                 <div class="primary-color text-sm mb-1">PAN (optional)</div>
                 <div>
-                    <input maxlength="10" @input="panNo ? panNo = panNo?.toUpperCase() : panNo" type="text" name="panNo" id="panNo" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="panNo"/>
+                    <input maxlength="10" @input="panNo ? panNo = panNo?.toUpperCase() : panNo" type="text" name="panNo" id="panNo" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" v-model="panNo"/>
                 </div>
                 <div class="h-4">
                 </div>
@@ -158,7 +158,7 @@
             <div class="my-3">
                 <div class="primary-color text-sm mb-1">Mobile No</div>
                 <div>
-                    <input maxlength="10" @input="digitKeyOnly($event, 'mobileNo')" type="text" name="mobileNo" id="mobileNo" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="mobileNo"/>
+                    <input maxlength="10" @input="digitKeyOnly($event, 'mobileNo')" type="text" name="mobileNo" id="mobileNo" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" v-model="mobileNo"/>
                 </div>
                 <div class="h-4">
                     <span class="error-msg" v-if="!isValidMobile() && isSubmit">Enter valid mobile number</span>
@@ -172,7 +172,7 @@
                     <div class="primary-color text-sm mb-1">Nominee Share Percentage</div> <span class="text-xs">Total available shares: ({{ totalAvilableShare }})</span>
                 </div>
                 <div>
-                    <input maxlength="3" @input="digitKeyOnly($event, 'nomineeSharePercentage')" type="text" name="sharePercentage" id="sharePercentage" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="nomineeSharePercentage"/>
+                    <input maxlength="3" @input="digitKeyOnly($event, 'nomineeSharePercentage')" type="text" name="sharePercentage" id="sharePercentage" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" v-model="nomineeSharePercentage"/>
                 </div>
 
                 <div class="h-4">
@@ -200,7 +200,7 @@
             <div>
                 <div class="primary-color text-sm mb-1">Address</div>
                 <div>
-                    <input type="text" name="Address" id="Address" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="Address"/>
+                    <input type="text" name="Address" id="Address" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" v-model="Address"/>
                 </div>
                 <div class="h-4">
                     <span class="error-msg" v-if="Address == '' && isSubmit">Enter the Address</span>
@@ -210,7 +210,7 @@
             <div>
                 <div class="primary-color text-sm mb-1">Address line 2</div>
                 <div>
-                    <input type="text" name="pincode" id="Address2" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="AddressLine2"/>
+                    <input type="text" name="pincode" id="Address2" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" v-model="AddressLine2"/>
                 </div>
                 <div class="h-4">
                     <span class="error-msg" v-if="AddressLine2 == '' && isSubmit">Enter the Address line 2</span>
@@ -222,7 +222,7 @@
             <div>
                 <div class="primary-color text-sm mb-1">State</div>
                 <div>
-                    <input type="text" name="state" id="state" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="state"/>
+                    <input type="text" name="state" id="state" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" v-model="state"/>
                 </div>
                 <div class="h-4">
                     <span class="error-msg" v-if="state == '' && isSubmit">Enter the Address line 2</span>
@@ -232,7 +232,7 @@
             <div>
                 <div class="primary-color text-sm mb-1">PIN code</div>
                 <div>
-                    <input maxlength="6" @input="digitKeyOnly($event, 'pincode')" type="text" name="pincode" id="pincode" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="pincode"/>
+                    <input maxlength="6" @input="digitKeyOnly($event, 'pincode')" type="text" name="pincode" id="pincode" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" v-model="pincode"/>
                 </div>
                 <div class="h-4">
                     <span class="error-msg" v-if="pincode == '' && isSubmit">Enter the pincode</span>

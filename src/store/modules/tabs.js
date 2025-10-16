@@ -6,7 +6,7 @@ import router from '@/router';
 const state = {
     reportTabs: [
         { name: 'Tradebook', id: 0, active: true, count: '0' },
-        { name: 'P&L', id: 1, active: false, count: '0' },
+        // { name: 'P&L', id: 1, active: false, count: '0' },
         // { name: 'Tax P&L', id: 2, active: false, count: '0' },
         { name: 'Ledger', id: 2, active: false, count: '0' },
         // { name: 'Downloads', id: 4, active: false, count: '0' },
@@ -27,9 +27,9 @@ const state = {
         { name: 'Bank Details', id: 1, active: true, count: '0' },
         { name: 'Nominee', id: 2, active: false, count: '0' },
         { name: 'Segments', id: 3, active: false, count: '0' },
-        { name: 'Documents', id: 4, active: false, count: '0' },
-        { name: 'Income Proof', id: 5, active: false, count: '0' },
-        { name: 'Close Account', id: 6, active: false, count: '0' },
+        // { name: 'Documents', id: 4, active: false, count: '0' },
+        // { name: 'Income Proof', id: 5, active: false, count: '0' },
+        // { name: 'Close Account', id: 6, active: false, count: '0' },
 
 
 
@@ -37,7 +37,7 @@ const state = {
     dashboardTabs: [
         { name: 'Equity', id: 0, active: true, count: '0' },
         // { name: 'Funds', id: 1, active: false, count: '0' },
-        { name: 'Commodity', id: 2, active: false, count: '0' },
+        // { name: 'Commodity', id: 2, active: false, count: '0' },
         // { name: 'Ledger', id: 3, active: false, count: '0' }
     ],
     profileCurrentTab: 0

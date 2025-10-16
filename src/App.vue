@@ -155,11 +155,11 @@ body {
 }
 
 .violet-color {
-  @apply text-[#753ED7] font-medium;
+  @apply text-[#3977de] font-medium;
 }
 
 .violet-bg {
-  @apply !bg-[#753ED7];
+  @apply !bg-[#3977de];
 }
 
 .secondary-violet-bg {
@@ -172,7 +172,7 @@ body {
 
 /* new css */
 .commonbtn {
-  @apply !px-4 !py-2 !text-sm !bg-[#753ED7] !text-white !rounded-md min-w-[90px]
+  @apply !px-4 !py-2 !text-sm !bg-[#3977de] !text-white !rounded-md min-w-[90px]
 }
 .commonbtn:disabled, .cancelbtn:disabled {
   @apply !opacity-60 !bg-gray-400 cursor-not-allowed
@@ -264,7 +264,7 @@ input[type="text"] {
 }
 
 .changeColorHover {
-  fill: #753ed7;
+  fill: #3977de;
   transition: all ease 0.3s;
 }
 

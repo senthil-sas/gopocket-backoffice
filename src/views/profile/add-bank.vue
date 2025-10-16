@@ -10,7 +10,7 @@
                 <div>
                     <div class="primary-color text-sm mb-1">Bank IFSC Code </div>
                     <div>
-                        <input type="text" name="ifscCode" id="ifscCode" v-model="ifscCode" maxlength="11" placeholder="Bank IFSC Code" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" @input="validateIfsc(),keyPressIfsc($event),ifscCode?.length < 11 ? $store.commit('bankDetails/setIFSCDetails', '', {root:true}) : ''">
+                        <input type="text" name="ifscCode" id="ifscCode" v-model="ifscCode" maxlength="11" placeholder="Bank IFSC Code" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" @input="validateIfsc(),keyPressIfsc($event),ifscCode?.length < 11 ? $store.commit('bankDetails/setIFSCDetails', '', {root:true}) : ''">
                                     <!-- Error Msg for First Name --> 
                      </div>
                      <div class="text-red-500 text-xs pt-1 h-3">{{ geterrormsg }}
@@ -28,7 +28,7 @@
                 <div>
                     <div class="primary-color text-sm mb-1">Bank’s MICR Code</div>
                     <div>
-                        <input type="text" name="MICRcode" id="MICRcode" maxlength="25" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Bank’s MICR Code"  v-model="MICRcode" @input="keyPressAlphaNumericMicr" />
+                        <input type="text" name="MICRcode" id="MICRcode" maxlength="25" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" placeholder="Bank’s MICR Code"  v-model="MICRcode" @input="keyPressAlphaNumericMicr" />
                      </div>
                      <div class="h-5"></div>
                 </div>
@@ -38,7 +38,7 @@
                 <div >
                     <div class="primary-color text-sm mb-1">Enter your account number</div>
                     <div>
-                        <input type="text"  maxlength="15" name="accountNo" id="accountNo" class="pw block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"  autocomplete="off" v-model="accountNumber" placeholder="Bank Account Number" @input="keyPressAlphaNumericAcc"/>
+                        <input type="text"  maxlength="15" name="accountNo" id="accountNo" class="pw block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"  autocomplete="off" v-model="accountNumber" placeholder="Bank Account Number" @input="keyPressAlphaNumericAcc"/>
                     </div>
                     <div class="h-4">
                        <span class="text-red-500 text-xs pt-1 h-3" v-if="accountNumber == '' && isSubmit">Enter Account Number</span>
@@ -49,7 +49,7 @@
                 <div>
                     <div class="primary-color text-sm mb-1">Re-enter your account number</div>
                     <div>
-                        <input type="text" name="reAccountNo" id="reAccountNo" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"  @paste.prevent @keyup="clrMisMatchErr" placeholder="Bank Account Number" maxlength="15" v-model="reEnterAccountNumber" autocomplete="off" @input="keyPressAlphaNumericReAcc" />
+                        <input type="text" name="reAccountNo" id="reAccountNo" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"  @paste.prevent @keyup="clrMisMatchErr" placeholder="Bank Account Number" maxlength="15" v-model="reEnterAccountNumber" autocomplete="off" @input="keyPressAlphaNumericReAcc" />
                     </div>
                     <div class="h-4">
                        <span class="text-red-500 text-xs pt-1 h-3" v-if="reEnterAccountNumber == '' && isSubmit">Re-enter Account Number</span>

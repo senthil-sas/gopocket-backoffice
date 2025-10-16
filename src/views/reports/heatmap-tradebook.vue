@@ -2,7 +2,7 @@
     <div class="flex justify-center items-center heatmap_cus">
         <v-frappe-chart class="w-full h-[150px]" type="heatmap" :data="getDataPoints"
             :start="new Date(`${fromDateYear}`)" :end="new Date(`${toDateYear}`)"
-             :truncateLegends="true" :colors="['#ebedf0', '#d4bff8', '#b893f4', '#8b5be4', '#753ED7']"/>
+             :truncateLegends="true" :colors="['#ebedf0', '#d4bff8', '#b893f4', '#8b5be4', '#3977de']"/>
         <!-- :start="new Date(dates.fromDate)"
             :end="new Date(dates.toDate)" -->
     </div>

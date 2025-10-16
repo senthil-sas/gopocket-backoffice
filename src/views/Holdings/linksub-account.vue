@@ -10,7 +10,7 @@
                     <div>
                         <div class="primary-color text-sm mb-1">Sub-account's Client ID</div>
                         <div>
-                            <input type="text" name="subClientId" id="subClientId" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="subClientId"/>
+                            <input type="text" name="subClientId" id="subClientId" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" v-model="subClientId"/>
                          </div>
                     </div>
                 </div>
@@ -19,7 +19,7 @@
                     <div>
                         <div class="primary-color text-sm mb-1">Sub-account's PAN</div>
                         <div>
-                            <input type="text" name="subClientPan" id="subClientPan" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="subClientPan"/>
+                            <input type="text" name="subClientPan" id="subClientPan" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" v-model="subClientPan"/>
                          </div>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                     <div >
                         <div class="primary-color text-sm mb-1">Sub-account's Mobile No</div>
                         <div>
-                            <input type="text" name="subClientMobileNo" id="subClientMobileNo" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="subClientMobileNo"/>
+                            <input type="text" name="subClientMobileNo" id="subClientMobileNo" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" v-model="subClientMobileNo"/>
                         </div>
                     </div>
                 </div>

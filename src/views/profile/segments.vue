@@ -10,9 +10,9 @@
                     <button id="accinfo_label_nse_mf" class="bluebtn" >NSE MF</button>
                 </div>
                 <p class="secondary-color dark:text-[#94A3B8] mb-4 text-sm min-h-[60px]">Equity derivatives, as well as contract-based assets,such as bonds, commodities and currencies, on NSE.</p>
-                    <button v-if="getProfileData.segment.nse?.toUpperCase() == 'ACTIVE' && getProfileData.segment.bse?.toUpperCase() == 'ACTIVE'" id="accinfo_eq_isactive" class="commonbtn green">Active</button>   
-                    <button v-if="getProfileData.segment.nse?.toUpperCase() == 'INACTIVE' || getProfileData.segment.bse?.toUpperCase() == 'INACTIVE'" id="accinfo_eq_isactive" class="commonbtn">Activate Segment</button>  
-                    <button v-if="getProfileData.segment.nse?.toUpperCase() == 'DORMANT' || getProfileData.segment.bse?.toUpperCase() == 'DORMANT'" id="accinfo_eq_isactive" class="commonbtn">Start-KYC</button>                 
+                    <button v-if="getProfileData.segment.nse?.toUpperCase() == 'Y' && getProfileData.segment.bse?.toUpperCase() == 'Y'" id="accinfo_eq_isactive" class="commonbtn green">Active</button>   
+                    <button v-if="getProfileData.segment.nse?.toUpperCase() == 'N' || getProfileData.segment.bse?.toUpperCase() == 'N'" id="accinfo_eq_isactive" class="commonbtn" @click="ekyc()">Activate Segment</button>  
+                    <button v-if="getProfileData.segment.nse?.toUpperCase() == 'DORMANT' || getProfileData.segment.bse?.toUpperCase() == 'DORMANT'" id="accinfo_eq_isactive" class="commonbtn" @click="ekyc()">Start-KYC</button>                 
             </div>
             </div>
             <div class="rounded-lg p-3 border-[0.02rem] dark:border-[#232325]">
@@ -25,9 +25,9 @@
                 </div>
                 <p class="secondary-color dark:text-[#94A3B8] mb-4 text-sm min-h-[60px]">Equity derivatives, as well as contract-based assets, such as bonds, commodities & currencies, on NSE</p>
                 <!-- <button id="accinfo_derivatives_isactive" class="commonbtn" >Enable Segment</button> -->
-                    <button v-if="getProfileData.segment.nfo?.toUpperCase() == 'ACTIVE' && getProfileData.segment.bfo?.toUpperCase() == 'ACTIVE'" id="accinfo_eq_isactive" class="commonbtn green">Active</button>   
-                    <button v-if="getProfileData.segment.nfo?.toUpperCase() == 'INACTIVE' || getProfileData.segment.bfo?.toUpperCase() == 'INACTIVE'" id="accinfo_eq_isactive" class="commonbtn">Activate Segment</button>  
-                    <button v-if="getProfileData.segment.nfo?.toUpperCase() == 'DORMANT' || getProfileData.segment.bfo?.toUpperCase() == 'DORMANT'" id="accinfo_eq_isactive" class="commonbtn">Start-KYC</button>
+                    <button v-if="getProfileData.segment.nfo?.toUpperCase() == 'Y' && getProfileData.segment.bfo?.toUpperCase() == 'Y'" id="accinfo_eq_isactive" class="commonbtn green">Active</button>   
+                    <button v-if="getProfileData.segment.nfo?.toUpperCase() == 'N' || getProfileData.segment.bfo?.toUpperCase() == 'N'" id="accinfo_eq_isactive" class="commonbtn" @click="ekyc()">Activate Segment</button>  
+                    <button v-if="getProfileData.segment.nfo?.toUpperCase() == 'DORMANT' || getProfileData.segment.bfo?.toUpperCase() == 'DORMANT'" id="accinfo_eq_isactive" class="commonbtn" @click="ekyc()">Start-KYC</button>
                 </div>
             </div>
             <div class="rounded-lg p-3 border-[0.02rem] dark:border-[#232325]">
@@ -38,9 +38,9 @@
                 </div>
                 <p class="secondary-color dark:text-[#94A3B8] mb-4 text-sm min-h-[60px]">Trade physical substances such as gold, crude oil, cotton, lead etc. on MCX.</p>
                 <!-- <button id="accinfo_com_isactive" class="commonbtn">Perform KYC</button> -->
-                    <button v-if="getProfileData.segment.mcx?.toUpperCase() == 'ACTIVE'" id="accinfo_eq_isactive" class="commonbtn green">Active</button>   
-                    <button v-if="getProfileData.segment.mcx?.toUpperCase() == 'INACTIVE'" id="accinfo_eq_isactive" class="commonbtn">Activate Segment</button>  
-                    <button v-if="getProfileData.segment.mcx?.toUpperCase() == 'DORMANT'" id="accinfo_eq_isactive" class="commonbtn">Start-KYC</button>
+                    <button v-if="getProfileData.segment.mcx?.toUpperCase() == 'Y'" id="accinfo_eq_isactive" class="commonbtn green">Active</button>   
+                    <button v-if="getProfileData.segment.mcx?.toUpperCase() == 'N'" id="accinfo_eq_isactive" class="commonbtn" @click="ekyc()">Activate Segment</button>  
+                    <button v-if="getProfileData.segment.mcx?.toUpperCase() == 'DORMANT'" id="accinfo_eq_isactive" class="commonbtn" @click="ekyc()">Start-KYC</button>
                 </div>
             </div>
         </div>
@@ -61,6 +61,11 @@ export default {
 
 
     },
+    methods: {
+        ekyc(){
+            this.$store.dispatch('ekycReirection');
+        }
+    }
 
 }
 </script>

@@ -11,7 +11,7 @@
                     <div>
                         <div class="primary-color text-sm mb-1">Recipient's Name</div>
                         <div>
-                            <input type="text" name="recipientsName" id="recipientsName" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="recipientsName"/>
+                            <input type="text" name="recipientsName" id="recipientsName" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" v-model="recipientsName"/>
                          </div>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                     <div>
                         <div class="primary-color text-sm mb-1">Recipient's Mobile No</div>
                         <div>
-                            <input type="text" name="recipientsMobileNo" id="recipientsMobileNo" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="recipientsMobileNo"/>
+                            <input type="text" name="recipientsMobileNo" id="recipientsMobileNo" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" v-model="recipientsMobileNo"/>
                          </div>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                     <div >
                         <div class="primary-color text-sm mb-1">Recipient's Email</div>
                         <div>
-                            <input type="text" name="recipientsEmail" id="recipientsEmail" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" v-model="recipientsEmail"/>
+                            <input type="text" name="recipientsEmail" id="recipientsEmail" class="block w-[350px] h-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" v-model="recipientsEmail"/>
                         </div>
                     </div>
                 </div>

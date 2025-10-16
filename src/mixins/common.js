@@ -67,6 +67,7 @@ export default {
         },
 
         ruppesFormat(num) {
+            if(!num) return "0.00";
             var n1, n2;
             num = num + "" || "";
             // works for integer and floating as well
@@ -101,7 +102,7 @@ export default {
                     tab == 0 ? title = 'Account Details' : tab == 1 ? title = 'Bank Details' : tab == 2 ? title = 'Nominee' : tab == 3 ? title = 'Segments' : tab == 4 ? title = 'Documents' : tab == 5 ? title = 'Income Proof' : tab == 6 ? title = 'Close Account' : title = 'Portfolio'
                 }
             }
-            return document.title = val.path != '/' && title ? `${title} / Cosmos` : 'Cosmos'
+            return document.title = val.path != '/' && title ? `${title} / RMONEY` : 'RMONEY'
         }
     },
 }

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div class="text-red-500 text-base text-center mt-4">{{ getErrorMessage }}</div>
         <div v-if="getLoader" class="flex items-center justify-center" style="height:100vh !important">
         <img height="60" width="60" :src="spinnerGif" alt="loading">
         </div>
@@ -7,7 +8,7 @@
         <div v-else class="flex justify-center items-center h-screen">
             <div class="flex flex-col gap-4 max-w-[500px]">
                 <div>
-                    <img :src="nidhi_logo" alt="nidhi_logo" class="max-w-[25%] h-auto">
+                    <img :src="client_logo" alt="client_logo" class="max-w-[25%] h-auto">
                 </div>
                 <div class="primary-color text-xl">
                     The central dashboard for your {{ $store.state.brokerName }} account
@@ -25,17 +26,17 @@
 </template>
 <script>
 import spinnerGif from "../../assets/images/spinner.gif"
-import nidhi_logo from '../../assets/images/client-logo.svg'
+import client_logo from '../../assets/images/client-logo.svg'
 import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
             spinnerGif,
-            nidhi_logo
+            client_logo
         }
     },
     computed: {
-        ...mapGetters('auth',['getLoader'])
+        ...mapGetters('auth',['getLoader', 'getErrorMessage'])
     },
     methods: {
         login() {
@@ -43,18 +44,18 @@ export default {
         }
     },
     created() {
-        // if (this.$store.state.sessionId && this.$store.state.userId) {
-        //     this.$router.push('dashboard').catch(() => { })
-        // } else {
-        //     if (this.$route.query.authCode) {
-        //         this.isParamAvil = true
-        //         this.$store.dispatch("auth/getData", this.$route.query.authCode);
-        //     } 
-        // }
-        if (this.$route.query.authCode) {
-            this.isParamAvil = true
-            this.$store.dispatch("auth/getData", this.$route.query.authCode);
+        if ((this.$route.query.authCode || this.$route.query.authcode) && this.$route.query.userId) {
+            let authcode = this.$route.query.authCode || this.$route.query.authcode
+            const clientid = this.$route.query.userId
+            this.isParamAvil = true;
+            this.$store.dispatch("auth/getData", { vendor: this.$route.query.appcode, authCode: this.$route.query.authCode, });
         } 
+        else if (this.$route.query.logout) { 
+
+        } 
+        else {
+            this.login();
+        }
     },
 }
 </script>
