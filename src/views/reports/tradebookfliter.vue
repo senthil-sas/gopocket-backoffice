@@ -99,7 +99,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
 import Icons from "../../components/utilComponents/icons.vue";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/vue";
@@ -118,10 +118,14 @@ const popover = ref({
   visibility: "click",
   placement: "bottom-start",
 });
+const today = ref(new Date())
+// Calculate 3 months before today
+const threeMonthsAgo = new Date()
+threeMonthsAgo.setMonth(today.value.getMonth() - 3)
+const formatDate = (date: Date) => date.toISOString().split('T')[0]
 
 const fromDate = ref();
 const toDate = ref();
-const today = ref(new Date());
 const loader = computed(() => store.getters["getLoader"]);
 
 const getTradeBook = () => {
@@ -139,11 +143,21 @@ const getTradeBook = () => {
   }
 };
 
+
+// const isOwVisible = computed(() => store.getters["ow/getIsOwVisible"]);
+watch(activeReportTab, () => {
+  getTradeBook();
+});
+
 onMounted(async() => {
   const localData = JSON.parse(localStorage.getItem('tradeBookDates')!)
   if(localData && Object.keys(localData).length) {
     fromDate.value = new Date(localData.fromDate)
     toDate.value = new Date(localData.toDate)
+  } else {
+    fromDate.value = formatDate(threeMonthsAgo);
+    toDate.value = formatDate(today.value);
   }
+  getTradeBook();
 });
 </script>
