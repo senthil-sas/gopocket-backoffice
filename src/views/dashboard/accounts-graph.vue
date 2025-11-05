@@ -48,13 +48,11 @@ export default {
             </div>
           </div>
         </div>
+        <button class="commonbtn" @click="addFunds()">Add Funds</button>
       </div>
 
-      <div class="w-[50%]">
+      <!-- <div class="w-[50%]">
         <span class="primary-color !font-bold">Commodity</span>
-        <!-- <span class="secondary-color text-xs mx-2"
-          >( Updated on <span>2023-07-06</span> )</span
-        > -->
 
         <div class="flex flex-col justify-center items-center gap-4 h-60">
           <img
@@ -65,9 +63,9 @@ export default {
           <div class="text-center primary-color">
             You don't have any funds here
           </div>
-          <button class="commonbtn">Add Funds</button>
+          <button class="commonbtn" @click="addFunds()">Add Funds</button>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <!-- Recent Transactions -->
@@ -179,6 +177,9 @@ export default {
 
       return formattedDate;
     },
+    addFunds() {
+      this.$store.dispatch("addFunds")
+    }
   },
   async created(){
     await this.$store.dispatch('holdings/getHoldingsFromApi')

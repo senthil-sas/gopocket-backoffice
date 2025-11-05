@@ -7,22 +7,6 @@ const state = {
 }
 
 const actions = {
-    // getPositionsFromApi({ commit }, payload) {
-    //     commit('setPositionData', [])
-    //     try {
-    //         service.getPositionsFromApi(payload).then(resp => {
-    //             if (resp.data.message.data.positions != 'Positions Not Exists') {
-    //                 commit('setPositionData', resp.data.message.data.positions)
-    //             } else {
-    //             }
-    //         })
-    //     } catch (error) {
-
-    //     }
-    // }
-
-
-
     getPositionsFromApi({ commit, rootGetters }, userId) {
         commit('setPositionData', []);
         commit('setLoader', true, { root: true });

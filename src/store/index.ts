@@ -20,7 +20,7 @@ import boReports from "./modules/boReports"
 export default createStore({
   state: {
     brokerName: "RMONEY",
-    ekycLink: 'https://ekyc.gopocket.in/',
+    ekycLink: 'https://e-kyc.rmoneyindia.com/e-kyc/?selected=NQ==',
     ssoRedirectionUrl: 'https://weblive.rmoneyindia.net/',
     myAppCode: 'TleoyPuHYUmhUsw',
     appSecret: 'yuhtdrWmUvdWlisrXBvlHslotbpoiuRzAwpoTgKQiuyrbEOuQnnLyGHHZZqeltAEownvrOOlsgdfUUvqwYYjm',
@@ -61,7 +61,7 @@ export default createStore({
   },
 
   actions: {
-    ekycReirection({ state, dispatch, rootGetters }:any) {
+    ekycReirection({ state, dispatch, rootGetters }:any, action:string) {
       const userId = rootGetters["auth/getUserId"]
       const appcode = state.redirectionAppCode
       // // const redirectionUrl = 'https://e-kyc.rmoneyindia.com/account/?_gl=1*8b6een*_gcl_au*MTI3MjE1ODE5Ny4xNzU5MTI5MzYy*_ga*MjUxMTIyMzUyLjE3NTkxMjkzNjI.*_ga_JKBNJZVCSY*czE3NTkxNDUzMjMkbzIkZzEkdDE3NTkxNDU0NDkkajQxJGwwJGgw'
@@ -69,10 +69,27 @@ export default createStore({
       // window.open(redirectionUrl, '_blank');
       const json = {
         "userId": userId,
-        "vendor": appcode
+        "vendor": appcode,
+        "action" : action
       }
       dispatch("auth/ssoRedirection", json)
-    }
+    },
+
+    addFunds() {
+      const redirectUrl = "https://weblive.rmoneyindia.net/funds"
+      window.open(redirectUrl, "_blank")
+    },
+    appcodeBasedRedirection({ state, dispatch, rootGetters }:any, appcode:string) {
+      const userId = rootGetters["auth/getUserId"]
+      // // const redirectionUrl = 'https://e-kyc.rmoneyindia.com/account/?_gl=1*8b6een*_gcl_au*MTI3MjE1ODE5Ny4xNzU5MTI5MzYy*_ga*MjUxMTIyMzUyLjE3NTkxMjkzNjI.*_ga_JKBNJZVCSY*czE3NTkxNDUzMjMkbzIkZzEkdDE3NTkxNDU0NDkkajQxJGwwJGgw'
+      // const redirectionUrl = `https://e-kyc-rmoneyindia-stg.app/account/user/validateCode?authCode=${authcode}&userId=${userId}&appname=RMoney&appcode=${appcode}&action=mobile/email/account`
+      // window.open(redirectionUrl, '_blank');
+      const json = {
+        "userId": userId,
+        "vendor": appcode,
+      }
+      dispatch("auth/ssoRedirection", json)
+    },
   },
 
   getters: {

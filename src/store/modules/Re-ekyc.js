@@ -60,11 +60,9 @@ const actions = {
         };
         service.verifyOTP(requestData)
             .then(resp => {
-                // console.log('jk33', resp)
 
                 if ((resp.data.message.toString().trim() == "Success" && resp.status == "200")) {
                     commit('setverifyOTP', resp.data.result);
-                    // commit('setIsOtpVerify', true);
                     commit('popup/setIsOtpVerify', false, { root: true }); // Assuming you have a 'popup' module
                     commit('popup/setisNewEmailOrNewMobileUpdate', true, { root: true }); // Assuming you have a 'popup' module
                 } else {
@@ -149,7 +147,6 @@ const actions = {
 
         service.UpdateEmailId(NewEmail, state.LoginId)
             .then(resp => {
-                // console.log(resp);
                 if ((resp.data.message.toString().trim() == "Success" && resp.status == "200")) {
                     commit('setUpdateEmailId', resp.data.result);
 
@@ -202,18 +199,12 @@ const actions = {
 
                 if (resp.status == 200 && resp?.data?.stat === 1) {
                     state.digiURL = resp?.data?.result;
-                    // window.open(state.digiURL, '_self')
                     window.open(state.digiURL, '_blank')
                 } else {
                 }
             })
             .catch(err => {
                 errorHandle.handleError(err);
-                //    notify({
-                //         group: "auth",
-                //          type: "error",
-                //         title: err.response.data.reason,
-                //     });
             })
             .finally(() => {
                 commit('setloginloader', false,);

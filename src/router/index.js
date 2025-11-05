@@ -55,7 +55,7 @@ router.beforeEach((to, from, next) => {
 
   const isValidSession = sessionId !== null && sessionId !== "undefined";
   const isValidClientId = userId !== null && userId !== "undefined";
-  if (isValidSession && isValidClientId && from.path === "/" && to.path === "/" && !isQuery) {
+  if (isValidSession && isValidClientId && from.path === "/" && to.path === "/" && !isQuery && (!to.query.hasOwnProperty('logout') || !from.query.hasOwnProperty('logout'))) {
     next({ path: "dashboard" });
   } else if ((!isValidSession || !isValidClientId) && to.path !== "/" && !to.query.hasOwnProperty('logout')) {
     next({ path: "/" });

@@ -40,7 +40,6 @@ const actions = {
     async getDematData({ commit }, payload) {
         commit('setLoader', true, { root: true })
         service.getDematData(payload).then(resp => {
-            console.log(resp?.data);
             if (resp?.data?.result[0].dematId) {
                 commit('setDPData', resp?.data?.result[0].dematId)
             } else {

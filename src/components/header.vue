@@ -131,7 +131,6 @@
                 <div class="py-1">
                   <MenuItem v-slot="{ active }">
                     <a
-                      href="#"
                       class="primary-color text-xs hover:!text-[#52a3ff]"
                       :class="[
                         active ? ' text-gray-900' : 'text-gray-700',
@@ -148,7 +147,6 @@
                     @click="navigatePage('rewards')"
                   >
                     <a
-                      href="#"
                       class="primary-color text-xs hover:!text-[#52a3ff]"
                       :class="[
                         active ? ' text-gray-900' : 'text-gray-700',
@@ -162,7 +160,6 @@
                     @click="navigatePage('giftStocks')"
                   >
                     <a
-                      href="#"
                       class="primary-color text-xs hover:!text-[#52a3ff]"
                       :class="[
                         active ? ' text-gray-900' : 'text-gray-700',
@@ -173,7 +170,6 @@
                   </MenuItem>
                   <MenuItem v-slot="{ active }" @click="navigatePage('family')">
                     <a
-                      href="#"
                       class="primary-color text-xs hover:!text-[#52a3ff]"
                       :class="[
                         active ? ' text-gray-900' : 'text-gray-700',
@@ -187,7 +183,6 @@
                     @click="navigatePage('support')"
                   >
                     <a
-                      href="#"
                       class="primary-color text-xs hover:!text-[#52a3ff]"
                       :class="[
                         active ? ' text-gray-900' : 'text-gray-700',
@@ -200,7 +195,6 @@
                 <div class="py-1" @click="logout()">
                   <MenuItem v-slot="{ active }">
                     <a
-                      href="#"
                       class="primary-color text-xs hover:!text-[#52a3ff]"
                       :class="[
                         active ? ' text-gray-900' : 'text-gray-700',

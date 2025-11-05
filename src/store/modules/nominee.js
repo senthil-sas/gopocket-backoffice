@@ -34,7 +34,6 @@ const actions = {
                 if (resp.status == 200) {
                     commit('setNomineeStage', 'nomineeSummary')
                 } else {
-                    //  commit('setNomineeList', [])
                 }
             })
         } catch (error) {

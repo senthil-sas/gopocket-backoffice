@@ -43,9 +43,6 @@ const mutations = {
             dates.push(new Date(el.trade_date))
             dataPoints[getTimeStamp(el.trade_date)] = (el.qty)
         });
-
-        // state.startDate = new Date(Math.min.apply(null, dates));
-        // state.endDate = new Date(Math.max.apply(null, dates));
         state.dataPoints = dataPoints
     },
 };

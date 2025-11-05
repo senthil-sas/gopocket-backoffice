@@ -136,7 +136,9 @@ export default {
         const requestOptions = {
             headers: this.authHeader(),
         };
-        return axios.post(`${baseUrl}auth/sso/vendor/authorize/check`, payload, requestOptions)
+        const json = {...payload}
+        delete json.action
+        return axios.post(`${baseUrl}auth/sso/vendor/authorize/check`, json, requestOptions)
             .then();
     },
 

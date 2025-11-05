@@ -28,9 +28,10 @@
                 </div>
             </div>
 
-            <div class="my-6">
-                <button class="commonbtn" @click="addBank()">Add New bank</button>
-                </div>
+            <div class="my-6 flex gap-3">
+                <button class="commonbtn" @click="addBank('new_bank')">Add New bank</button>
+                <button class="commonbtn" @click="addBank('primary_bank')">Modify bank</button>
+            </div>
             </div>
         <add_bank v-if="isAddBank" @cancel="cancelAddBank" />
     </div>
@@ -52,9 +53,9 @@ const cancelAddBank = () => {
 }
 
 const getbankdetails = computed(() => store.getters['boReports/getBankDetails']);
-const addBank = () => {
+const addBank = (action:string) => {
     // isAddBank.value = true;
-    store.dispatch('ekycReirection');
+    store.dispatch('ekycReirection', action);
 }
 
 onMounted(() => {

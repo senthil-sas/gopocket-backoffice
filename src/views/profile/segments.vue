@@ -62,8 +62,8 @@ export default {
 
     },
     methods: {
-        ekyc(){
-            this.$store.dispatch('ekycReirection');
+        ekyc() {
+            this.$store.dispatch('ekycReirection', "segment");
         }
     }
 

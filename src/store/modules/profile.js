@@ -64,7 +64,7 @@ const actions = {
             if (resp.data && resp.data.status == 'Ok' && resp.data.result.length > 0) {
                 commit('setFundsDetails', resp.data.result[0])
             } else {
-                commit('setFundsDetails', state.fundsRespModal)
+                commit('setFundsDetails', fundsRespModal)
             }
             },(err) => {
                 errorHandle.handleError(err)
@@ -79,7 +79,6 @@ const actions = {
 const mutations = {
     setProfileData(state, payload) {
         state.profileData = payload;
-        // console.log(payload);
     },
     setbankdetails(state, payload) {
         state.bankdetails = payload;

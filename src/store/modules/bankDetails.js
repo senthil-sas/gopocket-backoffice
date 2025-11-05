@@ -31,32 +31,7 @@ const actions = {
             .finally(() => {
             });
     },
-
-    // async saveBankDetails({ commit, dispatch, rootGetters }, payload) {
-    //     commit("setLoader", true, { root: true });
-    //     try {
-    //         // let json = {
-    //         //     "applicationId": rootGetters['auth/getUserId'],
-    //         //     "micr": payload.MICR,
-    //         //     "address": payload.address,
-    //         //     "ifsc": payload.ifsc,
-    //         //     "accountNo": payload.accountNo,
-    //         //     "branchName": payload.branchName,
-    //         //     "pincode": payload.pincode,
-    //         //     "verifyAccNumber": payload.verifyAccNumber
-    //         // }
-    //         let response = await service.saveBankDetails(json);
-    //         if (response.status == 200 && response?.data?.stat === 1) {
-    //             console.log(response.status)
-    //             commit('common/setcurrentTab', '3', { root: true })
-    //             commit('common/setIsPenny', true, { root: true })
-    //         } else {
-    //         }
-    //     } catch (error) {
-    //         commit("setLoader", false, { root: true });
-    //     }
-    //     commit("setLoader", false, { root: true });
-    // },
+    
     async saveBankDetails({ commit }, payload) {
         commit('setLoader', true, { root: true });
         service.saveBankDetails(payload).then(resp => {

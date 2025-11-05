@@ -1,5 +1,7 @@
 import service from '../httpService';
 import router from '@/router';
+import { useNotification } from "@kyvg/vue3-notification";
+const { notify } = useNotification();
 
 async function sha256(message) {
     const msgBuffer = new TextEncoder().encode(message);
@@ -45,10 +47,6 @@ const auth = {
             commit('setLoader', true)
             commit('setErrorMessage', null)
             try {
-                // let json = {
-                //     vendor: rootState['myAppCode'],
-                //     authCode: ""
-                // }
                 const response = await service.ssoLogin(payload)
                 if (response.data.stat === "Ok") {
                     localStorage.setItem('clientId', response.data.clientId);
@@ -63,7 +61,6 @@ const auth = {
             } catch (error) {
                 commit('setLoader', false)
                 console.log(error);
-                // dispatch('unAuthorized', error, {root: true})
             }
         },
         async logout({ commit }) {
@@ -78,10 +75,13 @@ const auth = {
 
         async ssoRedirection({ commit }, payload) {
             service.ssoRedirection(payload).then((resp) => {
-                if(resp.status == 200 && Array.isArray(resp.data.result) && resp.data.result[0].hasOwnProperty("authorized") && !resp.data.result[0].authorized) {
+                if(resp.status == 200 && resp.data.status != "Not ok" && Array.isArray(resp.data.result) && resp.data.result[0].hasOwnProperty("authorized") && !resp.data.result[0].authorized) {
                     commit("setIsAuthorizeDialog", true)
-                } else if (resp.status == 200 && Array.isArray(resp.data.result) && resp.data.result[0].hasOwnProperty("redirectUrl")) {
-                    const redirectUrl = resp.data.result[0].redirectUrl
+                } else if (resp.status == 200 && resp.data.status != "Not ok" && Array.isArray(resp.data.result) && resp.data.result[0].hasOwnProperty("redirectUrl")) {
+                    let redirectUrl = `${resp.data.result[0].redirectUrl}`
+                    if(payload?.action) {
+                        redirectUrl += `&action=${payload.action}`
+                    }
                     window.open(redirectUrl, "_blank")
                 } else {
                     notify({ group: 'auth', type: 'error', title: resp.data.message })

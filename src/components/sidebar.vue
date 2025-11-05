@@ -30,14 +30,14 @@
             <p class="primaryColor text-[14px]">
               {{ getProfileData.emailId }}
             </p>
-            <a class="ml-auto cursor-pointer" @click="updateEmailOrMobile('email')"><icon name="edit" height="16" width="16" /></a>
+            <a class="ml-auto cursor-pointer" @click="ekycReirection('email')"><icon name="edit" height="16" width="16" /></a>
           </div>
           <div class="flex mt-6 gap-4 items-center">
             <icon name="phone" height="18" width="18"/>
             <p class="primaryColor text-[14px]">
               {{ getProfileData.mobileNo }}
             </p>
-            <abbr class="ml-auto cursor-pointer"  @click="updateEmailOrMobile('mobile')"><icon name="edit" height="16" width="16" /></abbr>
+            <abbr class="ml-auto cursor-pointer"  @click="ekycReirection('mobile')"><icon name="edit" height="16" width="16" /></abbr>
           </div>
           <div class="flex mt-6">
             <icon name="address" height="18" width="18" class="mr-4"/>
@@ -46,8 +46,56 @@
                 {{ getProfileData.primaryAddress || 'NA' }}
               </div>
             </div>
-            <span class="ml-auto cursor-pointer"  @click="getDigioLink()" ><icon name="edit" height="16" width="16" /></span>
+            <span class="ml-auto cursor-pointer"  @click="ekycReirection('address')" ><icon name="edit" height="16" width="16" /></span>
           </div>
+
+          <div class="flex mt-6 items-center gap-2 cursor-pointer hover:bg-blue-100 w-fit rounded" @click="ekycReirection('annual_income')">
+            <img :src="incomeProofSvg" alt="incomeProofSvg" class="h-[24px] w-[24px]">
+            <div class="primaryColor text-[14px]">
+              <div class="primaryColor text-[14px] leading-[1.3rem]">
+                Income Proof
+              </div>
+            </div>
+            <span>
+              <img :src="redirectionSvg" alt="redirectionSvg" class="h-4 w-4">
+            </span>
+          </div>
+
+          <div class="flex mt-6 items-center gap-3 cursor-pointer hover:bg-blue-100 w-fit rounded" @click="ekycReirection('account_closure')">
+            <img :src="closeAccountAvg" alt="closeAccountAvg" class="h-[18px] w-[18px]">
+            <div class="primaryColor text-[14px]">
+              <div class="primaryColor text-[14px] leading-[1.3rem]">
+                Close Account
+              </div>
+            </div>
+            <span>
+              <img :src="redirectionSvg" alt="redirectionSvg" class="h-4 w-4">
+            </span>
+          </div>
+
+          <!-- <div class="flex mt-6 items-center gap-2 cursor-pointer hover:bg-blue-100 w-fit rounded" >
+            <img :src="incomeProofSvg" alt="incomeProofSvg" class="h-[24px] w-[24px]">
+            <div class="primaryColor text-[14px]">
+              <div class="primaryColor text-[14px] leading-[1.3rem]">
+                Income Proof
+              </div>
+            </div>
+            <span>
+              <img :src="redirectionSvg" alt="redirectionSvg" class="h-4 w-4">
+            </span>
+          </div>
+
+          <div class="flex mt-6 items-center gap-2 cursor-pointer hover:bg-blue-100 w-fit rounded" @click="ekycReirection('account_closure')">
+            <img :src="closeAccountAvg" alt="closeAccountAvg" class="h-[18px] w-[18px]">
+            <div class="primaryColor text-[14px]">
+              <div class="primaryColor text-[14px] leading-[1.3rem]">
+                Close Account
+              </div>
+            </div>
+            <span>
+              <img :src="redirectionSvg" alt="redirectionSvg" class="h-4 w-4">
+            </span>
+          </div> -->
         </box>
       </div>
 
@@ -140,20 +188,23 @@ import { computed } from 'vue';
 import tradebookfliter from '../views/reports/tradebookfliter.vue';
 import box from './utilComponents/box.vue';
 import icon from './utilComponents/icons.vue';
-import { useRouter } from 'vue-router';
+// import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 const store = useStore()
 const getProfileData = computed(() => store.getters['boReports/getProfileData']);
+import redirectionSvg from "../assets/redirection.svg"
+import incomeProofSvg from "../assets/images/incomeProof.svg"
+import closeAccountAvg from "../assets/images/closeAccount.svg";
 
-const router = useRouter();
-const updateEmailOrMobile = async (type: string) => {
-  // router.push('/profile').catch(() => { });
-  // store.commit('tabs/setProfileCurrentTab', JSON.stringify(5));
-  // store.dispatch('tabs/setActiveTab', { path: router.path, id: 5 });
-  // store.commit('popup/setUpdateType', type);
-  // store.commit('popup/setIsEmailOrMobileUpdate', true);
-  store.dispatch('ekycReirection');
-};
+// const router = useRouter();
+// const updateEmailOrMobile = async (type: string) => {
+//   // router.push('/profile').catch(() => { });
+//   // store.commit('tabs/setProfileCurrentTab', JSON.stringify(5));
+//   // store.dispatch('tabs/setActiveTab', { path: router.path, id: 5 });
+//   // store.commit('popup/setUpdateType', type);
+//   // store.commit('popup/setIsEmailOrMobileUpdate', true);
+//   store.dispatch('ekycReirection');
+// };
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   const day = date.getDate().toString().padStart(2, '0');
@@ -161,10 +212,14 @@ const formatDate = (dateString: string) => {
   const year = date.getFullYear().toString();
   return `${day}-${month}-${year}`;
 }
-const getDigioLink = () => {
-  // store.dispatch('reekyc/getDigilocker')
-  store.dispatch('ekycReirection');
-};
+// const getDigioLink = () => {
+//   // store.dispatch('reekyc/getDigilocker')
+// };
+
+const ekycReirection = (action:string) => {
+  store.dispatch('ekycReirection', action);
+}
+
 const props = defineProps({
   isBox: { type: Boolean, default: true }
 });
