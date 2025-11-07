@@ -56,8 +56,7 @@ export default createStore({
     },
     setcurrenttab(state:any, payload:any) {
       state.currenttab = payload
-
-    }
+    },
   },
 
   actions: {
@@ -79,11 +78,12 @@ export default createStore({
       const redirectUrl = "https://weblive.rmoneyindia.net/funds"
       window.open(redirectUrl, "_blank")
     },
-    appcodeBasedRedirection({ state, dispatch, rootGetters }:any, appcode:string) {
+    appcodeBasedRedirection({ state, dispatch, rootGetters, commmit }:any, appcode:string) {
       const userId = rootGetters["auth/getUserId"]
       // // const redirectionUrl = 'https://e-kyc.rmoneyindia.com/account/?_gl=1*8b6een*_gcl_au*MTI3MjE1ODE5Ny4xNzU5MTI5MzYy*_ga*MjUxMTIyMzUyLjE3NTkxMjkzNjI.*_ga_JKBNJZVCSY*czE3NTkxNDUzMjMkbzIkZzEkdDE3NTkxNDU0NDkkajQxJGwwJGgw'
       // const redirectionUrl = `https://e-kyc-rmoneyindia-stg.app/account/user/validateCode?authCode=${authcode}&userId=${userId}&appname=RMoney&appcode=${appcode}&action=mobile/email/account`
       // window.open(redirectionUrl, '_blank');
+      state.redirectionAppCode = appcode 
       const json = {
         "userId": userId,
         "vendor": appcode,

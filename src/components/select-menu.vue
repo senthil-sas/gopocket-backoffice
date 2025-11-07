@@ -1,14 +1,13 @@
 <template>
-    <div class="relative w-full pl-4 pr-10">
+    <div class="relative w-full pl-4 pr-4">
         <!-- <Label class="text-[11px]">Reports:</Label> -->
         <Listbox v-model="internalValue">
                 <ListboxButton
-                    class="min-w-[180px] relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left sm:text-sm primary-color !font-bold">
-                    <span class="block truncate">
-                        {{ internalValue?.[labelKey] || placeholder }}
-                    </span>
+                    class="min-w-[180px] flex gap-2 items-center justify-center relative w-full rounded h-8 px-3 sm:text-xs font-semibold bg-[#3977DE] text-white cursor-pointer">
+                    More Reports
+                    
                     <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                        <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                        <ChevronDownIcon class="h-5 w-5 text-white" aria-hidden="true" />
                     </span>
                 </ListboxButton>
 
@@ -21,10 +20,8 @@
                             <li :class="[
                                 active ? 'bg-[#F0F6FD] text-[#3977DE]' : 'text-gray-900',
                                 'relative cursor-pointer select-none py-2 pl-3 pr-4 flex items-center gap-2 primary-color font-bold',
-                            ]" @click="clickHandler()">
-                                <span v-if="isSso">
-                                    <img :src="redirectSvg" alt="redirectSvg" class="h-4 w-4">
-                                </span>
+                            ]" @click="clickHandler(option)">
+                                <img :src="redirectSvg" alt="redirectSvg" class="h-4 w-4" v-if="isSso">
                                 <span :class="[
                                     selected ? 'font-medium' : 'font-normal',
                                     'block truncate',
@@ -52,7 +49,7 @@ import {
     ListboxOptions,
     ListboxOption,
 } from '@headlessui/vue'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
+import { CheckIcon, ChevronDownIcon } from '@heroicons/vue/20/solid'
 import redirectSvg from "../assets/redirection.svg"
 import { useStore } from 'vuex'
 const store = useStore()
@@ -100,9 +97,9 @@ watch(internalValue, (val) => {
     emit('update:modelValue', val)
 })
 
-const clickHandler = () => {
+const clickHandler = (option) => {
     if(props.isSso) {
-        store.dispatch("appcodeBasedRedirection", internalValue.value.appcode)
+        store.dispatch("appcodeBasedRedirection", option.appcode)
         return
     }
 }
